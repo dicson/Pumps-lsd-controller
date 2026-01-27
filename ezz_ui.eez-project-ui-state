@@ -1108,16 +1108,27 @@
       "selection": {
         "0": {
           "0": {
-            "3": {
-              "0": {}
+            "0": {
+              "4": {
+                "0": {},
+                "1": {
+                  "0": {},
+                  "1": {},
+                  "2": {
+                    "0": {
+                      "$selected": true
+                    }
+                  }
+                }
+              }
             }
           }
         }
       },
       "transform": {
         "translate": {
-          "x": -367,
-          "y": -255
+          "x": -384,
+          "y": -276
         },
         "scale": 1
       },
@@ -1177,7 +1188,10 @@
   "lvglPart": "MAIN",
   "lvglState": "DEFAULT",
   "lvglExpandedPropertiesGroup": [
-    "PADDING"
+    "BACKGROUND",
+    "MISCELLANEOUS",
+    "PADDING",
+    "TEXT"
   ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,
