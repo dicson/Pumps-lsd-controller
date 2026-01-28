@@ -53,7 +53,9 @@ typedef struct _objects_t {
     lv_obj_t *bar_15;
     lv_obj_t *obj17;
     lv_obj_t *obj18;
+    lv_obj_t *k_dw_time;
     lv_obj_t *obj19;
+    lv_obj_t *k_reset;
     lv_obj_t *obj20;
     lv_obj_t *obj21;
     lv_obj_t *obj22;
@@ -72,7 +74,6 @@ typedef struct _objects_t {
     lv_obj_t *obj35;
     lv_obj_t *obj36;
     lv_obj_t *obj37;
-    lv_obj_t *obj38;
     lv_obj_t *zone13_1;
     lv_obj_t *zone14_1;
     lv_obj_t *zone16_1;
@@ -125,15 +126,15 @@ typedef struct _objects_t {
     lv_obj_t *zone16;
     lv_obj_t *d_16;
     lv_obj_t *c_16;
+    lv_obj_t *obj38;
     lv_obj_t *obj39;
     lv_obj_t *obj40;
-    lv_obj_t *obj41;
     lv_obj_t *input_area;
     lv_obj_t *keyboard_1;
     lv_obj_t *input_area_1;
     lv_obj_t *keyboard;
     lv_obj_t *settings;
-    lv_obj_t *obj42;
+    lv_obj_t *obj41;
     lv_obj_t *debug;
     lv_obj_t *bl_idle;
     lv_obj_t *pause;

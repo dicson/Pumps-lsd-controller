@@ -14,6 +14,7 @@ uint32_t zone_pause;                  // пауза между зонами
 uint32_t zoneTimer;                   // таймер паузы
 boolean now_pumping = false;          // идет полив
 boolean dryState = true;              // какой клапан открыт. true - dry(грязная) false - чистая
+uint32_t k_dw_time = 100;             // коэффициент
 
 Preferences settings;
 int minutes = 60; //
@@ -31,6 +32,7 @@ void setup_settings()
         settings.putLong("GFX_BL_VALUE", 200);
         settings.putLong("GFX_BL_TIME", 30);
         settings.putLong("zone_pause", zone_pause);
+        settings.putLong("k_dw_time", 100);
         uint32_t dw_time[PUPM_AMOUNT];
         settings.putBytes("dw_time", dw_time, PUPM_AMOUNT * 4);
         uint32_t cw_time[PUPM_AMOUNT];
@@ -44,6 +46,7 @@ void setup_settings()
     zone_pause = settings.getLong("zone_pause");
     GFX_BL_VALUE = settings.getLong("GFX_BL_VALUE");
     GFX_BL_TIME = settings.getLong("GFX_BL_TIME");
+    k_dw_time = settings.getLong("k_dw_time", 100);
     settings.getBytes("dw_time", dw_time, PUPM_AMOUNT * 4);
     settings.getBytes("cw_time", cw_time, PUPM_AMOUNT * 4);
     settings.end();
@@ -134,4 +137,5 @@ void fill_widgets()
             lv_obj_remove_flag(bar_list[i], LV_OBJ_FLAG_HIDDEN);
         }
     }
+    lv_label_set_text(objects.k_dw_time, String(k_dw_time).c_str());
 }

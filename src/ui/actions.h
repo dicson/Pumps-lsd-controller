@@ -15,15 +15,15 @@ extern void action_idle_time_focused(lv_event_t * e);
 extern void action_idle_time_unfocused(lv_event_t * e);
 extern void action_dw(lv_event_t * e);
 extern void action_cw(lv_event_t * e);
-extern void action_hide_zone13(lv_event_t * e);
-extern void action_hide_zone14(lv_event_t * e);
-extern void action_hide_zone16(lv_event_t * e);
 extern void action_start(lv_event_t * e);
 extern void action_stop(lv_event_t * e);
 extern void action_tab_changed(lv_event_t * e);
 extern void action_debug(lv_event_t * e);
 extern void action_pause_ready(lv_event_t * e);
 extern void action_pause_released(lv_event_t * e);
+extern void action_spinbox_decrement_event_cb(lv_event_t * e);
+extern void action_spinbox_increment_event_cb(lv_event_t * e);
+extern void action_k_reset(lv_event_t * e);
 
 
 #ifdef __cplusplus

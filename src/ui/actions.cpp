@@ -26,6 +26,7 @@ extern boolean pump_finished[PUPM_AMOUNT];
 extern boolean pump_state[PUPM_AMOUNT];
 extern boolean now_pumping;
 extern lv_obj_t *bar_list[PUPM_AMOUNT];
+extern uint32_t k_dw_time;
 int dw_time_;
 int cw_time_;
 lv_obj_t *obj;
@@ -291,6 +292,46 @@ void action_stop(lv_event_t *e)
   lv_obj_remove_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
   lv_obj_clear_state(objects.start, LV_STATE_DISABLED);
   lv_obj_add_flag(objects.spinner, LV_OBJ_FLAG_HIDDEN);
+}
+
+void save_k_reset()
+{
+  lv_label_set_text(objects.k_dw_time, String(k_dw_time).c_str());
+  settings.begin("Settings", RW_MODE);
+  settings.putLong("k_dw_time", k_dw_time);
+  settings.end();
+}
+
+void action_spinbox_decrement_event_cb(lv_event_t *e)
+{
+  lv_event_code_t code = lv_event_get_code(e);
+  if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT)
+  {
+    if (k_dw_time > 50)
+    {
+      --k_dw_time;
+      save_k_reset();
+    }
+  }
+}
+
+void action_spinbox_increment_event_cb(lv_event_t *e)
+{
+  lv_event_code_t code = lv_event_get_code(e);
+  if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT)
+  {
+    if (k_dw_time < 200)
+    {
+      ++k_dw_time;
+      save_k_reset();
+    }
+  }
+}
+
+void action_k_reset(lv_event_t *e)
+{
+  k_dw_time = 100;
+  save_k_reset();
 }
 
 void action_tab_changed(lv_event_t *e)
