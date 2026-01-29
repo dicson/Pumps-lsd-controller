@@ -19,6 +19,7 @@ extern uint32_t zone_pause;
 extern uint32_t programm_time;
 extern uint32_t start_time;
 extern uint32_t zoneTimer;
+extern uint32_t k_dw_time;
 
 extern int8_t thisH, thisM, thisS;
 extern boolean now_pumping;
@@ -44,7 +45,7 @@ void zone_on(int i)
 
 void pump_on()
 {
-    //send_command(0, true); // 
+    // send_command(0, true); //
     Serial.println("включить насос");
     lv_obj_remove_flag(objects.pump, LV_OBJ_FLAG_HIDDEN);
 }
@@ -116,10 +117,11 @@ void periodTick()
             zone_on(i);
         }
         // ------------------переключение воды с грязной на чистую
-        if (dw_time[i] > 0 && millis() - pump_timers[i] >= dw_time[i] * 1000 * minutes // если время полива грязной вышло
-            && pump_state[i] == SWITCH_LEVEL                                           // если зона поливается в данный момент
-            && cw_time[i] > 0                                                          // если время чистой воды больше нуля
-            && (dryState))                                                             // если включена грязная
+        uint32_t dw_t = dw_time[i] * 1000 * minutes / 100 * k_dw_time;
+        if (dw_time[i] > 0 && millis() - pump_timers[i] >= dw_t // если время полива грязной вышло
+            && pump_state[i] == SWITCH_LEVEL                    // если зона поливается в данный момент
+            && cw_time[i] > 0                                   // если время чистой воды больше нуля
+            && (dryState))                                      // если включена грязная
             clear_water_on();
     }
 }
@@ -127,13 +129,14 @@ void periodTick()
 void flowTick()
 { // выключение зоны
     for (byte i = 0; i < PUPM_AMOUNT; i++)
-    {                                                                                  // пробегаем по всем помпам
-        if ((dw_time[i] > 0 || cw_time[i] > 0)                                         // если время полива больше нуля
-            && millis() - pump_timers[i] >= (dw_time[i] + cw_time[i]) * 1000 * minutes // если время полива вышло
-            && pump_state[i] == SWITCH_LEVEL)                                          // если зона поливается в данный момент
-        {                                                                              //
-            pump_state[i] = !SWITCH_LEVEL;                                             // зона не поливается в данный момент
-            if (zone_pause > 0)                                                        // если есть пауза между зонами -
+    {
+        uint32_t dw_t = dw_time[i] * 1000 * minutes / 100 * k_dw_time;         // пробегаем по всем помпам
+        if ((dw_time[i] > 0 || cw_time[i] > 0)                                 // если время полива больше нуля
+            && millis() - pump_timers[i] >= dw_t + cw_time[i] * 1000 * minutes // если время полива вышло
+            && pump_state[i] == SWITCH_LEVEL)                                  // если зона поливается в данный момент
+        {                                                                      //
+            pump_state[i] = !SWITCH_LEVEL;                                     // зона не поливается в данный момент
+            if (zone_pause > 0)                                                // если есть пауза между зонами -
                 pump_off();
             zone_off(i);
             now_pumping = false;     // полив остановлен
@@ -142,9 +145,9 @@ void flowTick()
 
             // -----------------------------------------проверка на конец заданий--------------------------------------------
             for (byte n = 0; n < PUPM_AMOUNT; n++)
-            {                                            // пробегаем по всем помпам
-                if (!pump_finished[n] && dw_time[n] > 0) // если нашли не политую - выходим
-                    break;                               //
+            {                                                                // пробегаем по всем помпам
+                if (!pump_finished[n] && (dw_time[n] > 0 || cw_time[n] > 0)) // если нашли не политую - выходим
+                    break;                                                   //
                 if (n == PUPM_AMOUNT - 1)
                 {
                     action_stop(NULL);
@@ -182,8 +185,9 @@ void update_bars()
     };
     if (current_zone != 255)
     {
-        uint32_t time = (dw_time[current_zone] + cw_time[current_zone] + zone_pause) * 1000 * minutes;
-        if (programm_time - prog_pass <= (dw_time[current_zone] + cw_time[current_zone]) * 1000 * minutes)
+        uint32_t dw_t = dw_time[current_zone] * 1000 * minutes / 100 * k_dw_time;
+        uint32_t time = dw_t + (cw_time[current_zone] + zone_pause) * 1000 * minutes;
+        if (programm_time - prog_pass <= dw_t + cw_time[current_zone] * 1000 * minutes)
         {
             time = time - zone_pause * 1000;
         }
@@ -203,4 +207,3 @@ void pump_loop()
     flowTick();
     update_bars();
 }
-

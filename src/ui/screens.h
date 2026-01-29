@@ -54,6 +54,7 @@ typedef struct _objects_t {
     lv_obj_t *obj17;
     lv_obj_t *obj18;
     lv_obj_t *k_dw_time;
+    lv_obj_t *k_container;
     lv_obj_t *obj19;
     lv_obj_t *k_reset;
     lv_obj_t *obj20;

@@ -218,6 +218,7 @@ void action_idle_time_unfocused(lv_event_t *e)
 void action_start(lv_event_t *e)
 {
   lv_obj_add_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_add_flag(objects.k_container, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_state(objects.start, LV_STATE_DISABLED);
   lv_obj_remove_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
   lv_obj_clear_state(objects.stop, LV_STATE_DISABLED);
@@ -233,7 +234,8 @@ void action_start(lv_event_t *e)
     pump_finished[i] = false; // сброс переменных политых зон(старт полива)
     if (dw_time[i] > 0 || cw_time[i] > 0)
     {
-      programm_time = programm_time + (dw_time[i] + cw_time[i] + zone_pause) * 1000 * minutes;
+      uint32_t dw_t = dw_time[i] * 1000 * minutes / 100 * k_dw_time;
+      programm_time = programm_time + dw_t + (cw_time[i] + zone_pause) * 1000 * minutes;
       // lcd.setCursor(i, 3);                          // заполняем индикатор заданий
       // if (pumping_time[i] > 0)                      // если время полива зоны больше нуля
       //   lcd.print("0");
@@ -290,11 +292,12 @@ void action_stop(lv_event_t *e)
   lv_obj_add_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_state(objects.stop, LV_STATE_DISABLED);
   lv_obj_remove_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_remove_flag(objects.k_container, LV_OBJ_FLAG_HIDDEN);
   lv_obj_clear_state(objects.start, LV_STATE_DISABLED);
   lv_obj_add_flag(objects.spinner, LV_OBJ_FLAG_HIDDEN);
 }
 
-void save_k_reset()
+void save_k_dw_time()
 {
   lv_label_set_text(objects.k_dw_time, String(k_dw_time).c_str());
   settings.begin("Settings", RW_MODE);
@@ -310,7 +313,7 @@ void action_spinbox_decrement_event_cb(lv_event_t *e)
     if (k_dw_time > 50)
     {
       --k_dw_time;
-      save_k_reset();
+      save_k_dw_time();
     }
   }
 }
@@ -323,7 +326,7 @@ void action_spinbox_increment_event_cb(lv_event_t *e)
     if (k_dw_time < 200)
     {
       ++k_dw_time;
-      save_k_reset();
+      save_k_dw_time();
     }
   }
 }
@@ -331,7 +334,7 @@ void action_spinbox_increment_event_cb(lv_event_t *e)
 void action_k_reset(lv_event_t *e)
 {
   k_dw_time = 100;
-  save_k_reset();
+  save_k_dw_time();
 }
 
 void action_tab_changed(lv_event_t *e)

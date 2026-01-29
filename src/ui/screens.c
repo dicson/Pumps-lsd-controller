@@ -801,7 +801,9 @@ void create_screen_main() {
                                     }
                                 }
                                 {
+                                    // k_container
                                     lv_obj_t *obj = lv_obj_create(parent_obj);
+                                    objects.k_container = obj;
                                     lv_obj_set_pos(obj, 6, 86);
                                     lv_obj_set_size(obj, 207, 29);
                                     lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3168,6 +3170,7 @@ void delete_screen_main() {
     objects.obj17 = 0;
     objects.obj18 = 0;
     objects.k_dw_time = 0;
+    objects.k_container = 0;
     objects.obj19 = 0;
     objects.k_reset = 0;
     objects.obj20 = 0;
