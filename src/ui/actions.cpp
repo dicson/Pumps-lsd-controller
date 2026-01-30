@@ -6,6 +6,7 @@
 #include "vars.h"
 #include <Preferences.h>
 #include "auto_pumps.h"
+#include "elegantota.h"
 
 #define PUPM_AMOUNT 16
 #define RW_MODE false
@@ -367,4 +368,9 @@ void action_tab_changed(lv_event_t *e)
   //   else
   //     lv_obj_add_flag(bar_list[i], LV_OBJ_FLAG_HIDDEN);
   // }
+}
+
+void action_update(lv_event_t *e)
+{
+  ota_setup();
 }

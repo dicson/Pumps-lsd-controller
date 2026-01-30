@@ -24,6 +24,7 @@ extern void action_pause_released(lv_event_t * e);
 extern void action_spinbox_decrement_event_cb(lv_event_t * e);
 extern void action_spinbox_increment_event_cb(lv_event_t * e);
 extern void action_k_reset(lv_event_t * e);
+extern void action_update(lv_event_t * e);
 
 
 #ifdef __cplusplus

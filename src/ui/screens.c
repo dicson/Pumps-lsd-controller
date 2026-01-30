@@ -2948,8 +2948,52 @@ void create_screen_main() {
                                 }
                                 {
                                     lv_obj_t *obj = lv_obj_create(parent_obj);
+                                    lv_obj_set_pos(obj, 0, 0);
+                                    lv_obj_set_size(obj, 300, 32);
+                                    lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    {
+                                        lv_obj_t *parent_obj = obj;
+                                        {
+                                            // bl
+                                            lv_obj_t *obj = lv_slider_create(parent_obj);
+                                            objects.bl = obj;
+                                            lv_obj_set_pos(obj, 150, 5);
+                                            lv_obj_set_size(obj, 140, 10);
+                                            lv_slider_set_range(obj, 50, 253);
+                                            lv_slider_set_value(obj, 200, LV_ANIM_ON);
+                                            lv_obj_add_event_cb(obj, action_bl_released, LV_EVENT_RELEASED, (void *)0);
+                                            lv_obj_add_event_cb(obj, action_bl_changed, LV_EVENT_VALUE_CHANGED, (void *)0);
+                                            {
+                                                lv_obj_t *parent_obj = obj;
+                                                {
+                                                    // textlabel
+                                                    lv_obj_t *obj = lv_label_create(parent_obj);
+                                                    objects.textlabel = obj;
+                                                    lv_obj_set_pos(obj, 547, 32);
+                                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                                    lv_obj_set_style_text_font(obj, &ui_font_ubuntu_20, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                                    lv_label_set_text(obj, "ТестЩщастье");
+                                                }
+                                            }
+                                        }
+                                        {
+                                            lv_obj_t *obj = lv_label_create(parent_obj);
+                                            lv_obj_set_pos(obj, 0, 0);
+                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                            lv_label_set_text(obj, "Яркость экрана");
+                                        }
+                                    }
+                                }
+                                {
+                                    lv_obj_t *obj = lv_obj_create(parent_obj);
                                     lv_obj_set_pos(obj, -203, -17);
-                                    lv_obj_set_size(obj, 309, 36);
+                                    lv_obj_set_size(obj, 309, 32);
                                     lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3002,7 +3046,7 @@ void create_screen_main() {
                                 {
                                     lv_obj_t *obj = lv_obj_create(parent_obj);
                                     lv_obj_set_pos(obj, -9, 151);
-                                    lv_obj_set_size(obj, 309, 36);
+                                    lv_obj_set_size(obj, 309, 32);
                                     lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3060,28 +3104,23 @@ void create_screen_main() {
                                         }
                                     }
                                 }
-                            }
-                        }
-                        {
-                            // bl
-                            lv_obj_t *obj = lv_slider_create(parent_obj);
-                            objects.bl = obj;
-                            lv_obj_set_pos(obj, 709, 214);
-                            lv_obj_set_size(obj, 10, 140);
-                            lv_slider_set_range(obj, 50, 253);
-                            lv_slider_set_value(obj, 200, LV_ANIM_ON);
-                            lv_obj_add_event_cb(obj, action_bl_released, LV_EVENT_RELEASED, (void *)0);
-                            lv_obj_add_event_cb(obj, action_bl_changed, LV_EVENT_VALUE_CHANGED, (void *)0);
-                            {
-                                lv_obj_t *parent_obj = obj;
                                 {
-                                    // textlabel
-                                    lv_obj_t *obj = lv_label_create(parent_obj);
-                                    objects.textlabel = obj;
-                                    lv_obj_set_pos(obj, 547, 32);
-                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                    lv_obj_set_style_text_font(obj, &ui_font_ubuntu_20, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "ТестЩщастье");
+                                    lv_obj_t *obj = lv_button_create(parent_obj);
+                                    lv_obj_set_pos(obj, 0, 0);
+                                    lv_obj_set_size(obj, 300, 32);
+                                    lv_obj_add_event_cb(obj, action_update, LV_EVENT_PRESSED, (void *)0);
+                                    {
+                                        lv_obj_t *parent_obj = obj;
+                                        {
+                                            // update
+                                            lv_obj_t *obj = lv_label_create(parent_obj);
+                                            objects.update = obj;
+                                            lv_obj_set_pos(obj, 0, 0);
+                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_label_set_text(obj, "Обновление прошивки");
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -3253,10 +3292,11 @@ void delete_screen_main() {
     objects.settings = 0;
     objects.obj41 = 0;
     objects.debug = 0;
-    objects.bl_idle = 0;
-    objects.pause = 0;
     objects.bl = 0;
     objects.textlabel = 0;
+    objects.bl_idle = 0;
+    objects.pause = 0;
+    objects.update = 0;
     objects.settings_kb = 0;
 }
 

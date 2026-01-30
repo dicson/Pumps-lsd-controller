@@ -1,8 +1,9 @@
 #include "display.h"
 #include "ui/ui.h"
- #include "settings.h"
+#include "settings.h"
 #include "auto_pumps.h"
 #include "enow.h"
+#include "elegantota.h"
 
 void setup()
 {
@@ -24,4 +25,5 @@ void loop()
 {
   loop_display();
   pump_loop();
+  ota_loop();
 }

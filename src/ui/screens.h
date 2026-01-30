@@ -137,10 +137,11 @@ typedef struct _objects_t {
     lv_obj_t *settings;
     lv_obj_t *obj41;
     lv_obj_t *debug;
-    lv_obj_t *bl_idle;
-    lv_obj_t *pause;
     lv_obj_t *bl;
     lv_obj_t *textlabel;
+    lv_obj_t *bl_idle;
+    lv_obj_t *pause;
+    lv_obj_t *update;
     lv_obj_t *settings_kb;
 } objects_t;
 
