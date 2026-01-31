@@ -1,60 +1,13 @@
-/*
-  -----------------------
-  ElegantOTA - Demo Example
-  -----------------------
-
-  Skill Level: Beginner
-
-  This example provides with a bare minimal app with ElegantOTA functionality.
-
-  Github: https://github.com/ayushsharma82/ElegantOTA
-  WiKi: https://docs.elegantota.pro
-
-  Works with following hardware:
-  - ESP8266
-  - ESP32
-  - RP2040 (with WiFi) (Example: Raspberry Pi Pico W)
-
-
-  Important note for RP2040 users:
-  - RP2040 requires LittleFS partition for the OTA updates to work. Without LittleFS partition, OTA updates will fail.
-    Make sure to select Tools > Flash Size > "2MB (Sketch 1MB, FS 1MB)" option.
-  - If using bare RP2040, it requires WiFi module like Pico W for ElegantOTA to work.
-
-  -------------------------------
-
-  Upgrade to ElegantOTA Pro: https://elegantota.pro
-
-*/
-
-#if defined(ESP8266)
-#include <ESP8266WiFi.h>
-#include <WiFiClient.h>
-#include <ESP8266WebServer.h>
-#elif defined(ESP32)
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <WebServer.h>
-#elif defined(TARGET_RP2040) || defined(TARGET_RP2350) || defined(PICO_RP2040) || defined(PICO_RP2350)
-#include <WiFi.h>
-#include <WiFiClient.h>
-#include <WiFiServer.h>
-#include <WebServer.h>
-#endif
-
 #include <ElegantOTA.h>
 
-const char *ssid = "Pump_ct.";
+const char *ssid = "Pump_controller";
 const char *password = "80100000";
 boolean update = false;
 
-#if defined(ESP8266)
-ESP8266WebServer server(80);
-#elif defined(ESP32)
 WebServer server(80);
-#elif defined(TARGET_RP2040) || defined(TARGET_RP2350) || defined(PICO_RP2040) || defined(PICO_RP2350)
-WebServer server(80);
-#endif
 
 unsigned long ota_progress_millis = 0;
 
@@ -91,8 +44,6 @@ void onOTAEnd(bool success)
 
 void ota_setup(void)
 {
-    // WiFi.mode(WIFI_AP);
-    // WiFi.begin(ssid, password);
     Serial.println("setup");
     if (!WiFi.softAP(ssid, password))
     {
@@ -100,27 +51,19 @@ void ota_setup(void)
         while (1)
             ;
     }
-    // Wait for connection
-    // while (WiFi.status() != WL_CONNECTED)
-    // {
-    //     delay(500);
-    //     Serial.print(".");
-    // }
+
     Serial.println("");
     Serial.print("Connected to ");
     Serial.println(ssid);
-    Serial.print("IP address: ");
-    Serial.println(WiFi.localIP());
-
     IPAddress myIP = WiFi.softAPIP();
-  Serial.print("AP IP address: ");
-  Serial.println(myIP);
+    Serial.print("AP IP address: ");
+    Serial.println(myIP);
 
     server.on("/", []()
               { server.send(200, "text/plain", "Hi! This is ElegantOTA Demo."); });
 
     ElegantOTA.begin(&server); // Start ElegantOTA
-   // ElegantOTA callbacks
+                               // ElegantOTA callbacks
     ElegantOTA.onStart(onOTAStart);
     ElegantOTA.onProgress(onOTAProgress);
     ElegantOTA.onEnd(onOTAEnd);

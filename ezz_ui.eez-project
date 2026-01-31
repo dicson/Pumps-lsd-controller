@@ -248,6 +248,14 @@
       "localVariables": [],
       "userProperties": [],
       "name": "k_reset"
+    },
+    {
+      "objID": "794b8456-ba82-42a2-ef7f-3a6f056a8a22",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "update"
     }
   ],
   "userPages": [
@@ -370,6 +378,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_label",
@@ -459,6 +468,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "leftUnit": "px",
@@ -481,6 +491,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "spinner",
@@ -768,6 +779,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "leftUnit": "px",
@@ -1282,6 +1294,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_0",
@@ -1305,6 +1318,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -1405,6 +1419,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_1",
@@ -1428,6 +1443,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -1528,6 +1544,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_2",
@@ -1551,6 +1568,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -1651,6 +1669,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_3",
@@ -1674,6 +1693,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -1774,6 +1794,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_4",
@@ -1797,6 +1818,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -1897,6 +1919,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_5",
@@ -1920,6 +1943,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -2020,6 +2044,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_6",
@@ -2043,6 +2068,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -2143,6 +2169,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_7",
@@ -2166,6 +2193,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -2266,6 +2294,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_8",
@@ -2289,6 +2318,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -2389,6 +2419,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_9",
@@ -2412,6 +2443,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -2512,6 +2544,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_10",
@@ -2535,6 +2568,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -2635,6 +2669,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_11",
@@ -2658,6 +2693,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -2758,6 +2794,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_12",
@@ -2781,6 +2818,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -2881,6 +2919,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_13",
@@ -2904,6 +2943,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -3004,6 +3044,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_14",
@@ -3027,6 +3068,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -3127,6 +3169,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "bar_15",
@@ -3150,6 +3193,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -3284,6 +3328,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "leftUnit": "px",
@@ -3306,6 +3351,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -3328,6 +3374,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -3350,6 +3397,7 @@
                                     "conditionalStyles": [],
                                     "childStyles": []
                                   },
+                                  "hiddenInEditor": false,
                                   "timeline": [],
                                   "eventHandlers": [],
                                   "identifier": "k_dw_time",
@@ -3393,6 +3441,7 @@
                                     "conditionalStyles": [],
                                     "childStyles": []
                                   },
+                                  "hiddenInEditor": false,
                                   "timeline": [],
                                   "eventHandlers": [],
                                   "leftUnit": "px",
@@ -3464,6 +3513,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -3537,6 +3587,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "identifier": "k_container",
@@ -3560,6 +3611,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [
                                 {
@@ -3597,6 +3649,7 @@
                                     "conditionalStyles": [],
                                     "childStyles": []
                                   },
+                                  "hiddenInEditor": false,
                                   "timeline": [],
                                   "eventHandlers": [],
                                   "leftUnit": "px",
@@ -3672,6 +3725,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [
                                 {
@@ -3702,6 +3756,7 @@
                                     "conditionalStyles": [],
                                     "childStyles": []
                                   },
+                                  "hiddenInEditor": false,
                                   "timeline": [],
                                   "eventHandlers": [],
                                   "identifier": "k_reset",
@@ -3777,6 +3832,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [
                                 {
@@ -3814,6 +3870,7 @@
                                     "conditionalStyles": [],
                                     "childStyles": []
                                   },
+                                  "hiddenInEditor": false,
                                   "timeline": [],
                                   "eventHandlers": [],
                                   "leftUnit": "px",
@@ -4029,6 +4086,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -4051,6 +4109,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -4100,6 +4159,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -4181,6 +4241,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -4278,6 +4339,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -4300,6 +4362,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -4349,6 +4412,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -4430,6 +4494,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -4527,6 +4592,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -4549,6 +4615,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -4598,6 +4665,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -4679,6 +4747,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -4776,6 +4845,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -4798,6 +4868,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -4847,6 +4918,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -4928,6 +5000,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -5025,6 +5098,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -5047,6 +5121,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -5096,6 +5171,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -5177,6 +5253,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -5274,6 +5351,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -5372,6 +5450,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -5421,6 +5500,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -5517,6 +5597,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -5566,6 +5647,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -5661,6 +5743,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -5710,6 +5793,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -5804,6 +5888,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -5826,6 +5911,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -5875,6 +5961,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -5956,6 +6043,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -6053,6 +6141,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -6151,6 +6240,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -6200,6 +6290,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -6294,6 +6385,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -6343,6 +6435,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -6437,6 +6530,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -6486,6 +6580,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -6679,6 +6774,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -6721,6 +6817,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -6819,6 +6916,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -6894,6 +6992,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone13_1",
@@ -6917,6 +7016,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -6966,6 +7066,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -7040,6 +7141,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone14_1",
@@ -7063,6 +7165,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -7112,6 +7215,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -7186,6 +7290,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone16_1",
@@ -7209,6 +7314,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -7258,6 +7364,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -7375,6 +7482,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone1",
@@ -7398,6 +7506,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -7447,6 +7556,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -7510,6 +7620,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -7608,6 +7719,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone2",
@@ -7631,6 +7743,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -7680,6 +7793,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -7743,6 +7857,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -7841,6 +7956,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone3",
@@ -7864,6 +7980,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -7913,6 +8030,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -7976,6 +8094,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -8074,6 +8193,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone4",
@@ -8097,6 +8217,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -8146,6 +8267,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -8209,6 +8331,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -8307,6 +8430,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone5",
@@ -8330,6 +8454,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -8379,6 +8504,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -8442,6 +8568,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -8540,6 +8667,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone6",
@@ -8563,6 +8691,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -8585,6 +8714,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -8634,6 +8764,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -8715,6 +8846,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -8778,6 +8910,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -8876,6 +9009,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone7",
@@ -8899,6 +9033,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -8921,6 +9056,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -8970,6 +9106,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -9051,6 +9188,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -9114,6 +9252,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -9212,6 +9351,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone8",
@@ -9235,6 +9375,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -9257,6 +9398,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -9306,6 +9448,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -9387,6 +9530,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -9450,6 +9594,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -9548,6 +9693,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone9",
@@ -9571,6 +9717,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -9593,6 +9740,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -9642,6 +9790,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -9723,6 +9872,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -9786,6 +9936,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -9884,6 +10035,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone10",
@@ -9907,6 +10059,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -9956,6 +10109,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -10019,6 +10173,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -10116,6 +10271,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone11",
@@ -10139,6 +10295,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -10161,6 +10318,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -10210,6 +10368,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -10291,6 +10450,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -10354,6 +10514,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -10452,6 +10613,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone12",
@@ -10475,6 +10637,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -10497,6 +10660,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -10546,6 +10710,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
                               "leftUnit": "px",
@@ -10627,6 +10792,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -10690,6 +10856,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -10788,6 +10955,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone12_1",
@@ -10811,6 +10979,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -10886,6 +11055,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone13",
@@ -10909,6 +11079,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -10958,6 +11129,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -11021,6 +11193,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -11119,6 +11292,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone14",
@@ -11142,6 +11316,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -11191,6 +11366,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -11254,6 +11430,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -11352,6 +11529,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone15",
@@ -11375,6 +11553,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -11417,6 +11596,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -11480,6 +11660,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -11577,6 +11758,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "zone16",
@@ -11600,6 +11782,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -11649,6 +11832,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -11712,6 +11896,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [
                             {
@@ -11810,6 +11995,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "leftUnit": "px",
@@ -11832,6 +12018,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -11907,6 +12094,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "leftUnit": "px",
@@ -11929,6 +12117,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -12004,6 +12193,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "leftUnit": "px",
@@ -12026,6 +12216,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -12101,6 +12292,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "input_area",
@@ -12161,6 +12353,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [
                         {
@@ -12220,6 +12413,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "input_area_1",
@@ -12280,6 +12474,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [
                         {
@@ -12347,8 +12542,8 @@
                 {
                   "objID": "d4b3c403-fd57-4514-cfc9-6e512673ec05",
                   "type": "LVGLTabWidget",
-                  "left": 0,
-                  "top": 1,
+                  "left": 26,
+                  "top": 6,
                   "width": 790,
                   "height": 433,
                   "customInputs": [],
@@ -12383,6 +12578,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "leftUnit": "px",
@@ -12405,6 +12601,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -12427,6 +12624,7 @@
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [
                                 {
@@ -12481,12 +12679,217 @@
                           "groupIndex": 0
                         },
                         {
+                          "objID": "1421979a-820e-4f95-da52-1f5aa6abed30",
+                          "type": "LVGLContainerWidget",
+                          "left": 0,
+                          "top": 0,
+                          "width": 300,
+                          "height": 32,
+                          "customInputs": [],
+                          "customOutputs": [],
+                          "style": {
+                            "objID": "aea7ccd5-24e4-4eac-ecff-08d7cab03c41",
+                            "useStyle": "default",
+                            "conditionalStyles": [],
+                            "childStyles": []
+                          },
+                          "hiddenInEditor": false,
+                          "timeline": [],
+                          "eventHandlers": [],
+                          "leftUnit": "px",
+                          "topUnit": "px",
+                          "widthUnit": "px",
+                          "heightUnit": "px",
+                          "children": [
+                            {
+                              "objID": "a69424fd-c2eb-4817-8275-45084e5f28ea",
+                              "type": "LVGLSliderWidget",
+                              "left": 150,
+                              "top": 5,
+                              "width": 140,
+                              "height": 10,
+                              "customInputs": [],
+                              "customOutputs": [],
+                              "style": {
+                                "objID": "c6cae154-7402-4c10-d787-5cf098f4fdc3",
+                                "useStyle": "default",
+                                "conditionalStyles": [],
+                                "childStyles": []
+                              },
+                              "hiddenInEditor": false,
+                              "timeline": [],
+                              "eventHandlers": [
+                                {
+                                  "objID": "90fd824a-66e0-4ca9-8795-c3ce00fdccbe",
+                                  "eventName": "RELEASED",
+                                  "handlerType": "action",
+                                  "action": "bl_released",
+                                  "userData": 0
+                                },
+                                {
+                                  "objID": "eeb3006d-761d-4bf1-fa2e-7b16932078f4",
+                                  "eventName": "VALUE_CHANGED",
+                                  "handlerType": "action",
+                                  "action": "bl_changed",
+                                  "userData": 0
+                                }
+                              ],
+                              "identifier": "bl",
+                              "leftUnit": "px",
+                              "topUnit": "px",
+                              "widthUnit": "px",
+                              "heightUnit": "px",
+                              "children": [
+                                {
+                                  "objID": "33ec6404-ffd3-4bc8-fc4b-44bad4e6da5e",
+                                  "type": "LVGLLabelWidget",
+                                  "left": 547,
+                                  "top": 32,
+                                  "width": 110,
+                                  "height": 22,
+                                  "customInputs": [],
+                                  "customOutputs": [],
+                                  "style": {
+                                    "objID": "5b02cb89-5963-48c8-896e-4a38ea5fbd4f",
+                                    "useStyle": "default",
+                                    "conditionalStyles": [],
+                                    "childStyles": []
+                                  },
+                                  "hiddenInEditor": false,
+                                  "timeline": [],
+                                  "eventHandlers": [],
+                                  "identifier": "textlabel",
+                                  "leftUnit": "px",
+                                  "topUnit": "px",
+                                  "widthUnit": "content",
+                                  "heightUnit": "content",
+                                  "children": [],
+                                  "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
+                                  "hiddenFlagType": "literal",
+                                  "clickableFlagType": "literal",
+                                  "flagScrollbarMode": "",
+                                  "flagScrollDirection": "",
+                                  "scrollSnapX": "",
+                                  "scrollSnapY": "",
+                                  "checkedStateType": "literal",
+                                  "disabledStateType": "literal",
+                                  "states": "",
+                                  "localStyles": {
+                                    "objID": "ae66749c-9efa-43cd-cefc-056fd4e6bdb5",
+                                    "definition": {
+                                      "MAIN": {
+                                        "DEFAULT": {
+                                          "text_font": "ubuntu 20"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "group": "",
+                                  "groupIndex": 0,
+                                  "text": "ТестЩщастье",
+                                  "textType": "literal",
+                                  "longMode": "WRAP",
+                                  "recolor": false
+                                }
+                              ],
+                              "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_ON_FOCUS|SCROLL_WITH_ARROW|SNAPPABLE",
+                              "hiddenFlagType": "literal",
+                              "clickableFlag": true,
+                              "clickableFlagType": "literal",
+                              "flagScrollbarMode": "",
+                              "flagScrollDirection": "",
+                              "scrollSnapX": "",
+                              "scrollSnapY": "",
+                              "checkedStateType": "literal",
+                              "disabledStateType": "literal",
+                              "states": "",
+                              "useStyle": "",
+                              "localStyles": {
+                                "objID": "5f3a3e16-a7b3-4767-868e-87e5f0dfbd0b"
+                              },
+                              "group": "",
+                              "groupIndex": 0,
+                              "min": 50,
+                              "minType": "literal",
+                              "max": 253,
+                              "maxType": "literal",
+                              "mode": "NORMAL",
+                              "value": 200,
+                              "valueType": "literal",
+                              "previewValue": 25,
+                              "valueLeft": 50,
+                              "valueLeftType": "literal",
+                              "previewValueLeft": 0,
+                              "enableAnimation": true
+                            },
+                            {
+                              "objID": "49449edf-de6b-4a19-fca0-006cf8dbe13c",
+                              "type": "LVGLLabelWidget",
+                              "left": 0,
+                              "top": 0,
+                              "width": 140,
+                              "height": 22,
+                              "customInputs": [],
+                              "customOutputs": [],
+                              "style": {
+                                "objID": "68c81890-324e-4a26-dd2d-e5065c1f4adb",
+                                "useStyle": "default",
+                                "conditionalStyles": [],
+                                "childStyles": []
+                              },
+                              "hiddenInEditor": false,
+                              "timeline": [],
+                              "eventHandlers": [],
+                              "leftUnit": "px",
+                              "topUnit": "px",
+                              "widthUnit": "content",
+                              "heightUnit": "content",
+                              "children": [],
+                              "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
+                              "hiddenFlagType": "literal",
+                              "clickableFlagType": "literal",
+                              "flagScrollbarMode": "",
+                              "flagScrollDirection": "",
+                              "scrollSnapX": "",
+                              "scrollSnapY": "",
+                              "checkedStateType": "literal",
+                              "disabledStateType": "literal",
+                              "states": "",
+                              "localStyles": {
+                                "objID": "c2e46ba2-c443-4f94-c98a-9872500d3370"
+                              },
+                              "group": "",
+                              "groupIndex": 0,
+                              "text": "Яркость экрана",
+                              "textType": "literal",
+                              "longMode": "WRAP",
+                              "recolor": false
+                            }
+                          ],
+                          "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
+                          "hiddenFlagType": "literal",
+                          "clickableFlag": true,
+                          "clickableFlagType": "literal",
+                          "flagScrollbarMode": "",
+                          "flagScrollDirection": "",
+                          "scrollSnapX": "",
+                          "scrollSnapY": "",
+                          "checkedStateType": "literal",
+                          "disabledStateType": "literal",
+                          "states": "",
+                          "localStyles": {
+                            "objID": "d9250446-bd78-4a07-9987-1f0589630ad4"
+                          },
+                          "group": "",
+                          "groupIndex": 0
+                        },
+                        {
                           "objID": "ace6a6f4-cfad-46c2-ecf5-b5ab66cbcba5",
                           "type": "LVGLContainerWidget",
                           "left": -203,
                           "top": -17,
                           "width": 309,
-                          "height": 36,
+                          "height": 32,
                           "customInputs": [],
                           "customOutputs": [],
                           "style": {
@@ -12705,7 +13108,7 @@
                           "left": -9,
                           "top": 151,
                           "width": 309,
-                          "height": 36,
+                          "height": 276,
                           "customInputs": [],
                           "customOutputs": [],
                           "style": {
@@ -12921,163 +13324,55 @@
                           "groupIndex": 0
                         },
                         {
-                          "objID": "1421979a-820e-4f95-da52-1f5aa6abed30",
-                          "type": "LVGLContainerWidget",
+                          "objID": "7cd7e0f4-cd4a-4a42-8bcb-e93c256b0906",
+                          "type": "LVGLButtonWidget",
                           "left": 0,
-                          "top": 0,
+                          "top": 246,
                           "width": 300,
-                          "height": 30,
+                          "height": 32,
                           "customInputs": [],
                           "customOutputs": [],
                           "style": {
-                            "objID": "aea7ccd5-24e4-4eac-ecff-08d7cab03c41",
+                            "objID": "9e9448ee-7d50-4c3b-edf8-757e045d4ca6",
                             "useStyle": "default",
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
-                          "eventHandlers": [],
+                          "eventHandlers": [
+                            {
+                              "objID": "ae07c613-299b-4883-ed9f-896115b88069",
+                              "eventName": "PRESSED",
+                              "handlerType": "action",
+                              "action": "update",
+                              "userData": 0
+                            }
+                          ],
                           "leftUnit": "px",
                           "topUnit": "px",
                           "widthUnit": "px",
                           "heightUnit": "px",
                           "children": [
                             {
-                              "objID": "a69424fd-c2eb-4817-8275-45084e5f28ea",
-                              "type": "LVGLSliderWidget",
-                              "left": 150,
-                              "top": 5,
-                              "width": 140,
-                              "height": 10,
-                              "customInputs": [],
-                              "customOutputs": [],
-                              "style": {
-                                "objID": "c6cae154-7402-4c10-d787-5cf098f4fdc3",
-                                "useStyle": "default",
-                                "conditionalStyles": [],
-                                "childStyles": []
-                              },
-                              "timeline": [],
-                              "eventHandlers": [
-                                {
-                                  "objID": "90fd824a-66e0-4ca9-8795-c3ce00fdccbe",
-                                  "eventName": "RELEASED",
-                                  "handlerType": "action",
-                                  "action": "bl_released",
-                                  "userData": 0
-                                },
-                                {
-                                  "objID": "eeb3006d-761d-4bf1-fa2e-7b16932078f4",
-                                  "eventName": "VALUE_CHANGED",
-                                  "handlerType": "action",
-                                  "action": "bl_changed",
-                                  "userData": 0
-                                }
-                              ],
-                              "identifier": "bl",
-                              "leftUnit": "px",
-                              "topUnit": "px",
-                              "widthUnit": "px",
-                              "heightUnit": "px",
-                              "children": [
-                                {
-                                  "objID": "33ec6404-ffd3-4bc8-fc4b-44bad4e6da5e",
-                                  "type": "LVGLLabelWidget",
-                                  "left": 547,
-                                  "top": 32,
-                                  "width": 110,
-                                  "height": 22,
-                                  "customInputs": [],
-                                  "customOutputs": [],
-                                  "style": {
-                                    "objID": "5b02cb89-5963-48c8-896e-4a38ea5fbd4f",
-                                    "useStyle": "default",
-                                    "conditionalStyles": [],
-                                    "childStyles": []
-                                  },
-                                  "timeline": [],
-                                  "eventHandlers": [],
-                                  "identifier": "textlabel",
-                                  "leftUnit": "px",
-                                  "topUnit": "px",
-                                  "widthUnit": "content",
-                                  "heightUnit": "content",
-                                  "children": [],
-                                  "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
-                                  "hiddenFlagType": "literal",
-                                  "clickableFlagType": "literal",
-                                  "flagScrollbarMode": "",
-                                  "flagScrollDirection": "",
-                                  "scrollSnapX": "",
-                                  "scrollSnapY": "",
-                                  "checkedStateType": "literal",
-                                  "disabledStateType": "literal",
-                                  "states": "",
-                                  "localStyles": {
-                                    "objID": "ae66749c-9efa-43cd-cefc-056fd4e6bdb5",
-                                    "definition": {
-                                      "MAIN": {
-                                        "DEFAULT": {
-                                          "text_font": "ubuntu 20"
-                                        }
-                                      }
-                                    }
-                                  },
-                                  "group": "",
-                                  "groupIndex": 0,
-                                  "text": "ТестЩщастье",
-                                  "textType": "literal",
-                                  "longMode": "WRAP",
-                                  "recolor": false
-                                }
-                              ],
-                              "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_ON_FOCUS|SCROLL_WITH_ARROW|SNAPPABLE",
-                              "hiddenFlagType": "literal",
-                              "clickableFlag": true,
-                              "clickableFlagType": "literal",
-                              "flagScrollbarMode": "",
-                              "flagScrollDirection": "",
-                              "scrollSnapX": "",
-                              "scrollSnapY": "",
-                              "checkedStateType": "literal",
-                              "disabledStateType": "literal",
-                              "states": "",
-                              "useStyle": "",
-                              "localStyles": {
-                                "objID": "5f3a3e16-a7b3-4767-868e-87e5f0dfbd0b"
-                              },
-                              "group": "",
-                              "groupIndex": 0,
-                              "min": 50,
-                              "minType": "literal",
-                              "max": 253,
-                              "maxType": "literal",
-                              "mode": "NORMAL",
-                              "value": 200,
-                              "valueType": "literal",
-                              "previewValue": 25,
-                              "valueLeft": 50,
-                              "valueLeftType": "literal",
-                              "previewValueLeft": 0,
-                              "enableAnimation": true
-                            },
-                            {
-                              "objID": "49449edf-de6b-4a19-fca0-006cf8dbe13c",
+                              "objID": "40d2df1f-f002-4c63-c6fe-c693c0a70d4f",
                               "type": "LVGLLabelWidget",
                               "left": 0,
                               "top": 0,
-                              "width": 140,
+                              "width": 190,
                               "height": 22,
                               "customInputs": [],
                               "customOutputs": [],
                               "style": {
-                                "objID": "68c81890-324e-4a26-dd2d-e5065c1f4adb",
+                                "objID": "316dfd5e-3a1f-4d16-be6f-927d4e1395df",
                                 "useStyle": "default",
                                 "conditionalStyles": [],
                                 "childStyles": []
                               },
+                              "hiddenInEditor": false,
                               "timeline": [],
                               "eventHandlers": [],
+                              "identifier": "update",
                               "leftUnit": "px",
                               "topUnit": "px",
                               "widthUnit": "content",
@@ -13094,17 +13389,24 @@
                               "disabledStateType": "literal",
                               "states": "",
                               "localStyles": {
-                                "objID": "c2e46ba2-c443-4f94-c98a-9872500d3370"
+                                "objID": "de929fea-bbb3-47d7-b8f7-1dbee325caf5",
+                                "definition": {
+                                  "MAIN": {
+                                    "DEFAULT": {
+                                      "align": "CENTER"
+                                    }
+                                  }
+                                }
                               },
                               "group": "",
                               "groupIndex": 0,
-                              "text": "Яркость экрана",
+                              "text": "Обновление прошивки",
                               "textType": "literal",
                               "longMode": "WRAP",
                               "recolor": false
                             }
                           ],
-                          "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
+                          "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_ON_FOCUS|SCROLL_WITH_ARROW|SNAPPABLE",
                           "hiddenFlagType": "literal",
                           "clickableFlag": true,
                           "clickableFlagType": "literal",
@@ -13116,7 +13418,14 @@
                           "disabledStateType": "literal",
                           "states": "",
                           "localStyles": {
-                            "objID": "d9250446-bd78-4a07-9987-1f0589630ad4"
+                            "objID": "7f8563a5-7ecb-4415-e9fd-4539b59bf07f",
+                            "definition": {
+                              "MAIN": {
+                                "DEFAULT": {
+                                  "radius": 8
+                                }
+                              }
+                            }
                           },
                           "group": "",
                           "groupIndex": 0
@@ -13170,6 +13479,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "identifier": "settings_kb",
@@ -13219,6 +13529,7 @@
                         "conditionalStyles": [],
                         "childStyles": []
                       },
+                      "hiddenInEditor": false,
                       "timeline": [],
                       "eventHandlers": [],
                       "leftUnit": "px",
@@ -13241,6 +13552,7 @@
                             "conditionalStyles": [],
                             "childStyles": []
                           },
+                          "hiddenInEditor": false,
                           "timeline": [],
                           "eventHandlers": [],
                           "leftUnit": "px",
@@ -13387,6 +13699,455 @@
       "top": 0,
       "width": 800,
       "height": 480,
+      "createAtStart": true,
+      "deleteOnScreenUnload": false
+    },
+    {
+      "objID": "2762dab2-c406-4e22-afdc-261aec3fcbb0",
+      "components": [
+        {
+          "objID": "3cd5ee7a-096b-4254-be70-e863d3ff3017",
+          "type": "LVGLScreenWidget",
+          "left": 0,
+          "top": 0,
+          "width": 800,
+          "height": 480,
+          "customInputs": [],
+          "customOutputs": [],
+          "style": {
+            "objID": "0820481f-7eaf-4866-9d0e-1684ce9cbab2",
+            "useStyle": "default",
+            "conditionalStyles": [],
+            "childStyles": []
+          },
+          "timeline": [],
+          "eventHandlers": [],
+          "leftUnit": "px",
+          "topUnit": "px",
+          "widthUnit": "px",
+          "heightUnit": "px",
+          "children": [
+            {
+              "objID": "937e3425-0499-4b84-c358-f1fb9a54ed22",
+              "type": "LVGLPanelWidget",
+              "left": 0,
+              "top": 0,
+              "width": 800,
+              "height": 480,
+              "customInputs": [],
+              "customOutputs": [],
+              "style": {
+                "objID": "f9d964dc-5c6a-43dd-febb-820f25e83560",
+                "useStyle": "default",
+                "conditionalStyles": [],
+                "childStyles": []
+              },
+              "timeline": [],
+              "eventHandlers": [],
+              "leftUnit": "px",
+              "topUnit": "px",
+              "widthUnit": "px",
+              "heightUnit": "px",
+              "children": [
+                {
+                  "objID": "2795da5b-f198-4759-82c2-3324e63ac529",
+                  "type": "LVGLContainerWidget",
+                  "left": -22,
+                  "top": -22,
+                  "width": 800,
+                  "height": 480,
+                  "customInputs": [],
+                  "customOutputs": [],
+                  "style": {
+                    "objID": "223851ea-051f-4a0f-ec7c-b6d3e0331deb",
+                    "useStyle": "default",
+                    "conditionalStyles": [],
+                    "childStyles": []
+                  },
+                  "hiddenInEditor": false,
+                  "timeline": [],
+                  "eventHandlers": [],
+                  "leftUnit": "px",
+                  "topUnit": "px",
+                  "widthUnit": "px",
+                  "heightUnit": "px",
+                  "children": [
+                    {
+                      "objID": "b82da56f-e0f6-456f-fe3b-9897102f339c",
+                      "type": "LVGLContainerWidget",
+                      "left": 0,
+                      "top": 0,
+                      "width": 400,
+                      "height": 480,
+                      "customInputs": [],
+                      "customOutputs": [],
+                      "style": {
+                        "objID": "b7cbd63c-7d78-4709-ec59-86e26980d708",
+                        "useStyle": "default",
+                        "conditionalStyles": [],
+                        "childStyles": []
+                      },
+                      "hiddenInEditor": false,
+                      "timeline": [],
+                      "eventHandlers": [],
+                      "leftUnit": "px",
+                      "topUnit": "px",
+                      "widthUnit": "px",
+                      "heightUnit": "px",
+                      "children": [
+                        {
+                          "objID": "1f93ca05-da25-4b5f-fe72-3b1f975f3e82",
+                          "type": "LVGLTextareaWidget",
+                          "left": 3,
+                          "top": 11,
+                          "width": 369,
+                          "height": 222,
+                          "customInputs": [],
+                          "customOutputs": [],
+                          "style": {
+                            "objID": "17a21832-4d74-4f8e-8f16-227b6bdde3b1",
+                            "useStyle": "default",
+                            "conditionalStyles": [],
+                            "childStyles": []
+                          },
+                          "hiddenInEditor": false,
+                          "timeline": [],
+                          "eventHandlers": [],
+                          "leftUnit": "px",
+                          "topUnit": "px",
+                          "widthUnit": "px",
+                          "heightUnit": "px",
+                          "children": [],
+                          "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_ON_FOCUS|SNAPPABLE",
+                          "hiddenFlagType": "literal",
+                          "clickableFlag": true,
+                          "clickableFlagType": "literal",
+                          "flagScrollbarMode": "",
+                          "flagScrollDirection": "",
+                          "scrollSnapX": "",
+                          "scrollSnapY": "",
+                          "checkedStateType": "literal",
+                          "disabledStateType": "literal",
+                          "states": "",
+                          "localStyles": {
+                            "objID": "0fa6236c-8d58-4744-c55d-a4bb99d50de5",
+                            "definition": {
+                              "MAIN": {
+                                "DEFAULT": {
+                                  "bg_color": "#000000",
+                                  "border_color": "#000000",
+                                  "border_opa": 255
+                                }
+                              }
+                            }
+                          },
+                          "group": "",
+                          "groupIndex": 0,
+                          "text": "WiFi сеть  (SSID): Pump_controller\nПароль Wi-Fi сети: 80100000",
+                          "textType": "literal",
+                          "placeholder": "",
+                          "oneLineMode": false,
+                          "passwordMode": false,
+                          "acceptedCharacters": "",
+                          "maxTextLength": 128
+                        },
+                        {
+                          "objID": "fc38a9b1-6d7c-4534-dfcb-0171c5e145cc",
+                          "type": "LVGLTextareaWidget",
+                          "left": 3,
+                          "top": 257,
+                          "width": 369,
+                          "height": 171,
+                          "customInputs": [],
+                          "customOutputs": [],
+                          "style": {
+                            "objID": "a10f9c1d-c91e-45af-c954-fffa8e754715",
+                            "useStyle": "default",
+                            "conditionalStyles": [],
+                            "childStyles": []
+                          },
+                          "hiddenInEditor": false,
+                          "timeline": [],
+                          "eventHandlers": [],
+                          "leftUnit": "px",
+                          "topUnit": "px",
+                          "widthUnit": "px",
+                          "heightUnit": "px",
+                          "children": [],
+                          "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_ON_FOCUS|SNAPPABLE",
+                          "hiddenFlagType": "literal",
+                          "clickableFlag": true,
+                          "clickableFlagType": "literal",
+                          "flagScrollbarMode": "",
+                          "flagScrollDirection": "",
+                          "scrollSnapX": "",
+                          "scrollSnapY": "",
+                          "checkedStateType": "literal",
+                          "disabledStateType": "literal",
+                          "states": "",
+                          "localStyles": {
+                            "objID": "f18b1b1e-acd3-460a-9290-651fb2c0d7b8",
+                            "definition": {
+                              "MAIN": {
+                                "DEFAULT": {
+                                  "bg_color": "#000000",
+                                  "border_color": "#000000",
+                                  "border_opa": 255
+                                }
+                              }
+                            }
+                          },
+                          "group": "",
+                          "groupIndex": 0,
+                          "text": "Перейти на страницу:\nhttp://192.168.4.1/update",
+                          "textType": "literal",
+                          "placeholder": "",
+                          "oneLineMode": false,
+                          "passwordMode": false,
+                          "acceptedCharacters": "",
+                          "maxTextLength": 128
+                        }
+                      ],
+                      "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
+                      "hiddenFlagType": "literal",
+                      "clickableFlag": true,
+                      "clickableFlagType": "literal",
+                      "flagScrollbarMode": "",
+                      "flagScrollDirection": "",
+                      "scrollSnapX": "",
+                      "scrollSnapY": "",
+                      "checkedStateType": "literal",
+                      "disabledStateType": "literal",
+                      "states": "",
+                      "localStyles": {
+                        "objID": "877608bc-4580-4e26-e35c-0d1ed299cd3b",
+                        "definition": {
+                          "MAIN": {
+                            "DEFAULT": {
+                              "bg_color": "#000000"
+                            }
+                          }
+                        }
+                      },
+                      "group": "",
+                      "groupIndex": 0
+                    },
+                    {
+                      "objID": "94a82e55-43ca-4006-972e-a9eafce5bf96",
+                      "type": "LVGLContainerWidget",
+                      "left": 400,
+                      "top": 0,
+                      "width": 400,
+                      "height": 480,
+                      "customInputs": [],
+                      "customOutputs": [],
+                      "style": {
+                        "objID": "253f0dd8-6f2c-4f33-f196-e0f0e9528e41",
+                        "useStyle": "default",
+                        "conditionalStyles": [],
+                        "childStyles": []
+                      },
+                      "hiddenInEditor": false,
+                      "timeline": [],
+                      "eventHandlers": [],
+                      "leftUnit": "px",
+                      "topUnit": "px",
+                      "widthUnit": "px",
+                      "heightUnit": "px",
+                      "children": [
+                        {
+                          "objID": "d9e5f9b3-b636-40ff-bf9d-6e5b9c41e3b8",
+                          "type": "LVGLQRCodeWidget",
+                          "left": 2435,
+                          "top": -996,
+                          "width": 211,
+                          "height": 213,
+                          "customInputs": [],
+                          "customOutputs": [],
+                          "style": {
+                            "objID": "1a2aa003-2c52-4fee-edff-13532e30fca2",
+                            "useStyle": "default",
+                            "conditionalStyles": [],
+                            "childStyles": []
+                          },
+                          "hiddenInEditor": false,
+                          "timeline": [],
+                          "eventHandlers": [],
+                          "leftUnit": "px",
+                          "topUnit": "px",
+                          "widthUnit": "px",
+                          "heightUnit": "px",
+                          "children": [],
+                          "widgetFlags": "CLICK_FOCUSABLE|SCROLLABLE|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_CHAIN|SCROLL_WITH_ARROW|SNAPPABLE|PRESS_LOCK|GESTURE_BUBBLE|ADV_HITTEST",
+                          "hiddenFlagType": "literal",
+                          "clickableFlag": true,
+                          "clickableFlagType": "literal",
+                          "flagScrollbarMode": "",
+                          "flagScrollDirection": "",
+                          "scrollSnapX": "",
+                          "scrollSnapY": "",
+                          "checkedStateType": "literal",
+                          "disabledStateType": "literal",
+                          "states": "",
+                          "localStyles": {
+                            "objID": "dd01189f-be49-4507-9b28-1c56920d068e"
+                          },
+                          "group": "",
+                          "groupIndex": 0,
+                          "text": "WIFI:S:Pump_controller;T:WPA2;P:80100000;;",
+                          "darkColor": "#20429F",
+                          "lightColor": "#E2F5FE"
+                        },
+                        {
+                          "objID": "d03e24ce-11bc-4c51-8695-3a499d359478",
+                          "type": "LVGLQRCodeWidget",
+                          "left": -11,
+                          "top": 72,
+                          "width": 211,
+                          "height": 209,
+                          "customInputs": [],
+                          "customOutputs": [],
+                          "style": {
+                            "objID": "cb5d6a2d-46f8-4f91-8a65-6d63f5098c96",
+                            "useStyle": "default",
+                            "conditionalStyles": [],
+                            "childStyles": []
+                          },
+                          "hiddenInEditor": false,
+                          "timeline": [],
+                          "eventHandlers": [],
+                          "leftUnit": "px",
+                          "topUnit": "px",
+                          "widthUnit": "px",
+                          "heightUnit": "px",
+                          "children": [],
+                          "widgetFlags": "CLICK_FOCUSABLE|SCROLLABLE|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_CHAIN|SCROLL_WITH_ARROW|SNAPPABLE|PRESS_LOCK|GESTURE_BUBBLE|ADV_HITTEST",
+                          "hiddenFlagType": "literal",
+                          "clickableFlag": true,
+                          "clickableFlagType": "literal",
+                          "flagScrollbarMode": "",
+                          "flagScrollDirection": "",
+                          "scrollSnapX": "",
+                          "scrollSnapY": "",
+                          "checkedStateType": "literal",
+                          "disabledStateType": "literal",
+                          "states": "",
+                          "localStyles": {
+                            "objID": "3d2bdcad-58de-4d21-e3eb-83b730c00801"
+                          },
+                          "group": "",
+                          "groupIndex": 0,
+                          "text": "http://192.168.4.1/update",
+                          "darkColor": "#20429F",
+                          "lightColor": "#E2F5FE"
+                        }
+                      ],
+                      "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
+                      "hiddenFlagType": "literal",
+                      "clickableFlag": true,
+                      "clickableFlagType": "literal",
+                      "flagScrollbarMode": "",
+                      "flagScrollDirection": "",
+                      "scrollSnapX": "",
+                      "scrollSnapY": "",
+                      "checkedStateType": "literal",
+                      "disabledStateType": "literal",
+                      "states": "",
+                      "localStyles": {
+                        "objID": "e414a52a-35e6-478c-98e0-ac05a7253ab9",
+                        "definition": {
+                          "MAIN": {
+                            "DEFAULT": {
+                              "layout": "FLEX",
+                              "flex_flow": "COLUMN",
+                              "flex_main_place": "SPACE_AROUND",
+                              "flex_track_place": "END",
+                              "pad_right": 10,
+                              "bg_color": "#000000"
+                            }
+                          }
+                        }
+                      },
+                      "group": "",
+                      "groupIndex": 0
+                    }
+                  ],
+                  "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
+                  "hiddenFlagType": "literal",
+                  "clickableFlag": true,
+                  "clickableFlagType": "literal",
+                  "flagScrollbarMode": "",
+                  "flagScrollDirection": "",
+                  "scrollSnapX": "",
+                  "scrollSnapY": "",
+                  "checkedStateType": "literal",
+                  "disabledStateType": "literal",
+                  "states": "",
+                  "localStyles": {
+                    "objID": "2f5e733f-3987-417d-c516-94f04386d888",
+                    "definition": {
+                      "MAIN": {
+                        "DEFAULT": {
+                          "layout": "NONE",
+                          "grid_row_dsc_array": "",
+                          "grid_column_dsc_array": "",
+                          "bg_color": "#000000"
+                        }
+                      }
+                    }
+                  },
+                  "group": "",
+                  "groupIndex": 0
+                }
+              ],
+              "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
+              "hiddenFlagType": "literal",
+              "clickableFlag": true,
+              "clickableFlagType": "literal",
+              "flagScrollbarMode": "",
+              "flagScrollDirection": "",
+              "scrollSnapX": "",
+              "scrollSnapY": "",
+              "checkedStateType": "literal",
+              "disabledStateType": "literal",
+              "states": "",
+              "localStyles": {
+                "objID": "c33addca-08fb-431a-b236-29f1dc42ac26",
+                "definition": {
+                  "MAIN": {
+                    "DEFAULT": {
+                      "bg_color": "#000000",
+                      "border_color": "#000000"
+                    }
+                  }
+                }
+              },
+              "group": "",
+              "groupIndex": 0
+            }
+          ],
+          "widgetFlags": "CLICKABLE|PRESS_LOCK|CLICK_FOCUSABLE|GESTURE_BUBBLE|SNAPPABLE|SCROLLABLE|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER",
+          "hiddenFlagType": "literal",
+          "clickableFlag": true,
+          "clickableFlagType": "literal",
+          "checkedStateType": "literal",
+          "disabledStateType": "literal",
+          "states": "",
+          "localStyles": {
+            "objID": "5cad6bfd-1756-48fe-ba86-d153f10f6460"
+          },
+          "groupIndex": 0
+        }
+      ],
+      "connectionLines": [],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "page_update",
+      "left": 0,
+      "top": 0,
+      "width": 800,
+      "height": 480,
+      "isUsedAsUserWidget": false,
       "createAtStart": true,
       "deleteOnScreenUnload": false
     }
