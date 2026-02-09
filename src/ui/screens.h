@@ -7,10 +7,20 @@
 extern "C" {
 #endif
 
+// Screens
+
+enum ScreensEnum {
+    _SCREEN_ID_FIRST = 1,
+    SCREEN_ID_MAIN = 1,
+    SCREEN_ID_PAGE_UPDATE = 2,
+    _SCREEN_ID_LAST = 2
+};
+
 typedef struct _objects_t {
     lv_obj_t *main;
     lv_obj_t *page_update;
     lv_obj_t *tabview;
+    lv_obj_t *tab_main;
     lv_obj_t *prog_bar;
     lv_obj_t *bar_label;
     lv_obj_t *spinner;
@@ -20,44 +30,46 @@ typedef struct _objects_t {
     lv_obj_t *pump;
     lv_obj_t *pipe;
     lv_obj_t *osmos;
-    lv_obj_t *obj1;
+    lv_obj_t *bars_panel;
     lv_obj_t *bar_0;
-    lv_obj_t *obj2;
+    lv_obj_t *obj1;
     lv_obj_t *bar_1;
-    lv_obj_t *obj3;
+    lv_obj_t *obj2;
     lv_obj_t *bar_2;
-    lv_obj_t *obj4;
+    lv_obj_t *obj3;
     lv_obj_t *bar_3;
-    lv_obj_t *obj5;
+    lv_obj_t *obj4;
     lv_obj_t *bar_4;
-    lv_obj_t *obj6;
+    lv_obj_t *obj5;
     lv_obj_t *bar_5;
-    lv_obj_t *obj7;
+    lv_obj_t *obj6;
     lv_obj_t *bar_6;
-    lv_obj_t *obj8;
+    lv_obj_t *obj7;
     lv_obj_t *bar_7;
-    lv_obj_t *obj9;
+    lv_obj_t *obj8;
     lv_obj_t *bar_8;
-    lv_obj_t *obj10;
+    lv_obj_t *obj9;
     lv_obj_t *bar_9;
-    lv_obj_t *obj11;
+    lv_obj_t *obj10;
     lv_obj_t *bar_10;
-    lv_obj_t *obj12;
+    lv_obj_t *obj11;
     lv_obj_t *bar_11;
-    lv_obj_t *obj13;
+    lv_obj_t *obj12;
     lv_obj_t *bar_12;
-    lv_obj_t *obj14;
+    lv_obj_t *obj13;
     lv_obj_t *bar_13;
-    lv_obj_t *obj15;
+    lv_obj_t *obj14;
     lv_obj_t *bar_14;
-    lv_obj_t *obj16;
+    lv_obj_t *obj15;
     lv_obj_t *bar_15;
+    lv_obj_t *obj16;
     lv_obj_t *obj17;
-    lv_obj_t *obj18;
     lv_obj_t *k_dw_time;
     lv_obj_t *k_container;
-    lv_obj_t *obj19;
+    lv_obj_t *obj18;
     lv_obj_t *k_reset;
+    lv_obj_t *obj19;
+    lv_obj_t *tab_1;
     lv_obj_t *obj20;
     lv_obj_t *obj21;
     lv_obj_t *obj22;
@@ -75,10 +87,10 @@ typedef struct _objects_t {
     lv_obj_t *obj34;
     lv_obj_t *obj35;
     lv_obj_t *obj36;
-    lv_obj_t *obj37;
     lv_obj_t *zone13_1;
     lv_obj_t *zone14_1;
     lv_obj_t *zone16_1;
+    lv_obj_t *tab_2;
     lv_obj_t *zone1;
     lv_obj_t *d_1;
     lv_obj_t *c_1;
@@ -115,7 +127,6 @@ typedef struct _objects_t {
     lv_obj_t *zone12;
     lv_obj_t *d_12;
     lv_obj_t *c_12;
-    lv_obj_t *zone12_1;
     lv_obj_t *zone13;
     lv_obj_t *d_13;
     lv_obj_t *c_13;
@@ -128,22 +139,22 @@ typedef struct _objects_t {
     lv_obj_t *zone16;
     lv_obj_t *d_16;
     lv_obj_t *c_16;
+    lv_obj_t *obj37;
     lv_obj_t *obj38;
     lv_obj_t *obj39;
-    lv_obj_t *obj40;
     lv_obj_t *input_area;
     lv_obj_t *keyboard_1;
     lv_obj_t *input_area_1;
     lv_obj_t *keyboard;
-    lv_obj_t *settings;
-    lv_obj_t *obj41;
+    lv_obj_t *tab_settings;
+    lv_obj_t *obj40;
     lv_obj_t *debug;
     lv_obj_t *bl;
-    lv_obj_t *textlabel;
     lv_obj_t *bl_idle;
     lv_obj_t *pause;
     lv_obj_t *update;
     lv_obj_t *settings_kb;
+    lv_obj_t *obj41;
     lv_obj_t *obj42;
     lv_obj_t *obj43;
     lv_obj_t *obj44;
@@ -151,15 +162,9 @@ typedef struct _objects_t {
     lv_obj_t *obj46;
     lv_obj_t *obj47;
     lv_obj_t *obj48;
-    lv_obj_t *obj49;
 } objects_t;
 
 extern objects_t objects;
-
-enum ScreensEnum {
-    SCREEN_ID_MAIN = 1,
-    SCREEN_ID_PAGE_UPDATE = 2,
-};
 
 void create_screen_main();
 void delete_screen_main();
@@ -175,7 +180,6 @@ void tick_screen_by_id(enum ScreensEnum screenId);
 void tick_screen(int screen_index);
 
 void create_screens();
-
 
 #ifdef __cplusplus
 }

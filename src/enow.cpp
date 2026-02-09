@@ -58,27 +58,27 @@ void esp_now_setup()
 }
 
 
-void requestData(void *params)
-{
-  (void)params;
+// void requestData(void *params)
+// {
+//   (void)params;
 
-  uint8_t broadcastAddress[] = {0x68, 0x25, 0xDD, 0xFD, 0x24, 0x94};
-  // Set values to send
-  myData.a = 0;
-  myData.b = true;
+//   uint8_t broadcastAddress[] = {0x68, 0x25, 0xDD, 0xFD, 0x24, 0x94};
+//   // Set values to send
+//   myData.a = 0;
+//   myData.b = true;
 
-  esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
+//   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
 
-  if (result == ESP_OK)
-  {
-    Serial.println("Sent with success");
-  }
-  else
-  {
-    Serial.println("Error sending the data");
-  }
-  vTaskDelete(NULL);
-}
+//   if (result == ESP_OK)
+//   {
+//     Serial.println("Sent with success");
+//   }
+//   else
+//   {
+//     Serial.println("Error sending the data");
+//   }
+//   vTaskDelete(NULL);
+// }
 
 
 void send_command(int relay, bool state)

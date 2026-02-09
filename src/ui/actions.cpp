@@ -41,30 +41,13 @@ void update_zone_list()
 {
   for (int i = 0; i < PUPM_AMOUNT; i++)
   {
-    lv_obj_t *bar_list[PUPM_AMOUNT] = {
-        objects.bar_0,
-        objects.bar_1,
-        objects.bar_2,
-        objects.bar_3,
-        objects.bar_4,
-        objects.bar_5,
-        objects.bar_6,
-        objects.bar_7,
-        objects.bar_8,
-        objects.bar_9,
-        objects.bar_10,
-        objects.bar_11,
-        objects.bar_12,
-        objects.bar_13,
-        objects.bar_14,
-        objects.bar_15,
-    };
+    lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
     if (cw_time[i] != 0 || dw_time[i] != 0)
     {
-      lv_obj_remove_flag(bar_list[i], LV_OBJ_FLAG_HIDDEN);
+      lv_obj_remove_flag(bar, LV_OBJ_FLAG_HIDDEN);
     }
     else
-      lv_obj_add_flag(bar_list[i], LV_OBJ_FLAG_HIDDEN);
+      lv_obj_add_flag(bar, LV_OBJ_FLAG_HIDDEN);
   }
 }
 
@@ -218,6 +201,9 @@ void action_idle_time_unfocused(lv_event_t *e)
 
 void action_start(lv_event_t *e)
 {
+  lv_obj_add_flag(objects.tab_1, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_add_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_add_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_flag(objects.k_container, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_state(objects.start, LV_STATE_DISABLED);
@@ -230,18 +216,13 @@ void action_start(lv_event_t *e)
 
   now_pumping = true;
   programm_time = 0;
-  for (byte i = 0; i < PUPM_AMOUNT; i++)
-  {                           // пробегаем по всем помпам
-    pump_finished[i] = false; // сброс переменных политых зон(старт полива)
+  for (byte i = 0; i < PUPM_AMOUNT; i++) // считаем время программы
+  {                                      // пробегаем по всем помпам
+    pump_finished[i] = false;            // сброс переменных политых зон(старт полива)
     if (dw_time[i] > 0 || cw_time[i] > 0)
     {
       uint32_t dw_t = dw_time[i] * 1000 * minutes / 100 * k_dw_time;
       programm_time = programm_time + dw_t + (cw_time[i] + zone_pause) * 1000 * minutes;
-      // lcd.setCursor(i, 3);                          // заполняем индикатор заданий
-      // if (pumping_time[i] > 0)                      // если время полива зоны больше нуля
-      //   lcd.print("0");
-      // else
-      //   lcd.print("*");
     }
   }
   programm_time = programm_time - (zone_pause * 1000 * minutes);
@@ -255,29 +236,12 @@ void action_start(lv_event_t *e)
 
 void action_stop(lv_event_t *e)
 {
-  lv_obj_t *bar_list[PUPM_AMOUNT] = {
-      objects.bar_0,
-      objects.bar_1,
-      objects.bar_2,
-      objects.bar_3,
-      objects.bar_4,
-      objects.bar_5,
-      objects.bar_6,
-      objects.bar_7,
-      objects.bar_8,
-      objects.bar_9,
-      objects.bar_10,
-      objects.bar_11,
-      objects.bar_12,
-      objects.bar_13,
-      objects.bar_14,
-      objects.bar_15,
-  };
   pump_off();
   dry_water_on();
   for (byte i = 0; i < PUPM_AMOUNT; i++)
   {
-    lv_bar_set_value(bar_list[i], 0, LV_ANIM_ON);
+    lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
+    lv_bar_set_value(bar, 0, LV_ANIM_ON);
     pump_finished[i] = true;
     if (pump_state[i] == SWITCH_LEVEL)
     {
@@ -294,6 +258,9 @@ void action_stop(lv_event_t *e)
   lv_obj_add_state(objects.stop, LV_STATE_DISABLED);
   lv_obj_remove_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
   lv_obj_remove_flag(objects.k_container, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_remove_flag(objects.tab_1, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_remove_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_remove_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
   lv_obj_clear_state(objects.start, LV_STATE_DISABLED);
   lv_obj_add_flag(objects.spinner, LV_OBJ_FLAG_HIDDEN);
 }
