@@ -14,11 +14,7 @@ void setup()
   ui_init();
   fill_widgets();
   pump_setup();
-  // xTaskCreate(guiTask, "gui", 4096 * 4, NULL, 2, NULL);
-
-  //vTaskDelay(500);
-  //xTaskCreate(espnowTask, "espnowTask", 4096, NULL, 2, NULL);
-   esp_now_setup();
+  esp_now_setup();
 }
 
 void loop()

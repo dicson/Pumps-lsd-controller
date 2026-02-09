@@ -164,25 +164,6 @@ void update_bars()
     uint32_t prog_pass = millis() - start_time;
     if (lv_obj_has_flag(objects.stop, LV_OBJ_FLAG_HIDDEN))
         return;
-
-    lv_obj_t *bar_list[PUPM_AMOUNT] = {
-        objects.bar_0,
-        objects.bar_1,
-        objects.bar_2,
-        objects.bar_3,
-        objects.bar_4,
-        objects.bar_5,
-        objects.bar_6,
-        objects.bar_7,
-        objects.bar_8,
-        objects.bar_9,
-        objects.bar_10,
-        objects.bar_11,
-        objects.bar_12,
-        objects.bar_13,
-        objects.bar_14,
-        objects.bar_15,
-    };
     if (current_zone != 255)
     {
         uint32_t dw_t = dw_time[current_zone] * 1000 * minutes / 100 * k_dw_time;
@@ -192,7 +173,8 @@ void update_bars()
             time = time - zone_pause * 1000;
         }
         uint32_t time_pass = millis() - pump_timers[current_zone];
-        lv_bar_set_value(bar_list[current_zone], map(time_pass, 0, time, 0, 100), LV_ANIM_ON);
+        lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, current_zone);
+        lv_bar_set_value(bar, map(time_pass, 0, time, 0, 100), LV_ANIM_ON);
         int8_t H = floor((long)prog_pass / 3600 / 1000); // секунды в часы
         int8_t M = floor((prog_pass / 1000 - (long)H * 3600) / 60);
         int8_t S = prog_pass / 1000 - (long)H * 3600 - M * 60;
