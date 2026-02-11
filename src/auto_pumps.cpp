@@ -94,7 +94,7 @@ void periodTick()
         if (millis() - zoneTimer < zone_pause * 1000 * minutes)
             break;                             // если пауза не закончилась - выход из цикла
         if ((dw_time[i] > 0 || cw_time[i] > 0) // если грязная или чистая вода не ноль
-                                               // && cw_time[i] > 0 // если общее время полива зоны не ноль
+                                               // если время полива зоны не ноль
             && !pump_finished[i]               // если зона еще не поливалась
             && !now_pumping)                   // если никакая зона не включена
         {
@@ -161,9 +161,9 @@ void flowTick()
 
 void update_bars()
 {
-    uint32_t prog_pass = millis() - start_time;
     if (lv_obj_has_flag(objects.stop, LV_OBJ_FLAG_HIDDEN))
         return;
+    uint32_t prog_pass = millis() - start_time;
     if (current_zone != 255)
     {
         uint32_t dw_t = dw_time[current_zone] * 1000 * minutes / 100 * k_dw_time;

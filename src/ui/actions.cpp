@@ -307,34 +307,6 @@ void action_k_reset(lv_event_t *e)
 
 void action_tab_changed(lv_event_t *e)
 {
-
-  // for (int i = 0; i < PUPM_AMOUNT; i++)
-  // {
-  //   lv_obj_t *bar_list[PUPM_AMOUNT] = {
-  //       objects.bar_0,
-  //       objects.bar_1,
-  //       objects.bar_2,
-  //       objects.bar_3,
-  //       objects.bar_4,
-  //       objects.bar_5,
-  //       objects.bar_6,
-  //       objects.bar_7,
-  //       objects.bar_8,
-  //       objects.bar_9,
-  //       objects.bar_10,
-  //       objects.bar_11,
-  //       objects.bar_12,
-  //       objects.bar_13,
-  //       objects.bar_14,
-  //       objects.bar_15,
-  //   };
-  //   if (cw_time[i] != 0 || dw_time[i] != 0)
-  //   {
-  //     lv_obj_remove_flag(bar_list[i], LV_OBJ_FLAG_HIDDEN);
-  //   }
-  //   else
-  //     lv_obj_add_flag(bar_list[i], LV_OBJ_FLAG_HIDDEN);
-  // }
 }
 
 void action_update(lv_event_t *e)
