@@ -28,6 +28,7 @@ extern boolean pump_state[PUPM_AMOUNT];
 extern boolean now_pumping;
 extern lv_obj_t *bar_list[PUPM_AMOUNT];
 extern uint32_t k_dw_time;
+extern int current_zone;
 int dw_time_;
 int cw_time_;
 lv_obj_t *obj;
@@ -143,14 +144,6 @@ void action_input_done1(lv_event_t *e)
   settings.putBytes("cw_time", cw_time, PUPM_AMOUNT * 4);
   settings.end();
   update_zone_list();
-  // for (int i = 0; i < sizeof(dw_time) / sizeof(int); i++)
-  // {
-  //   Serial.print(dw_time[i]);
-  //   Serial.print(", ");
-  // }
-  // Serial.println(sizeof(dw_time));
-  // Serial.println("   ");
-  // Serial.println("\r\n");
 }
 
 void action_idle_time_focused(lv_event_t *e)
@@ -238,6 +231,7 @@ void action_stop(lv_event_t *e)
 {
   pump_off();
   dry_water_on();
+  zone_off(current_zone);
   for (byte i = 0; i < PUPM_AMOUNT; i++)
   {
     lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
@@ -246,9 +240,6 @@ void action_stop(lv_event_t *e)
     if (pump_state[i] == SWITCH_LEVEL)
     {
       pump_state[i] = !SWITCH_LEVEL;
-      Serial.print("stop ");
-      Serial.print(i + 1);
-      Serial.print("\n");
     }
   }
   now_pumping = false;

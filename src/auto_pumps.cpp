@@ -20,39 +20,37 @@ extern uint32_t programm_time;
 extern uint32_t start_time;
 extern uint32_t zoneTimer;
 extern uint32_t k_dw_time;
-
 extern int8_t thisH, thisM, thisS;
 extern boolean now_pumping;
 extern boolean dryState;
 extern int minutes;
 int current_zone = 255;
+uint32_t ping_timer;
 
 void zone_off(int i)
 {
     send_command(i, false);
-    Serial.print("выключить зону ");
-    Serial.print(i + 1);
+    Serial.printf("выключить зону %d", (i + 1));
     Serial.print("\r\n");
 }
 
 void zone_on(int i)
 {
     send_command(i, true);
-    Serial.print("включить зону ");
-    Serial.print(i + 1);
+    Serial.printf("включить зону %d", (i + 1));
     Serial.print("\r\n");
 }
 
 void pump_on()
 {
-    // send_command(0, true); //
+    send_command(15, true); //
     Serial.println("включить насос");
     lv_obj_remove_flag(objects.pump, LV_OBJ_FLAG_HIDDEN);
 }
 
 void pump_off()
 {
-    send_command(0, false);
+    send_command(15, false);
     Serial.println("выключить насос");
     lv_obj_add_flag(objects.pump, LV_OBJ_FLAG_HIDDEN);
 }
@@ -183,9 +181,21 @@ void update_bars()
     lv_bar_set_value(objects.prog_bar, prog_pass, LV_ANIM_OFF);
 }
 
+void send_ping()
+{
+    if (current_zone == 255 && lv_obj_has_flag(objects.relay_zone_led, LV_OBJ_FLAG_HIDDEN))
+    {
+        if (millis() - ping_timer < 1000)
+            return;
+        send_command(0, false);
+        ping_timer = millis();
+    }
+}
+
 void pump_loop()
 {
     periodTick();
     flowTick();
     update_bars();
+    send_ping();
 }

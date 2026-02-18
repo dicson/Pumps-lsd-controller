@@ -30,6 +30,8 @@ typedef struct _objects_t {
     lv_obj_t *pump;
     lv_obj_t *pipe;
     lv_obj_t *osmos;
+    lv_obj_t *relay_zone_led;
+    lv_obj_t *relay_water_led;
     lv_obj_t *bars_panel;
     lv_obj_t *bar_0;
     lv_obj_t *obj1;

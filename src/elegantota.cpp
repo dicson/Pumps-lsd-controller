@@ -44,7 +44,6 @@ void onOTAEnd(bool success)
 
 void ota_setup(void)
 {
-    Serial.println("setup");
     if (!WiFi.softAP(ssid, password))
     {
         Serial.print(".");
