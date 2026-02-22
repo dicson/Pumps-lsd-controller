@@ -265,7 +265,6 @@ void action_zone_selected(lv_event_t *e)
   pump_finished[zone_num] = false;
   if (lv_obj_has_flag(objects.prog_bar, LV_OBJ_FLAG_HIDDEN))
   {
-    lv_textarea_set_text(objects.log, "----- Старт -----\n");
     lv_obj_add_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
