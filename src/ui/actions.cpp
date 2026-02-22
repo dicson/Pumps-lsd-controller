@@ -243,6 +243,7 @@ void action_tab_changed(lv_event_t *e)
 void action_update(lv_event_t *e)
 {
   loadScreen(SCREEN_ID_PAGE_UPDATE);
+  lv_label_set_text(objects.version, VERSION);
   ota_setup();
 }
 

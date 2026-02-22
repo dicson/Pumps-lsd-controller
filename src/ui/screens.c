@@ -2908,6 +2908,14 @@ void create_screen_page_update() {
                                     lv_obj_set_style_border_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_border_opa(obj, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
                                 }
+                                {
+                                    // version
+                                    lv_obj_t *obj = lv_label_create(parent_obj);
+                                    objects.version = obj;
+                                    lv_obj_set_pos(obj, 15, 445);
+                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                    lv_label_set_text(obj, "Текущая версия прошивки 0,0");
+                                }
                             }
                         }
                         {
@@ -2970,6 +2978,7 @@ void delete_screen_page_update() {
     objects.obj38 = 0;
     objects.obj39 = 0;
     objects.obj40 = 0;
+    objects.version = 0;
     objects.obj41 = 0;
     objects.obj42 = 0;
     objects.obj43 = 0;

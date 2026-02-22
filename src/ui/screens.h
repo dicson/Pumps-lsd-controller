@@ -152,6 +152,7 @@ typedef struct _objects_t {
     lv_obj_t *obj38;
     lv_obj_t *obj39;
     lv_obj_t *obj40;
+    lv_obj_t *version;
     lv_obj_t *obj41;
     lv_obj_t *obj42;
     lv_obj_t *obj43;
