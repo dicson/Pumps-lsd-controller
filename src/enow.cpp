@@ -19,8 +19,8 @@ esp_now_peer_info_t peerInfo;
 // callback when data is sent
 void OnDataSent(const esp_now_recv_info_t *info, esp_now_send_status_t status)
 {
-  Serial.print("\r\nLast Packet Send Status:\t");
-  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+  // Serial.print("\r\nLast Packet Send Status:\t");
+  // Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
   if (status == ESP_NOW_SEND_SUCCESS)
   {
     lv_obj_remove_flag(objects.relay_zone_led, LV_OBJ_FLAG_HIDDEN);
@@ -66,7 +66,7 @@ void send_command(int relay, bool state)
 
   if (result == ESP_OK)
   {
-    Serial.println("Sent with success");
+    //Serial.println("Sent with success");
   }
   else
   {
