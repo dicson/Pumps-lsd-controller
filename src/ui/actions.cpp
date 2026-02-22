@@ -12,8 +12,7 @@
 #define RW_MODE false
 #define RO_MODE true
 #define GFX_BL 2
-#define SWITCH_LEVEL 0 // реле: 1 - высокого уровня (или мосфет), 0 - низкого
-// String myString;
+
 extern Preferences settings;
 extern int32_t GFX_BL_VALUE; // brightness
 extern int32_t GFX_BL_TIME;
@@ -169,6 +168,13 @@ void action_stop(lv_event_t *e)
   {
     lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
     lv_bar_set_value(bar, 0, LV_ANIM_ON);
+    lv_obj_t *zone_button = lv_obj_get_child(objects.tab_1, i);
+    if (!lv_obj_has_flag(zone_button, LV_OBJ_FLAG_CHECKABLE))
+    {
+      lv_obj_t *check_box = lv_obj_get_child(zone_button, 1);
+      lv_obj_add_flag(check_box, LV_OBJ_FLAG_CLICKABLE);
+      lv_obj_remove_state(check_box, LV_STATE_CHECKED);
+    }
     pump_finished[i] = true;
     if (pump_state[i] == SWITCH_LEVEL)
     {
@@ -187,6 +193,7 @@ void action_stop(lv_event_t *e)
   lv_obj_remove_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
   lv_obj_clear_state(objects.start, LV_STATE_DISABLED);
   lv_obj_add_flag(objects.spinner, LV_OBJ_FLAG_HIDDEN);
+  update_zone_list();
 }
 
 void save_k_dw_time()
@@ -241,10 +248,42 @@ void action_update(lv_event_t *e)
 
 void action_zone_selected(lv_event_t *e)
 {
-  lv_obj_t *check_box = lv_event_get_current_target_obj(e);
-  int32_t zone_num = lv_obj_get_index(check_box);
+  lv_obj_t *zone_button = lv_event_get_current_target_obj(e);
+  int32_t zone_num = lv_obj_get_index(zone_button);
+  lv_obj_remove_flag(lv_event_get_target_obj(e), LV_OBJ_FLAG_CLICKABLE);
   pump_finished[zone_num] = false;
-  Serial.println(zone_num);
+  if (lv_obj_has_flag(objects.prog_bar, LV_OBJ_FLAG_HIDDEN))
+  {
+    lv_obj_add_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(objects.k_container, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_state(objects.start, LV_STATE_DISABLED);
+    lv_obj_remove_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_clear_state(objects.stop, LV_STATE_DISABLED);
+    lv_obj_remove_flag(objects.spinner, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_remove_flag(objects.prog_bar, LV_OBJ_FLAG_HIDDEN);
+    zoneTimer = millis() - zone_pause * 1000 * minutes; // убираем паузу перед запуском полива
+    pump_on();
+    start_time = millis();
+  }
+  programm_time = 0;
+  for (byte i = 0; i < PUMP_AMOUNT; i++) // считаем время программы
+  {                                      // пробегаем по всем помпам
+    lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
+    if ((dw_time[i] > 0 || cw_time[i] > 0) && pump_finished[i] == false)
+    {
+      uint32_t dw_t = dw_time[i] * 1000 * minutes / 100 * k_dw_time;
+      programm_time = programm_time + dw_t + (cw_time[i] + zone_pause) * 1000 * minutes;
+      lv_obj_remove_flag(bar, LV_OBJ_FLAG_HIDDEN);
+    }
+    else
+      lv_obj_add_flag(bar, LV_OBJ_FLAG_HIDDEN);
+  }
+  programm_time = programm_time - (zone_pause * 1000 * minutes);
+  thisH = floor((long)programm_time / 3600 / 1000); // секунды в часы
+  thisM = floor((programm_time / 1000 - (long)thisH * 3600) / 60);
+  lv_bar_set_range(objects.prog_bar, 0, programm_time);
 }
 
 void action_zone_time_clicked(lv_event_t *e)
