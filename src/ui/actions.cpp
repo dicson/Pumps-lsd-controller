@@ -30,6 +30,7 @@ lv_obj_t *obj;
 uint32_t start_time;
 uint32_t programm_time;
 extern int minutes;
+extern bool show_log;
 int8_t thisH, thisM, thisS;
 
 void update_zone_list()
@@ -62,6 +63,14 @@ void action_debug(lv_event_t *e)
     minutes = 1;
   else
     minutes = 60;
+}
+
+void action_show_log(lv_event_t *e)
+{
+  show_log = lv_obj_has_state(objects.show_log, LV_STATE_CHECKED);
+  settings.begin("Settings", RW_MODE);
+  settings.putBool("show_log", show_log);
+  settings.end();
 }
 
 void action_bl_changed(lv_event_t *e)
@@ -126,6 +135,7 @@ void action_idle_time_unfocused(lv_event_t *e)
 
 void action_start(lv_event_t *e)
 {
+  lv_textarea_set_text(objects.log, "----- Старт -----\n");
   lv_obj_add_flag(objects.tab_1, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
@@ -255,6 +265,7 @@ void action_zone_selected(lv_event_t *e)
   pump_finished[zone_num] = false;
   if (lv_obj_has_flag(objects.prog_bar, LV_OBJ_FLAG_HIDDEN))
   {
+    lv_textarea_set_text(objects.log, "----- Старт -----\n");
     lv_obj_add_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
