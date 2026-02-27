@@ -148,7 +148,7 @@ void action_start(lv_event_t *e)
 
   zoneTimer = millis() - zone_pause * 1000 * minutes; // убираем паузу перед запуском полива
   pump_on();
-
+  update_log();
   now_pumping = true;
   programm_time = 0;
   for (byte i = 0; i < PUMP_AMOUNT; i++) // считаем время программы
@@ -171,9 +171,13 @@ void action_start(lv_event_t *e)
 
 void action_stop(lv_event_t *e)
 {
+  update_log();
   pump_off();
+  update_log();
   dry_water_on();
-  zone_off(current_zone);
+  update_log();
+  if (!pump_finished[current_zone])
+    zone_off(current_zone);
   for (byte i = 0; i < PUMP_AMOUNT; i++)
   {
     lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
@@ -265,6 +269,7 @@ void action_zone_selected(lv_event_t *e)
   pump_finished[zone_num] = false;
   if (lv_obj_has_flag(objects.prog_bar, LV_OBJ_FLAG_HIDDEN))
   {
+    lv_textarea_set_text(objects.log, "----- Старт -----\n");
     lv_obj_add_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(objects.start, LV_OBJ_FLAG_HIDDEN);

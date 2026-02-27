@@ -15,7 +15,7 @@ uint32_t zoneTimer;                 // таймер паузы
 boolean now_pumping = false;        // идет полив
 boolean dryState = true;            // какой клапан открыт. true - dry(грязная) false - чистая
 uint32_t k_dw_time = 100;           // коэффициент
-boolean show_log = false;           // вывод лога
+boolean show_log;                   // вывод лога
 int minutes = 60;                   // отладка
 extern void update_zone_list();
 
