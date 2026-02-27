@@ -15,6 +15,7 @@ uint32_t zoneTimer;                 // таймер паузы
 boolean now_pumping = false;        // идет полив
 boolean dryState = true;            // какой клапан открыт. true - dry(грязная) false - чистая
 uint32_t k_dw_time = 100;           // коэффициент
+boolean show_log;                   // вывод лога
 int minutes = 60;                   // отладка
 extern void update_zone_list();
 
@@ -38,6 +39,7 @@ void setup_settings()
         settings.putBytes("dw_time", dw_time, PUMP_AMOUNT * 4);
         uint32_t cw_time[PUMP_AMOUNT];
         settings.putBytes("cw_time", cw_time, PUMP_AMOUNT * 4);
+        settings.putBool("show_log", false);
 
         settings.putBool("nvsInit", true);
         settings.end();
@@ -48,6 +50,7 @@ void setup_settings()
     GFX_BL_VALUE = settings.getLong("GFX_BL_VALUE");
     GFX_BL_TIME = settings.getLong("GFX_BL_TIME");
     k_dw_time = settings.getLong("k_dw_time", 100);
+    show_log = settings.getBool("show_log");
     settings.getBytes("dw_time", dw_time, PUMP_AMOUNT * 4);
     settings.getBytes("cw_time", cw_time, PUMP_AMOUNT * 4);
     settings.end();
@@ -59,6 +62,7 @@ void fill_widgets()
     lv_textarea_set_text(objects.bl_idle, String(GFX_BL_TIME).c_str());
     lv_textarea_set_text(objects.pause, String(zone_pause).c_str());
     lv_label_set_text(objects.k_dw_time, String(k_dw_time).c_str());
+    lv_obj_set_state(objects.show_log, LV_STATE_CHECKED, show_log);
 
     for (int i = 0; i < PUMP_AMOUNT; i++)
     {
