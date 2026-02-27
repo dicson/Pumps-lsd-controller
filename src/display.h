@@ -32,9 +32,9 @@ Arduino_ESP32RGBPanel rgbpanel(
     14 /* R0 */, 21 /* R1 */, 47 /* R2 */, 48 /* R3 */, 45 /* R4 */,
     9 /* G0 */, 46 /* G1 */, 3 /* G2 */, 8 /* G3 */, 16 /* G4 */, 1 /* G5 */,
     15 /* B0 */, 7 /* B1 */, 6 /* B2 */, 5 /* B3 */, 4 /* B4 */,
-    0 /* hsync_polarity */, 20 /* hsync_front_porch */, 30 /* hsync_pulse_width */, 16 /* hsync_back_porch */,
+    0 /* hsync_polarity */, 210 /* hsync_front_porch */, 30 /* hsync_pulse_width */, 16 /* hsync_back_porch */,
     0 /* vsync_polarity */, 22 /* vsync_front_porch */, 13 /* vsync_pulse_width */, 10 /* vsync_back_porch */,
-    true /* pclk_active_neg */);
+    true /* pclk_active_neg */, 12500000 /* prefer_speed */);
 
 Arduino_RGB_Display gfx(800, 480, &rgbpanel, 0 /* rotation */, true);
 
@@ -105,7 +105,7 @@ void setup_display()
 #ifdef DIRECT_MODE
   bufSize = screenWidth * screenHeight;
 #else
-  bufSize = screenWidth * 240;
+  bufSize = screenWidth * 120;
 #endif
 
   disp_draw_buf = (lv_color_t *)malloc(bufSize * 2);
@@ -137,7 +137,7 @@ void setup_display()
 void loop_display()
 {
   lv_task_handler();
-  delay(5);
+  delay(2);
   if ((lv_display_get_inactive_time(disp) > GFX_BL_TIME * 1000) && (ledcRead(GFX_BL) != 0))
   {
     ledcWrite(GFX_BL, 0);
