@@ -72,8 +72,8 @@ void create_screen_main() {
                             lv_obj_set_pos(obj, 128, 359);
                             lv_obj_set_size(obj, 447, 51);
                             lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
+                            lv_obj_set_style_radius(obj, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
                             lv_obj_set_style_radius(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_obj_set_style_radius(obj, 4, LV_PART_INDICATOR | LV_STATE_DEFAULT);
                             {
                                 lv_obj_t *parent_obj = obj;
                                 {
@@ -2739,8 +2739,6 @@ void create_screen_main() {
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_label_set_text(obj, "Полив окончен");
                 }
-<<<<<<< HEAD
-=======
                 {
                     lv_obj_t *obj = lv_button_create(parent_obj);
                     lv_obj_set_pos(obj, 264, 100);
@@ -2756,7 +2754,6 @@ void create_screen_main() {
                         }
                     }
                 }
->>>>>>> 2
             }
         }
     }

@@ -5,7 +5,6 @@
 #include "enow.h"
 #include "constants.h"
 #include <freertos/queue.h>
-#include <freertos/queue.h>
 
 #define SWITCH_LEVEL 0 // реле: 1 - высокого уровня (или мосфет), 0 - низкого
 
@@ -23,12 +22,9 @@ extern int8_t thisH, thisM, thisS;
 extern boolean now_pumping;
 extern boolean dryState;
 extern bool show_log;
-extern bool show_log;
 extern int minutes;
 int current_zone = 255;
 uint32_t ping_timer;
-extern QueueHandle_t esp_now_queue;
-extern const char *Message;
 extern QueueHandle_t esp_now_queue;
 extern const char *Message;
 
