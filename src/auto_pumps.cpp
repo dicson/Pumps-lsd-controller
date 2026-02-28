@@ -27,72 +27,58 @@ int current_zone = 255;
 uint32_t ping_timer;
 extern QueueHandle_t esp_now_queue;
 extern const char *Message;
+void update_log();
+
+void MessageToLog(String Message)
+{
+    const char *text = Message.c_str();
+    xQueueSendFromISR(esp_now_queue, &text, NULL); // Send to queue from ISR
+    Serial.println(Message);
+    delay(10);
+    update_log();
+}
 
 void zone_off(int i)
 {
     send_command(i, false);
-    String Mess = "выключить зону " + String(i + 1);
-    const char *Message = Mess.c_str();
-    xQueueSendFromISR(esp_now_queue, &Message, NULL); // Send to queue from ISR
-
-    // xQueueSend(esp_now_queue, "&Message", 0); // Send to queue from ISR
-    // lv_textarea_add_text(objects.log, Message.c_str());
-    Serial.printf("выключить зону %d", (i + 1));
-    Serial.print("\r\n");
+    MessageToLog("выключить зону " + String(i + 1));
 }
 
 void zone_on(int i)
 {
     send_command(i, true);
-    String Mess = "включить зону " + String(i + 1);
-    const char *Message = Mess.c_str();
-    xQueueSendFromISR(esp_now_queue, &Message, NULL); // Send to queue from ISR
-    // lv_textarea_add_text(objects.log, Message.c_str());
-    Serial.printf("включить зону %d", (i + 1));
-    Serial.print("\r\n");
+    MessageToLog("включить  зону " + String(i + 1));
 }
 
 void pump_on()
 {
     send_command(PUMP_RELAY, true);
-    const char *Message = "включить насос";
-    xQueueSendFromISR(esp_now_queue, &Message, NULL); // Send to queue from ISR
-    // lv_textarea_add_text(objects.log, "включить насос\n");
-    Serial.println("включить насос");
+    MessageToLog("включить  насос ");
     lv_obj_remove_flag(objects.pump, LV_OBJ_FLAG_HIDDEN);
 }
 
 void pump_off()
 {
     send_command(PUMP_RELAY, false);
-    const char *Message = "выключить насос";
-    xQueueSendFromISR(esp_now_queue, &Message, NULL); // Send to queue from ISR
-    // lv_textarea_add_text(objects.log, "выключить насос\n");
-    Serial.println("выключить насос");
+    MessageToLog("выключить насос ");
     lv_obj_add_flag(objects.pump, LV_OBJ_FLAG_HIDDEN);
 }
 
 void dry_water_on()
 {
     send_command(WATER_RELAY, false);
-    const char *Message = "включить грязную воду";
-    xQueueSendFromISR(esp_now_queue, &Message, NULL); // Send to queue from ISR
-    // lv_textarea_add_text(objects.log, "включить грязную воду\n");
+    MessageToLog("выключить чистую воду");
     lv_obj_add_flag(objects.osmos, LV_OBJ_FLAG_HIDDEN);
     lv_obj_remove_flag(objects.pipe, LV_OBJ_FLAG_HIDDEN);
-    Serial.println("включить грязную воду"); //
-    dryState = true;                         // флаг грязной воды поднять
+    dryState = true; // флаг грязной воды поднять
 }
 
 void clear_water_on()
 {
     send_command(WATER_RELAY, true);
-    const char *Message = "включить чистую воду";
-    xQueueSendFromISR(esp_now_queue, &Message, NULL); // Send to queue from ISR
-    // lv_textarea_add_text(objects.log, "включить чистую воду\n");
+    MessageToLog("включить чистую воду");
     lv_obj_add_flag(objects.pipe, LV_OBJ_FLAG_HIDDEN);
     lv_obj_remove_flag(objects.osmos, LV_OBJ_FLAG_HIDDEN);
-    Serial.println("включить чистую воду");
     dryState = false;
 }
 
@@ -172,7 +158,7 @@ void flowTick()
                     break;                                                   //
                 if (n == PUMP_AMOUNT - 1)                                    // если нет не политых
                 {
-                    
+
                     action_stop(NULL);
                     // lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
                     // lv_msgbox_add_close_button(objects.message_box);
