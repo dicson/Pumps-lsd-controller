@@ -25,21 +25,8 @@ extern QueueHandle_t esp_now_queue;
 // callback when data is sent
 void OnDataSent(const esp_now_recv_info_t *info, esp_now_send_status_t status)
 {
-
-  // Serial.print("\r\nLast Packet Send Status:\t");
-  // Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
-  if (status == ESP_NOW_SEND_SUCCESS)
-  {
-    // lv_obj_remove_flag(objects.relay_zone_led, LV_OBJ_FLAG_HIDDEN);
-    const char *Message = "\r\n";
-    xQueueSendFromISR(esp_now_queue, &Message, NULL); // Send to queue from ISR
-  }
-  else
-  {
-    const char *Message = " - не выполнено\r\n";
-    xQueueSendFromISR(esp_now_queue, &Message, NULL); // Send to queue from ISR
-  }
-  
+  const char *Message = status == ESP_NOW_SEND_SUCCESS ? "\r\n" : " - не выполнено\r\n";
+  xQueueSendFromISR(esp_now_queue, &Message, NULL); // Send to queue from ISR
 }
 
 void esp_now_setup()

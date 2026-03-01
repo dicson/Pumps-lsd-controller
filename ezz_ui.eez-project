@@ -484,7 +484,7 @@
                           },
                           "INDICATOR": {
                             "DEFAULT": {
-                              "radius": 4
+                              "radius": 10
                             }
                           }
                         }
@@ -11733,6 +11733,7 @@
                       },
                       "timeline": [],
                       "eventHandlers": [],
+                      "identifier": "log_panel",
                       "leftUnit": "px",
                       "topUnit": "px",
                       "widthUnit": "px",

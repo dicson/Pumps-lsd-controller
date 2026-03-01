@@ -63,6 +63,10 @@ void fill_widgets()
     lv_textarea_set_text(objects.pause, String(zone_pause).c_str());
     lv_label_set_text(objects.k_dw_time, String(k_dw_time).c_str());
     lv_obj_set_state(objects.show_log, LV_STATE_CHECKED, show_log);
+    if (show_log)
+        lv_obj_remove_flag(objects.log, LV_OBJ_FLAG_HIDDEN);
+    else
+        lv_obj_add_flag(objects.log, LV_OBJ_FLAG_HIDDEN);
 
     for (int i = 0; i < PUMP_AMOUNT; i++)
     {
