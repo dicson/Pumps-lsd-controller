@@ -68,6 +68,11 @@ void action_debug(lv_event_t *e)
 void action_show_log(lv_event_t *e)
 {
   show_log = lv_obj_has_state(objects.show_log, LV_STATE_CHECKED);
+  if (show_log)
+    lv_obj_remove_flag(objects.log, LV_OBJ_FLAG_HIDDEN);
+  else
+    lv_obj_add_flag(objects.log, LV_OBJ_FLAG_HIDDEN);
+  lv_textarea_set_text(objects.log, "");
   settings.begin("Settings", RW_MODE);
   settings.putBool("show_log", show_log);
   settings.end();

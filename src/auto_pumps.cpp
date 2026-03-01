@@ -31,10 +31,12 @@ void update_log();
 
 void MessageToLog(String Message)
 {
+    Serial.println(Message);
+    if (!show_log)
+        return;
     const char *text = Message.c_str();
     xQueueSendFromISR(esp_now_queue, &text, NULL); // Send to queue from ISR
-    Serial.println(Message);
-    delay(10);
+    delay(5);
     update_log();
 }
 

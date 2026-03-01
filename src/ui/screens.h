@@ -148,18 +148,18 @@ typedef struct _objects_t {
     lv_obj_t *pause;
     lv_obj_t *update;
     lv_obj_t *settings_kb;
-    lv_obj_t *obj36;
+    lv_obj_t *log_panel;
     lv_obj_t *log;
     lv_obj_t *message_box;
+    lv_obj_t *obj36;
     lv_obj_t *obj37;
     lv_obj_t *obj38;
     lv_obj_t *obj39;
     lv_obj_t *obj40;
-    lv_obj_t *obj41;
     lv_obj_t *version;
+    lv_obj_t *obj41;
     lv_obj_t *obj42;
     lv_obj_t *obj43;
-    lv_obj_t *obj44;
 } objects_t;
 
 extern objects_t objects;
