@@ -36,7 +36,7 @@ void MessageToLog(String Message)
         return;
     const char *text = Message.c_str();
     xQueueSendFromISR(esp_now_queue, &text, NULL); // Send to queue from ISR
-    delay(5);
+    delay(3);
     update_log();
 }
 
