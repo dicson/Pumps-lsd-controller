@@ -190,7 +190,7 @@ void update_bars()
         int8_t H = floor((long)prog_pass / 3600 / 1000); // секунды в часы
         int8_t M = floor((prog_pass / 1000 - (long)H * 3600) / 60);
         int8_t S = prog_pass / 1000 - (long)H * 3600 - M * 60;
-        lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d", H, M, S, thisH, thisM);
+        lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d", H, M, S, thisH, thisM, thisS);
     }
     lv_bar_set_value(objects.prog_bar, prog_pass, LV_ANIM_OFF);
 }
