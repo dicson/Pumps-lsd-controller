@@ -21,6 +21,7 @@ typedef struct _objects_t {
     lv_obj_t *page_update;
     lv_obj_t *tabview;
     lv_obj_t *tab_main;
+    lv_obj_t *message_box;
     lv_obj_t *prog_bar;
     lv_obj_t *bar_label;
     lv_obj_t *spinner;
@@ -30,8 +31,6 @@ typedef struct _objects_t {
     lv_obj_t *pump;
     lv_obj_t *pipe;
     lv_obj_t *osmos;
-    lv_obj_t *relay_zone_led;
-    lv_obj_t *relay_water_led;
     lv_obj_t *bars_panel;
     lv_obj_t *bar_0;
     lv_obj_t *obj1;
@@ -150,7 +149,6 @@ typedef struct _objects_t {
     lv_obj_t *settings_kb;
     lv_obj_t *log_panel;
     lv_obj_t *log;
-    lv_obj_t *message_box;
     lv_obj_t *obj36;
     lv_obj_t *obj37;
     lv_obj_t *obj38;

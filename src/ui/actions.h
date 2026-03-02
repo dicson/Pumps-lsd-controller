@@ -28,6 +28,7 @@ extern void action_update(lv_event_t * e);
 extern void action_zone_selected(lv_event_t * e);
 extern void action_zone_time_clicked(lv_event_t * e);
 extern void action_show_log(lv_event_t * e);
+extern void action_reset(lv_event_t * e);
 
 #ifdef __cplusplus
 }

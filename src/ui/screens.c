@@ -66,6 +66,41 @@ void create_screen_main() {
                     {
                         lv_obj_t *parent_obj = obj;
                         {
+                            // message_box
+                            lv_obj_t *obj = lv_msgbox_create(parent_obj);
+                            objects.message_box = obj;
+                            lv_obj_set_pos(obj, 208, 183);
+                            lv_obj_set_size(obj, 344, 140);
+                            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
+                            lv_obj_set_style_align(obj, LV_ALIGN_DEFAULT, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_layout(obj, LV_LAYOUT_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            {
+                                lv_obj_t *parent_obj = obj;
+                                {
+                                    lv_obj_t *obj = lv_label_create(parent_obj);
+                                    lv_obj_set_pos(obj, 60, 33);
+                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                    lv_label_set_text(obj, "Связь с реле потеряна!");
+                                }
+                                {
+                                    lv_obj_t *obj = lv_button_create(parent_obj);
+                                    lv_obj_set_pos(obj, 90, 80);
+                                    lv_obj_set_size(obj, 160, 50);
+                                    lv_obj_add_event_cb(obj, action_reset, LV_EVENT_RELEASED, (void *)0);
+                                    {
+                                        lv_obj_t *parent_obj = obj;
+                                        {
+                                            lv_obj_t *obj = lv_label_create(parent_obj);
+                                            lv_obj_set_pos(obj, 0, 0);
+                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_label_set_text(obj, "Перезагрузка");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        {
                             // prog_bar
                             lv_obj_t *obj = lv_bar_create(parent_obj);
                             objects.prog_bar = obj;
@@ -73,6 +108,7 @@ void create_screen_main() {
                             lv_obj_set_size(obj, 447, 51);
                             lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
                             lv_obj_set_style_radius(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_text_color(obj, lv_color_hex(0xff2196f3), LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_radius(obj, 10, LV_PART_INDICATOR | LV_STATE_DEFAULT);
                             {
                                 lv_obj_t *parent_obj = obj;
@@ -80,10 +116,10 @@ void create_screen_main() {
                                     // bar_label
                                     lv_obj_t *obj = lv_label_create(parent_obj);
                                     objects.bar_label = obj;
-                                    lv_obj_set_pos(obj, 169, 14);
+                                    lv_obj_set_pos(obj, 153, 16);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_text_color(obj, lv_color_hex(0xffeceff0), LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "1.11 / 1.11");
+                                    lv_label_set_text(obj, "");
                                 }
                             }
                         }
@@ -159,12 +195,12 @@ void create_screen_main() {
                             lv_obj_t *obj = lv_obj_create(parent_obj);
                             objects.obj0 = obj;
                             lv_obj_set_pos(obj, 586, -20);
-                            lv_obj_set_size(obj, 184, 166);
+                            lv_obj_set_size(obj, 184, 125);
                             lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
                             add_style_1style(obj);
                             lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_COLUMN, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_START, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -277,78 +313,6 @@ void create_screen_main() {
                                             lv_led_set_color(obj, lv_color_hex(0xff449dda));
                                             lv_led_set_brightness(obj, 200);
                                             lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
-                                        }
-                                    }
-                                }
-                                {
-                                    lv_obj_t *obj = lv_obj_create(parent_obj);
-                                    lv_obj_set_pos(obj, 593, -4);
-                                    lv_obj_set_size(obj, 170, 29);
-                                    lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
-                                    lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_ROW, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_top(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_left(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_right(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_bottom(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    {
-                                        lv_obj_t *parent_obj = obj;
-                                        {
-                                            lv_obj_t *obj = lv_label_create(parent_obj);
-                                            lv_obj_set_pos(obj, 26, 13);
-                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                            lv_label_set_text(obj, "Реле зон");
-                                        }
-                                        {
-                                            // relay_zone_led
-                                            lv_obj_t *obj = lv_led_create(parent_obj);
-                                            objects.relay_zone_led = obj;
-                                            lv_obj_set_pos(obj, 149, 8);
-                                            lv_obj_set_size(obj, 23, 22);
-                                            lv_led_set_color(obj, lv_color_hex(0xff00ff00));
-                                            lv_led_set_brightness(obj, 200);
-                                            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
-                                            lv_obj_set_style_shadow_width(obj, 12, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                        }
-                                    }
-                                }
-                                {
-                                    lv_obj_t *obj = lv_obj_create(parent_obj);
-                                    lv_obj_set_pos(obj, 593, -4);
-                                    lv_obj_set_size(obj, 170, 29);
-                                    lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
-                                    lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_ROW, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_top(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_left(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_right(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_bottom(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    {
-                                        lv_obj_t *parent_obj = obj;
-                                        {
-                                            lv_obj_t *obj = lv_label_create(parent_obj);
-                                            lv_obj_set_pos(obj, 26, 13);
-                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                            lv_label_set_text(obj, "Реле насоса");
-                                        }
-                                        {
-                                            // relay_water_led
-                                            lv_obj_t *obj = lv_led_create(parent_obj);
-                                            objects.relay_water_led = obj;
-                                            lv_obj_set_pos(obj, 149, 8);
-                                            lv_obj_set_size(obj, 23, 22);
-                                            lv_led_set_color(obj, lv_color_hex(0xff00ff00));
-                                            lv_led_set_brightness(obj, 200);
-                                            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
-                                            lv_obj_set_style_shadow_width(obj, 12, LV_PART_MAIN | LV_STATE_DEFAULT);
                                         }
                                     }
                                 }
@@ -2723,40 +2687,6 @@ void create_screen_main() {
                 }
             }
         }
-        {
-            // message_box
-            lv_obj_t *obj = lv_msgbox_create(parent_obj);
-            objects.message_box = obj;
-            lv_obj_set_pos(obj, 208, 183);
-            lv_obj_set_size(obj, 344, 140);
-            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
-            lv_obj_set_style_align(obj, LV_ALIGN_DEFAULT, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_layout(obj, LV_LAYOUT_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
-            {
-                lv_obj_t *parent_obj = obj;
-                {
-                    lv_obj_t *obj = lv_label_create(parent_obj);
-                    lv_obj_set_pos(obj, 105, 51);
-                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "Полив окончен");
-                }
-                {
-                    lv_obj_t *obj = lv_button_create(parent_obj);
-                    lv_obj_set_pos(obj, 264, 100);
-                    lv_obj_set_size(obj, 78, 35);
-                    {
-                        lv_obj_t *parent_obj = obj;
-                        {
-                            lv_obj_t *obj = lv_label_create(parent_obj);
-                            lv_obj_set_pos(obj, 0, 0);
-                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_label_set_text(obj, "ok");
-                        }
-                    }
-                }
-            }
-        }
     }
     lv_keyboard_set_textarea(objects.keyboard, objects.input_area);
     
@@ -2768,6 +2698,7 @@ void delete_screen_main() {
     objects.main = 0;
     objects.tabview = 0;
     objects.tab_main = 0;
+    objects.message_box = 0;
     objects.prog_bar = 0;
     objects.bar_label = 0;
     objects.spinner = 0;
@@ -2777,8 +2708,6 @@ void delete_screen_main() {
     objects.pump = 0;
     objects.pipe = 0;
     objects.osmos = 0;
-    objects.relay_zone_led = 0;
-    objects.relay_water_led = 0;
     objects.bars_panel = 0;
     objects.bar_0 = 0;
     objects.obj1 = 0;
@@ -2897,7 +2826,6 @@ void delete_screen_main() {
     objects.settings_kb = 0;
     objects.log_panel = 0;
     objects.log = 0;
-    objects.message_box = 0;
 }
 
 void tick_screen_main() {

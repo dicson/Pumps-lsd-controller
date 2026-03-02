@@ -28,6 +28,7 @@ uint32_t ping_timer;
 extern QueueHandle_t esp_now_queue;
 extern const char *Message;
 void update_log();
+extern String error_string;
 
 void MessageToLog(String Message)
 {
@@ -208,12 +209,24 @@ void update_bars()
 
 void update_log()
 {
-    // char Message;
     if (xQueueReceive(esp_now_queue, &Message, 0) == pdTRUE)
+    {
         if (show_log)
         {
             lv_textarea_add_text(objects.log, Message);
         }
+        if (Message == " - не выполнено\r\n")
+        {
+            ledcWrite(2, 70);
+            lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_add_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
+            while (true)
+            {
+                lv_task_handler();
+                delay(2);
+            }
+        }
+    }
 }
 
 void pump_loop()
@@ -223,4 +236,6 @@ void pump_loop()
     update_bars();
     // send_ping();
     update_log();
+    // lv_label_set_text(objects.error_zone, error_string.c_str());
+    // lv_obj_set_style_bg_color(objects.prog_bar, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR );
 }

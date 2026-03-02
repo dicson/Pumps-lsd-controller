@@ -33,6 +33,11 @@ extern int minutes;
 extern bool show_log;
 int8_t thisH, thisM, thisS;
 
+void action_reset(lv_event_t *e)
+{
+  ESP.restart();
+}
+
 void update_zone_list()
 {
   for (int i = 0; i < PUMP_AMOUNT; i++)
@@ -171,7 +176,7 @@ void action_start(lv_event_t *e)
   programm_time = programm_time - (zone_pause * 1000 * minutes);
   thisH = floor((long)programm_time / 3600 / 1000); // секунды в часы
   thisM = floor((programm_time / 1000 - (long)thisH * 3600) / 60);
-  thisS = programm_time / 1000  - (long)thisH * 3600 - thisM * 60;
+  thisS = programm_time / 1000 - (long)thisH * 3600 - thisM * 60;
   lv_bar_set_range(objects.prog_bar, 0, programm_time);
   lv_obj_remove_flag(objects.prog_bar, LV_OBJ_FLAG_HIDDEN);
   start_time = millis();
@@ -312,7 +317,7 @@ void action_zone_selected(lv_event_t *e)
   programm_time = programm_time - (zone_pause * 1000 * minutes);
   thisH = floor((long)programm_time / 3600 / 1000); // секунды в часы
   thisM = floor((programm_time / 1000 - (long)thisH * 3600) / 60);
-  thisS = programm_time / 1000  - (long)thisH * 3600 - thisM * 60;
+  thisS = programm_time / 1000 - (long)thisH * 3600 - thisM * 60;
   lv_bar_set_range(objects.prog_bar, 0, programm_time);
 }
 
