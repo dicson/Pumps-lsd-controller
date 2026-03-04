@@ -26,7 +26,13 @@ extern QueueHandle_t esp_now_queue;
 void OnDataSent(const esp_now_recv_info_t *info, esp_now_send_status_t status)
 {
   const char *Message = status == ESP_NOW_SEND_SUCCESS ? "\r\n" : " - не выполнено\r\n";
-  xQueueSendFromISR(esp_now_queue, &Message, NULL); // Send to queue from ISR
+  const uint8_t *mac_addr = info->src_addr;
+  if (!memcmp(mac_addr, broadcastAddress, sizeof(mac_addr)))
+    // char macStr[18];
+    // snprintf(macStr, sizeof(macStr), "%02X:%02X:%02X:%02X:%02X:%02X",
+    //          mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5]);
+    // Serial.println(macStr);
+    xQueueSendFromISR(esp_now_queue, &Message, NULL); // Send to queue from ISR
 }
 
 void esp_now_setup()

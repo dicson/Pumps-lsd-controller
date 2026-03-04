@@ -71,32 +71,15 @@ void create_screen_main() {
                             objects.message_box = obj;
                             lv_obj_set_pos(obj, 208, 183);
                             lv_obj_set_size(obj, 344, 140);
-                            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
                             lv_obj_set_style_align(obj, LV_ALIGN_DEFAULT, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_layout(obj, LV_LAYOUT_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
                             {
                                 lv_obj_t *parent_obj = obj;
                                 {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
-                                    lv_obj_set_pos(obj, 60, 33);
+                                    lv_obj_set_pos(obj, 60, 34);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                    lv_label_set_text(obj, "Связь с реле потеряна!");
-                                }
-                                {
-                                    lv_obj_t *obj = lv_button_create(parent_obj);
-                                    lv_obj_set_pos(obj, 90, 80);
-                                    lv_obj_set_size(obj, 160, 50);
-                                    lv_obj_add_event_cb(obj, action_reset, LV_EVENT_RELEASED, (void *)0);
-                                    {
-                                        lv_obj_t *parent_obj = obj;
-                                        {
-                                            lv_obj_t *obj = lv_label_create(parent_obj);
-                                            lv_obj_set_pos(obj, 0, 0);
-                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                            lv_label_set_text(obj, "Перезагрузка");
-                                        }
-                                    }
+                                    lv_label_set_text(obj, "Связь с реле потеряна!\n\nПерезапустите систему.");
                                 }
                             }
                         }
@@ -2440,30 +2423,6 @@ void create_screen_main() {
                                 }
                                 {
                                     lv_obj_t *obj = lv_obj_create(parent_obj);
-                                    lv_obj_set_pos(obj, -14, 112);
-                                    lv_obj_set_size(obj, 312, 32);
-                                    lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    {
-                                        lv_obj_t *parent_obj = obj;
-                                        {
-                                            // show_log
-                                            lv_obj_t *obj = lv_checkbox_create(parent_obj);
-                                            objects.show_log = obj;
-                                            lv_obj_set_pos(obj, 0, 0);
-                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text(obj, "Выводить лог");
-                                            lv_obj_add_event_cb(obj, action_show_log, LV_EVENT_VALUE_CHANGED, (void *)0);
-                                        }
-                                    }
-                                }
-                                {
-                                    lv_obj_t *obj = lv_obj_create(parent_obj);
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, 300, 66);
                                     lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2669,19 +2628,6 @@ void create_screen_main() {
                             }
                             lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_top(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            {
-                                lv_obj_t *parent_obj = obj;
-                                {
-                                    // log
-                                    lv_obj_t *obj = lv_textarea_create(parent_obj);
-                                    objects.log = obj;
-                                    lv_obj_set_pos(obj, 360, 1112);
-                                    lv_obj_set_size(obj, 430, 404);
-                                    lv_textarea_set_max_length(obj, 12800);
-                                    lv_textarea_set_one_line(obj, false);
-                                    lv_textarea_set_password_mode(obj, false);
-                                }
-                            }
                         }
                     }
                 }
@@ -2818,14 +2764,12 @@ void delete_screen_main() {
     objects.tab_settings = 0;
     objects.obj35 = 0;
     objects.debug = 0;
-    objects.show_log = 0;
     objects.bl = 0;
     objects.bl_idle = 0;
     objects.pause = 0;
     objects.update = 0;
     objects.settings_kb = 0;
     objects.log_panel = 0;
-    objects.log = 0;
 }
 
 void tick_screen_main() {

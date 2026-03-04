@@ -28,17 +28,10 @@ uint32_t ping_timer;
 extern QueueHandle_t esp_now_queue;
 extern const char *Message;
 void update_log();
-extern String error_string;
 
 void MessageToLog(String Message)
 {
     Serial.println(Message);
-    if (!show_log)
-        return;
-    const char *text = Message.c_str();
-    xQueueSendFromISR(esp_now_queue, &text, NULL); // Send to queue from ISR
-    delay(3);
-    update_log();
 }
 
 void zone_off(int i)
@@ -211,10 +204,6 @@ void update_log()
 {
     if (xQueueReceive(esp_now_queue, &Message, 0) == pdTRUE)
     {
-        if (show_log)
-        {
-            lv_textarea_add_text(objects.log, Message);
-        }
         if (Message == " - не выполнено\r\n")
         {
             ledcWrite(2, 70);

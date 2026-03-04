@@ -141,14 +141,12 @@ typedef struct _objects_t {
     lv_obj_t *tab_settings;
     lv_obj_t *obj35;
     lv_obj_t *debug;
-    lv_obj_t *show_log;
     lv_obj_t *bl;
     lv_obj_t *bl_idle;
     lv_obj_t *pause;
     lv_obj_t *update;
     lv_obj_t *settings_kb;
     lv_obj_t *log_panel;
-    lv_obj_t *log;
     lv_obj_t *obj36;
     lv_obj_t *obj37;
     lv_obj_t *obj38;
