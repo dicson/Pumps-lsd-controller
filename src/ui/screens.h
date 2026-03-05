@@ -12,13 +12,17 @@ extern "C" {
 enum ScreensEnum {
     _SCREEN_ID_FIRST = 1,
     SCREEN_ID_MAIN = 1,
-    SCREEN_ID_PAGE_UPDATE = 2,
-    _SCREEN_ID_LAST = 2
+    SCREEN_ID_UPDATE_DISPLAY = 2,
+    SCREEN_ID_UPDATE_SELECTOR = 3,
+    SCREEN_ID_UPDATE_RELAY = 4,
+    _SCREEN_ID_LAST = 4
 };
 
 typedef struct _objects_t {
     lv_obj_t *main;
-    lv_obj_t *page_update;
+    lv_obj_t *update_display;
+    lv_obj_t *update_selector;
+    lv_obj_t *update_relay;
     lv_obj_t *tabview;
     lv_obj_t *tab_main;
     lv_obj_t *message_box;
@@ -149,13 +153,19 @@ typedef struct _objects_t {
     lv_obj_t *log_panel;
     lv_obj_t *obj36;
     lv_obj_t *obj37;
+    lv_obj_t *version;
     lv_obj_t *obj38;
     lv_obj_t *obj39;
     lv_obj_t *obj40;
-    lv_obj_t *version;
     lv_obj_t *obj41;
     lv_obj_t *obj42;
     lv_obj_t *obj43;
+    lv_obj_t *obj44;
+    lv_obj_t *obj45;
+    lv_obj_t *obj46;
+    lv_obj_t *obj47;
+    lv_obj_t *obj48;
+    lv_obj_t *obj49;
 } objects_t;
 
 extern objects_t objects;
@@ -164,9 +174,17 @@ void create_screen_main();
 void delete_screen_main();
 void tick_screen_main();
 
-void create_screen_page_update();
-void delete_screen_page_update();
-void tick_screen_page_update();
+void create_screen_update_display();
+void delete_screen_update_display();
+void tick_screen_update_display();
+
+void create_screen_update_selector();
+void delete_screen_update_selector();
+void tick_screen_update_selector();
+
+void create_screen_update_relay();
+void delete_screen_update_relay();
+void tick_screen_update_relay();
 
 void create_screen_by_id(enum ScreensEnum screenId);
 void delete_screen_by_id(enum ScreensEnum screenId);

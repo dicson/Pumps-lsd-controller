@@ -71,6 +71,7 @@ void create_screen_main() {
                             objects.message_box = obj;
                             lv_obj_set_pos(obj, 208, 183);
                             lv_obj_set_size(obj, 344, 140);
+                            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
                             lv_obj_set_style_align(obj, LV_ALIGN_DEFAULT, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_layout(obj, LV_LAYOUT_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
                             {
@@ -2591,10 +2592,10 @@ void create_screen_main() {
                                             // update
                                             lv_obj_t *obj = lv_label_create(parent_obj);
                                             objects.update = obj;
-                                            lv_obj_set_pos(obj, 0, 0);
+                                            lv_obj_set_pos(obj, 0, -1);
                                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                            lv_label_set_text(obj, "Обновление прошивки");
+                                            lv_label_set_text(obj, "Обновление прошивок");
                                         }
                                     }
                                 }
@@ -2775,9 +2776,9 @@ void delete_screen_main() {
 void tick_screen_main() {
 }
 
-void create_screen_page_update() {
+void create_screen_update_display() {
     lv_obj_t *obj = lv_obj_create(0);
-    objects.page_update = obj;
+    objects.update_display = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 800, 480);
     {
@@ -2818,10 +2819,18 @@ void create_screen_page_update() {
                     {
                         lv_obj_t *parent_obj = obj;
                         {
+                            // version
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            objects.version = obj;
+                            lv_obj_set_pos(obj, 15, 445);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_label_set_text(obj, "Текущая версия прошивки 0,0");
+                        }
+                        {
                             lv_obj_t *obj = lv_obj_create(parent_obj);
                             objects.obj38 = obj;
                             lv_obj_set_pos(obj, 0, 0);
-                            lv_obj_set_size(obj, 400, 480);
+                            lv_obj_set_size(obj, 383, 281);
                             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2830,13 +2839,26 @@ void create_screen_page_update() {
                             lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_COLUMN, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_flex_cross_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_flex_track_place(obj, LV_FLEX_ALIGN_END, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            {
+                                static lv_coord_t dsc[] = {0, LV_GRID_TEMPLATE_LAST};
+                                lv_obj_set_style_grid_row_dsc_array(obj, dsc, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            }
+                            {
+                                static lv_coord_t dsc[] = {0, LV_GRID_TEMPLATE_LAST};
+                                lv_obj_set_style_grid_column_dsc_array(obj, dsc, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            }
                             {
                                 lv_obj_t *parent_obj = obj;
                                 {
                                     lv_obj_t *obj = lv_textarea_create(parent_obj);
                                     objects.obj39 = obj;
-                                    lv_obj_set_pos(obj, 3, 11);
-                                    lv_obj_set_size(obj, 369, 222);
+                                    lv_obj_set_pos(obj, -1185, 11);
+                                    lv_obj_set_size(obj, 369, 71);
                                     lv_textarea_set_max_length(obj, 128);
                                     lv_textarea_set_text(obj, "WiFi сеть  (SSID): Pump_controller\nПароль Wi-Fi сети: 80100000");
                                     lv_textarea_set_one_line(obj, false);
@@ -2844,35 +2866,26 @@ void create_screen_page_update() {
                                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_border_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_border_opa(obj, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                 }
                                 {
-                                    lv_obj_t *obj = lv_textarea_create(parent_obj);
+                                    lv_obj_t *obj = lv_qrcode_create(parent_obj);
                                     objects.obj40 = obj;
-                                    lv_obj_set_pos(obj, 3, 257);
-                                    lv_obj_set_size(obj, 369, 171);
-                                    lv_textarea_set_max_length(obj, 128);
-                                    lv_textarea_set_text(obj, "Перейти на страницу:\nhttp://192.168.4.1/update");
-                                    lv_textarea_set_one_line(obj, false);
-                                    lv_textarea_set_password_mode(obj, false);
-                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_border_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_border_opa(obj, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                }
-                                {
-                                    // version
-                                    lv_obj_t *obj = lv_label_create(parent_obj);
-                                    objects.version = obj;
-                                    lv_obj_set_pos(obj, 15, 445);
-                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                    lv_label_set_text(obj, "Текущая версия прошивки 0,0");
+                                    lv_obj_set_pos(obj, 2405, -987);
+                                    lv_obj_set_size(obj, 211, 213);
+                                    lv_qrcode_set_size(obj, 211);
+                                    lv_qrcode_set_dark_color(obj, lv_color_hex(0xff20429f));
+                                    lv_qrcode_set_light_color(obj, lv_color_hex(0xffe2f5fe));
+                                    lv_qrcode_update(obj, "WIFI:S:Pump_controller;T:WPA2;P:80100000;;", 42);
+                                    lv_obj_add_flag(obj, LV_OBJ_FLAG_CLICKABLE);
                                 }
                             }
                         }
                         {
                             lv_obj_t *obj = lv_obj_create(parent_obj);
                             objects.obj41 = obj;
-                            lv_obj_set_pos(obj, 400, 0);
-                            lv_obj_set_size(obj, 400, 480);
+                            lv_obj_set_pos(obj, 523, 0);
+                            lv_obj_set_size(obj, 277, 281);
                             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2881,27 +2894,39 @@ void create_screen_page_update() {
                             lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_COLUMN, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_SPACE_AROUND, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_flex_track_place(obj, LV_FLEX_ALIGN_END, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_right(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_flex_cross_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
                             {
                                 lv_obj_t *parent_obj = obj;
                                 {
-                                    lv_obj_t *obj = lv_qrcode_create(parent_obj);
+                                    lv_obj_t *obj = lv_textarea_create(parent_obj);
                                     objects.obj42 = obj;
-                                    lv_obj_set_pos(obj, 2435, -996);
-                                    lv_obj_set_size(obj, 211, 213);
-                                    lv_qrcode_set_size(obj, 211);
-                                    lv_qrcode_set_dark_color(obj, lv_color_hex(0xff20429f));
-                                    lv_qrcode_set_light_color(obj, lv_color_hex(0xffe2f5fe));
-                                    lv_qrcode_update(obj, "WIFI:S:Pump_controller;T:WPA2;P:80100000;;", 42);
-                                    lv_obj_add_flag(obj, LV_OBJ_FLAG_CLICKABLE);
+                                    lv_obj_set_pos(obj, 104, -52);
+                                    lv_obj_set_size(obj, 268, 76);
+                                    lv_textarea_set_max_length(obj, 128);
+                                    lv_textarea_set_text(obj, "Перейти на страницу:\nhttp://192.168.4.1/update");
+                                    lv_textarea_set_one_line(obj, false);
+                                    lv_textarea_set_password_mode(obj, false);
+                                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_border_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_border_opa(obj, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    {
+                                        static lv_coord_t dsc[] = {0, LV_GRID_TEMPLATE_LAST};
+                                        lv_obj_set_style_grid_row_dsc_array(obj, dsc, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    }
+                                    {
+                                        static lv_coord_t dsc[] = {0, LV_GRID_TEMPLATE_LAST};
+                                        lv_obj_set_style_grid_column_dsc_array(obj, dsc, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    }
+                                    lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                 }
                                 {
                                     lv_obj_t *obj = lv_qrcode_create(parent_obj);
                                     objects.obj43 = obj;
-                                    lv_obj_set_pos(obj, -11, 72);
+                                    lv_obj_set_pos(obj, -11, 70);
                                     lv_obj_set_size(obj, 211, 209);
                                     lv_qrcode_set_size(obj, 209);
                                     lv_qrcode_set_dark_color(obj, lv_color_hex(0xff20429f));
@@ -2917,30 +2942,324 @@ void create_screen_page_update() {
         }
     }
     
-    tick_screen_page_update();
+    tick_screen_update_display();
 }
 
-void delete_screen_page_update() {
-    lv_obj_delete(objects.page_update);
-    objects.page_update = 0;
+void delete_screen_update_display() {
+    lv_obj_delete(objects.update_display);
+    objects.update_display = 0;
     objects.obj36 = 0;
     objects.obj37 = 0;
+    objects.version = 0;
     objects.obj38 = 0;
     objects.obj39 = 0;
     objects.obj40 = 0;
-    objects.version = 0;
     objects.obj41 = 0;
     objects.obj42 = 0;
     objects.obj43 = 0;
 }
 
-void tick_screen_page_update() {
+void tick_screen_update_display() {
+}
+
+void create_screen_update_selector() {
+    lv_obj_t *obj = lv_obj_create(0);
+    objects.update_selector = obj;
+    lv_obj_set_pos(obj, 0, 0);
+    lv_obj_set_size(obj, 800, 480);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    {
+        lv_obj_t *parent_obj = obj;
+        {
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            lv_obj_set_pos(obj, 0, 165);
+            lv_obj_set_size(obj, 800, 150);
+            lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_ROW, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_SPACE_EVENLY, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_cross_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_track_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_text_font(obj, &ui_font_ubuntu_20, LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_button_create(parent_obj);
+                    lv_obj_set_pos(obj, 996, 0);
+                    lv_obj_set_size(obj, 200, 50);
+                    lv_obj_add_event_cb(obj, action_update_display, LV_EVENT_RELEASED, (void *)0);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            lv_obj_set_pos(obj, 0, 0);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_label_set_text(obj, "Обновление дисплея");
+                        }
+                    }
+                }
+                {
+                    lv_obj_t *obj = lv_button_create(parent_obj);
+                    lv_obj_set_pos(obj, -2326, 0);
+                    lv_obj_set_size(obj, 200, 50);
+                    lv_obj_add_event_cb(obj, action_update_relay, LV_EVENT_PRESSED, (void *)0);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            lv_obj_set_pos(obj, 0, 0);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_label_set_text(obj, "Обновление реле");
+                        }
+                    }
+                }
+                {
+                    lv_obj_t *obj = lv_button_create(parent_obj);
+                    lv_obj_set_pos(obj, 0, 0);
+                    lv_obj_set_size(obj, 100, 50);
+                    lv_obj_add_event_cb(obj, action_update_back, LV_EVENT_PRESSED, (void *)0);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            lv_obj_set_pos(obj, 0, 0);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_label_set_text(obj, "Назад");
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    tick_screen_update_selector();
+}
+
+void delete_screen_update_selector() {
+    lv_obj_delete(objects.update_selector);
+    objects.update_selector = 0;
+}
+
+void tick_screen_update_selector() {
+}
+
+void create_screen_update_relay() {
+    lv_obj_t *obj = lv_obj_create(0);
+    objects.update_relay = obj;
+    lv_obj_set_pos(obj, 0, 0);
+    lv_obj_set_size(obj, 800, 480);
+    lv_obj_set_style_text_font(obj, &ui_font_ubuntu_20, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    {
+        lv_obj_t *parent_obj = obj;
+        {
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            lv_obj_set_pos(obj, 0, 0);
+            lv_obj_set_size(obj, 800, 191);
+            lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_margin_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_top(obj, 11, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_COLUMN, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_track_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_START, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_cross_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, 0, 0);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "Запустить обновление прошивки на блоке реле:");
+                }
+                {
+                    lv_obj_t *obj = lv_obj_create(parent_obj);
+                    lv_obj_set_pos(obj, 7784, 0);
+                    lv_obj_set_size(obj, 650, 64);
+                    lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_ROW, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_flex_cross_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_flex_track_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_button_create(parent_obj);
+                            lv_obj_set_pos(obj, 1419, 0);
+                            lv_obj_set_size(obj, 144, 50);
+                            lv_obj_add_event_cb(obj, action_update_relay_1, LV_EVENT_PRESSED, (void *)0);
+                            {
+                                lv_obj_t *parent_obj = obj;
+                                {
+                                    lv_obj_t *obj = lv_label_create(parent_obj);
+                                    lv_obj_set_pos(obj, 0, 0);
+                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                    lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_label_set_text(obj, "Блок реле 1");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        {
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            objects.obj44 = obj;
+            lv_obj_set_pos(obj, 0, 199);
+            lv_obj_set_size(obj, 330, 281);
+            lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_COLUMN, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_cross_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_track_place(obj, LV_FLEX_ALIGN_END, LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                static lv_coord_t dsc[] = {0, LV_GRID_TEMPLATE_LAST};
+                lv_obj_set_style_grid_row_dsc_array(obj, dsc, LV_PART_MAIN | LV_STATE_DEFAULT);
+            }
+            {
+                static lv_coord_t dsc[] = {0, LV_GRID_TEMPLATE_LAST};
+                lv_obj_set_style_grid_column_dsc_array(obj, dsc, LV_PART_MAIN | LV_STATE_DEFAULT);
+            }
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_textarea_create(parent_obj);
+                    objects.obj45 = obj;
+                    lv_obj_set_pos(obj, -2081, 3);
+                    lv_obj_set_size(obj, 326, 76);
+                    lv_textarea_set_max_length(obj, 128);
+                    lv_textarea_set_text(obj, "WiFi сеть  (SSID): Relay_module\nПароль Wi-Fi сети: 80100000");
+                    lv_textarea_set_one_line(obj, false);
+                    lv_textarea_set_password_mode(obj, false);
+                    lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_border_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_border_opa(obj, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    lv_obj_t *obj = lv_qrcode_create(parent_obj);
+                    objects.obj46 = obj;
+                    lv_obj_set_pos(obj, 2405, -987);
+                    lv_obj_set_size(obj, 211, 213);
+                    lv_qrcode_set_size(obj, 211);
+                    lv_qrcode_set_dark_color(obj, lv_color_hex(0xff20429f));
+                    lv_qrcode_set_light_color(obj, lv_color_hex(0xffe2f5fe));
+                    lv_qrcode_update(obj, "WIFI:S:Relay_module;T:WPA2;P:80100000;;", 39);
+                    lv_obj_add_flag(obj, LV_OBJ_FLAG_CLICKABLE);
+                }
+            }
+        }
+        {
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            objects.obj47 = obj;
+            lv_obj_set_pos(obj, 523, 199);
+            lv_obj_set_size(obj, 277, 281);
+            lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_COLUMN, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_track_place(obj, LV_FLEX_ALIGN_END, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_right(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_flex_cross_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_textarea_create(parent_obj);
+                    objects.obj48 = obj;
+                    lv_obj_set_pos(obj, 104, -52);
+                    lv_obj_set_size(obj, 268, 76);
+                    lv_textarea_set_max_length(obj, 128);
+                    lv_textarea_set_text(obj, "Перейти на страницу:\nhttp://192.168.4.1/update");
+                    lv_textarea_set_one_line(obj, false);
+                    lv_textarea_set_password_mode(obj, false);
+                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_border_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_border_opa(obj, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    {
+                        static lv_coord_t dsc[] = {0, LV_GRID_TEMPLATE_LAST};
+                        lv_obj_set_style_grid_row_dsc_array(obj, dsc, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    }
+                    {
+                        static lv_coord_t dsc[] = {0, LV_GRID_TEMPLATE_LAST};
+                        lv_obj_set_style_grid_column_dsc_array(obj, dsc, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    }
+                    lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    lv_obj_t *obj = lv_qrcode_create(parent_obj);
+                    objects.obj49 = obj;
+                    lv_obj_set_pos(obj, -11, 70);
+                    lv_obj_set_size(obj, 211, 209);
+                    lv_qrcode_set_size(obj, 209);
+                    lv_qrcode_set_dark_color(obj, lv_color_hex(0xff20429f));
+                    lv_qrcode_set_light_color(obj, lv_color_hex(0xffe2f5fe));
+                    lv_qrcode_update(obj, "http://192.168.4.1/update", 25);
+                    lv_obj_add_flag(obj, LV_OBJ_FLAG_CLICKABLE);
+                }
+            }
+        }
+    }
+    
+    tick_screen_update_relay();
+}
+
+void delete_screen_update_relay() {
+    lv_obj_delete(objects.update_relay);
+    objects.update_relay = 0;
+    objects.obj44 = 0;
+    objects.obj45 = 0;
+    objects.obj46 = 0;
+    objects.obj47 = 0;
+    objects.obj48 = 0;
+    objects.obj49 = 0;
+}
+
+void tick_screen_update_relay() {
 }
 
 typedef void (*create_screen_func_t)();
 create_screen_func_t create_screen_funcs[] = {
     create_screen_main,
-    create_screen_page_update,
+    create_screen_update_display,
+    create_screen_update_selector,
+    create_screen_update_relay,
 };
 void create_screen(int screen_index) {
     create_screen_funcs[screen_index]();
@@ -2952,7 +3271,9 @@ void create_screen_by_id(enum ScreensEnum screenId) {
 typedef void (*delete_screen_func_t)();
 delete_screen_func_t delete_screen_funcs[] = {
     delete_screen_main,
-    delete_screen_page_update,
+    delete_screen_update_display,
+    delete_screen_update_selector,
+    delete_screen_update_relay,
 };
 void delete_screen(int screen_index) {
     delete_screen_funcs[screen_index]();
@@ -2964,7 +3285,9 @@ void delete_screen_by_id(enum ScreensEnum screenId) {
 typedef void (*tick_screen_func_t)();
 tick_screen_func_t tick_screen_funcs[] = {
     tick_screen_main,
-    tick_screen_page_update,
+    tick_screen_update_display,
+    tick_screen_update_selector,
+    tick_screen_update_relay,
 };
 void tick_screen(int screen_index) {
     tick_screen_funcs[screen_index]();
@@ -3064,5 +3387,4 @@ void create_screens() {
     // Initialize screens
     // Create screens
     create_screen_main();
-    create_screen_page_update();
 }

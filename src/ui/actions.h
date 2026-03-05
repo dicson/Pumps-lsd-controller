@@ -24,6 +24,10 @@ extern void action_k_reset(lv_event_t * e);
 extern void action_update(lv_event_t * e);
 extern void action_zone_selected(lv_event_t * e);
 extern void action_zone_time_clicked(lv_event_t * e);
+extern void action_update_display(lv_event_t * e);
+extern void action_update_relay(lv_event_t * e);
+extern void action_update_back(lv_event_t * e);
+extern void action_update_relay_1(lv_event_t * e);
 
 #ifdef __cplusplus
 }

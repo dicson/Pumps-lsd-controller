@@ -8,6 +8,7 @@
 #include "auto_pumps.h"
 #include "elegantota.h"
 #include "constants.h"
+#include "enow.h"
 
 #define RW_MODE false
 #define RO_MODE true
@@ -246,11 +247,34 @@ void action_tab_changed(lv_event_t *e)
 {
 }
 
+void action_update_back(lv_event_t *e)
+{
+  loadScreen(SCREEN_ID_MAIN);
+}
+
 void action_update(lv_event_t *e)
 {
-  loadScreen(SCREEN_ID_PAGE_UPDATE);
+  create_screen_update_selector();
+  loadScreen(SCREEN_ID_UPDATE_SELECTOR);
+}
+
+void action_update_display(lv_event_t *e)
+{
+  create_screen_update_display();
+  loadScreen(SCREEN_ID_UPDATE_DISPLAY);
   lv_label_set_text(objects.version, VERSION);
   ota_setup();
+}
+
+void action_update_relay(lv_event_t *e)
+{
+  create_screen_update_relay();
+  loadScreen(SCREEN_ID_UPDATE_RELAY);
+}
+
+void action_update_relay_1(lv_event_t *e)
+{
+  send_command(255, false);
 }
 
 void action_zone_selected(lv_event_t *e)

@@ -12,7 +12,6 @@
     "ui.c",
     "ui.h",
     "ui_font_ubuntu_20.c",
-    "ui_image_cup.c",
     "vars.h"
   ]
 }
