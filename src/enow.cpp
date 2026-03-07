@@ -7,6 +7,7 @@
 //  uint8_t broadcastAddress[] = {0x68, 0x25, 0xDD, 0xFD, 0x24, 0x94};
 //  uint8_t broadcastAddress[] = {0xD4, 0xE9, 0xF4, 0xF1, 0x20, 0xA8};   12v relay
 uint8_t broadcastAddress[] = {0xa4, 0xf0, 0x0f, 0x8d, 0x02, 0xec}; // a4:f0:0f:8d:02:ec 5v relay
+uint8_t pultAddress[] = {0x58, 0x8c, 0x81, 0x52, 0xec, 0x84};      // 58:8c:81:52:ec:84 pult
 //
 // // Define a queue handle
 QueueHandle_t esp_now_queue;
@@ -14,11 +15,24 @@ const char *Message;
 
 typedef struct struct_message
 {
-  int a;  // номер реле
-  bool b; // вкл/выкл
+  int relay;  // номер реле
+  bool state; // вкл/выкл
 } struct_message;
 
+typedef struct struct_message_pult
+{
+  bool state;             // вкл/выкл
+  bool pump_state;        // вкл/выкл
+  bool osmos_state;       // вкл/выкл
+  int current_zone;       // номер реле
+  uint32_t time_pass;     // прошло полива зоны
+  uint32_t time;          // время полива зоны
+  uint32_t prog_pass;     // прошло полива зоны
+  uint32_t programm_time; // время полива зоны
+} struct_message_pult;
+
 struct_message myData;
+struct_message_pult toPult;
 esp_now_peer_info_t peerInfo;
 extern QueueHandle_t esp_now_queue;
 
@@ -55,12 +69,17 @@ void esp_now_setup()
   memcpy(peerInfo.peer_addr, broadcastAddress, 6);
   peerInfo.channel = 0;
   peerInfo.encrypt = false;
-
-  // Add peer
   if (esp_now_add_peer(&peerInfo) != ESP_OK)
   {
     Serial.println("Failed to add peer");
-    return;
+  }
+  // Register peer
+  memcpy(peerInfo.peer_addr, pultAddress, 6);
+  peerInfo.channel = 0;
+  peerInfo.encrypt = false;
+  if (esp_now_add_peer(&peerInfo) != ESP_OK)
+  {
+    Serial.println("Failed to add peer");
   }
   esp_now_queue = xQueueCreate(50, sizeof(Message)); // Queue for 10 messages
 }
@@ -68,14 +87,47 @@ void esp_now_setup()
 void send_command(int relay, bool state)
 {
   // Set values to send
-  myData.a = relay;
-  myData.b = state;
+  myData.relay = relay;
+  myData.state = state;
   // Send message via ESP-NOW
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
 
   if (result == ESP_OK)
   {
     // Serial.println("Sent with success");
+  }
+  else
+  {
+    Serial.println("Error sending the data");
+  }
+}
+
+void send_to_pult(bool state, bool pump_state, bool osmos_state, int current_zone,
+                  uint32_t time_pass, uint32_t time, uint32_t prog_pass, uint32_t programm_time)
+{
+  // Set values to send
+  toPult.state = state;
+  toPult.pump_state = pump_state;
+  toPult.osmos_state = osmos_state;
+  toPult.current_zone = current_zone;
+  toPult.time_pass = time_pass;
+  toPult.time = time;
+  toPult.prog_pass = prog_pass;
+  toPult.programm_time = programm_time;
+  // Send message via ESP-NOW
+  esp_err_t result = esp_now_send(pultAddress, (uint8_t *)&toPult, sizeof(toPult));
+
+  if (result == ESP_OK)
+  {
+    //  Serial.println("Sent with success(pult)");
+    //  Serial.println(state);
+    //  Serial.println(pump_state);
+    //  Serial.println(osmos_state);
+    //  Serial.println(current_zone);
+    //  Serial.println(time_pass);
+    //  Serial.println(time);
+    //  Serial.println(prog_pass);
+    //  Serial.println(programm_time);
   }
   else
   {

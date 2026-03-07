@@ -25,9 +25,11 @@ extern bool show_log;
 extern int minutes;
 int current_zone = 255;
 uint32_t ping_timer;
+boolean pump_water_state;
 extern QueueHandle_t esp_now_queue;
 extern const char *Message;
 void update_log();
+void update_bars();
 
 void MessageToLog(String Message)
 {
@@ -48,6 +50,7 @@ void zone_on(int i)
 
 void pump_on()
 {
+    pump_water_state = true;
     send_command(PUMP_RELAY, true);
     MessageToLog("включить  насос ");
     lv_obj_remove_flag(objects.pump, LV_OBJ_FLAG_HIDDEN);
@@ -55,6 +58,7 @@ void pump_on()
 
 void pump_off()
 {
+    pump_water_state = false;
     send_command(PUMP_RELAY, false);
     MessageToLog("выключить насос ");
     lv_obj_add_flag(objects.pump, LV_OBJ_FLAG_HIDDEN);
@@ -154,7 +158,9 @@ void flowTick()
                     break;                                                   //
                 if (n == PUMP_AMOUNT - 1)                                    // если нет не политых
                 {
-
+                    if (millis() - ping_timer > 100)
+                        ping_timer = ping_timer - 1000;
+                    update_bars();
                     action_stop(NULL);
                     // lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
                     // lv_msgbox_add_close_button(objects.message_box);
@@ -165,28 +171,46 @@ void flowTick()
     }
 }
 
+void vOneTimeTask(void *pvParameters)
+{
+    // Serial.println("Executing one-time task");
+    send_to_pult(false, pump_water_state, !dryState, 0, 0, 0, 0, 0);
+    vTaskDelete(NULL);
+}
+
 void update_bars()
 {
+
     if (lv_obj_has_flag(objects.stop, LV_OBJ_FLAG_HIDDEN))
-        return;
-    uint32_t prog_pass = millis() - start_time;
-    if (current_zone != 255)
     {
-        uint32_t dw_t = dw_time[current_zone] * 1000 * minutes / 100 * k_dw_time;
-        uint32_t time = dw_t + (cw_time[current_zone] + zone_pause) * 1000 * minutes;
-        if (programm_time - prog_pass <= dw_t + cw_time[current_zone] * 1000 * minutes)
-        {
-            time = time - zone_pause * 1000;
-        }
-        uint32_t time_pass = millis() - pump_timers[current_zone];
-        lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, current_zone);
-        lv_bar_set_value(bar, map(time_pass, 0, time, 0, 100), LV_ANIM_ON);
-        int8_t H = floor((long)prog_pass / 3600 / 1000); // секунды в часы
-        int8_t M = floor((prog_pass / 1000 - (long)H * 3600) / 60);
-        int8_t S = prog_pass / 1000 - (long)H * 3600 - M * 60;
-        lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d", H, M, S, thisH, thisM, thisS);
+        if (millis() - ping_timer < 1000)
+            return;
+        xTaskCreatePinnedToCore(
+            vOneTimeTask /*Task function*/, "OneTimeTask" /* Name*/, 2048 /*Stack size*/, NULL /*SParameters*/,
+            0 /*SPriority*/, NULL /*STask handle*/, 0);
+        ping_timer = millis();
+        return;
     }
+    uint32_t prog_pass = millis() - start_time;
+    uint32_t dw_t = dw_time[current_zone] * 1000 * minutes / 100 * k_dw_time;
+    uint32_t time = dw_t + (cw_time[current_zone] + zone_pause) * 1000 * minutes;
+    if (programm_time - prog_pass <= dw_t + cw_time[current_zone] * 1000 * minutes)
+    {
+        time = time - zone_pause * 1000;
+    }
+    uint32_t time_pass = millis() - pump_timers[current_zone];
+    lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, current_zone);
+    lv_bar_set_value(bar, map(time_pass, 0, time, 0, 100), LV_ANIM_ON);
+    int8_t H = floor((long)prog_pass / 3600 / 1000); // секунды в часы
+    int8_t M = floor((prog_pass / 1000 - (long)H * 3600) / 60);
+    int8_t S = prog_pass / 1000 - (long)H * 3600 - M * 60;
+    lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d", H, M, S, thisH, thisM, thisS);
+    // }
     lv_bar_set_value(objects.prog_bar, prog_pass, LV_ANIM_OFF);
+    if (millis() - ping_timer < 1000)
+        return;
+    send_to_pult(true, pump_water_state, !dryState, current_zone, time_pass, time, prog_pass, programm_time);
+    ping_timer = millis();
 }
 
 // void send_ping()
