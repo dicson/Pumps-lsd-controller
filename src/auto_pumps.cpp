@@ -27,7 +27,9 @@ int current_zone = 255;
 uint32_t ping_timer;
 boolean pump_water_state;
 extern QueueHandle_t esp_now_queue;
+extern QueueHandle_t esp_now_queue_from_pult;
 extern const char *Message;
+extern const char *Message_from_pult;
 void update_log();
 void update_bars();
 
@@ -239,6 +241,15 @@ void update_log()
                 delay(2);
             }
         }
+    }
+    if (xQueueReceive(esp_now_queue_from_pult, &Message_from_pult, 0) == pdTRUE)
+    {
+        if (Message_from_pult == "start")
+        {
+            action_start(NULL);
+        }
+        if (Message_from_pult == "stop")
+            action_stop(NULL);
     }
 }
 

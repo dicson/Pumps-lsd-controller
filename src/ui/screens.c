@@ -2617,6 +2617,7 @@ void create_screen_main() {
                             objects.log_panel = obj;
                             lv_obj_set_pos(obj, 317, -16);
                             lv_obj_set_size(obj, 453, 429);
+                            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
                             lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
                             add_style_1style(obj);
                             lv_obj_set_style_pad_bottom(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);

@@ -11,7 +11,9 @@ uint8_t pultAddress[] = {0x58, 0x8c, 0x81, 0x52, 0xec, 0x84};      // 58:8c:81:5
 //
 // // Define a queue handle
 QueueHandle_t esp_now_queue;
+QueueHandle_t esp_now_queue_from_pult;
 const char *Message;
+const char *Message_from_pult;
 
 typedef struct struct_message
 {
@@ -32,9 +34,28 @@ typedef struct struct_message_pult
 } struct_message_pult;
 
 struct_message myData;
+struct_message fromPult;
 struct_message_pult toPult;
 esp_now_peer_info_t peerInfo;
-extern QueueHandle_t esp_now_queue;
+
+// callback function that will be executed when data is received
+void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, int len)
+{
+  const uint8_t *mac_addr = info->src_addr;
+  if (memcmp(mac_addr, pultAddress, 6) != 0)
+    return;
+  memcpy(&fromPult, incomingData, sizeof(fromPult));
+  if (fromPult.relay == 0 && fromPult.state == false)
+  {
+    const char *Message_from_pult = "stop";
+    xQueueSendFromISR(esp_now_queue_from_pult, &Message_from_pult, NULL); // Send to queue from ISR}
+  }
+  if (fromPult.relay == 1 && fromPult.state == true)
+  {
+    const char *Message_from_pult = "start";
+    xQueueSendFromISR(esp_now_queue_from_pult, &Message_from_pult, NULL); // Send to queue from ISR}
+  }
+}
 
 // callback when data is sent
 void OnDataSent(const esp_now_recv_info_t *info, esp_now_send_status_t status)
@@ -61,6 +82,9 @@ void esp_now_setup()
     Serial.println("Error initializing ESP-NOW");
     return;
   }
+  // Once ESPNow is successfully Init, we will register for recv CB to
+  // get recv packer info
+  esp_now_register_recv_cb(esp_now_recv_cb_t(OnDataRecv));
   // Once ESPNow is successfully Init, we will register for Send CB to
   // get the status of Trasnmitted packet
   esp_now_register_send_cb(esp_now_send_cb_t(OnDataSent));
@@ -81,7 +105,8 @@ void esp_now_setup()
   {
     Serial.println("Failed to add peer");
   }
-  esp_now_queue = xQueueCreate(50, sizeof(Message)); // Queue for 10 messages
+  esp_now_queue = xQueueCreate(50, sizeof(Message));                     // Queue for 10 messages
+  esp_now_queue_from_pult = xQueueCreate(10, sizeof(Message_from_pult)); // Queue for 10 messages
 }
 
 void send_command(int relay, bool state)
