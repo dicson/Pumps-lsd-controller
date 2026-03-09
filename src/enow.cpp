@@ -3,12 +3,8 @@
 #include <esp_wifi.h>
 #include <lvgl.h>
 #include "ui/screens.h"
+#include "enow.h"
 
-//  uint8_t broadcastAddress[] = {0x68, 0x25, 0xDD, 0xFD, 0x24, 0x94};
-//  uint8_t broadcastAddress[] = {0xD4, 0xE9, 0xF4, 0xF1, 0x20, 0xA8};   12v relay
-uint8_t broadcastAddress[] = {0xa4, 0xf0, 0x0f, 0x8d, 0x02, 0xec}; // a4:f0:0f:8d:02:ec 5v relay
-uint8_t pultAddress[] = {0x58, 0x8c, 0x81, 0x52, 0xec, 0x84};      // 58:8c:81:52:ec:84 pult
-//
 // // Define a queue handle
 QueueHandle_t esp_now_queue;
 QueueHandle_t esp_now_queue_from_pult;
@@ -63,10 +59,6 @@ void OnDataSent(const esp_now_recv_info_t *info, esp_now_send_status_t status)
   const char *Message = status == ESP_NOW_SEND_SUCCESS ? "\r\n" : " - не выполнено\r\n";
   const uint8_t *mac_addr = info->src_addr;
   if (!memcmp(mac_addr, broadcastAddress, sizeof(mac_addr)))
-    // char macStr[18];
-    // snprintf(macStr, sizeof(macStr), "%02X:%02X:%02X:%02X:%02X:%02X",
-    //          mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5]);
-    // Serial.println(macStr);
     xQueueSendFromISR(esp_now_queue, &Message, NULL); // Send to queue from ISR
 }
 

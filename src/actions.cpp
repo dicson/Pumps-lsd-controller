@@ -1,9 +1,8 @@
 #include <lvgl.h>
-#include "actions.h"
-#include "ui.h"
-#include "screens.h"
+#include "ui/actions.h"
+#include "ui/ui.h"
+#include "ui/screens.h"
 #include <Arduino.h>
-#include "vars.h"
 #include <Preferences.h>
 #include "auto_pumps.h"
 #include "elegantota.h"
@@ -248,6 +247,11 @@ void action_tab_changed(lv_event_t *e)
 }
 
 void action_update_back(lv_event_t *e)
+{
+  loadScreen(SCREEN_ID_MAIN);
+}
+
+void action_update_relay_back(lv_event_t *e)
 {
   loadScreen(SCREEN_ID_MAIN);
 }

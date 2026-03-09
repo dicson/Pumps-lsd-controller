@@ -166,6 +166,7 @@ typedef struct _objects_t {
     lv_obj_t *obj47;
     lv_obj_t *obj48;
     lv_obj_t *obj49;
+    lv_obj_t *update_relay_back;
 } objects_t;
 
 extern objects_t objects;

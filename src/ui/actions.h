@@ -28,6 +28,7 @@ extern void action_update_display(lv_event_t * e);
 extern void action_update_relay(lv_event_t * e);
 extern void action_update_back(lv_event_t * e);
 extern void action_update_relay_1(lv_event_t * e);
+extern void action_update_relay_back(lv_event_t * e);
 
 #ifdef __cplusplus
 }

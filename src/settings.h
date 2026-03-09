@@ -30,13 +30,13 @@ void setup_settings()
         settings.end();
         settings.begin("Settings", RW_MODE);
 
-        settings.putLong("GFX_BL_VALUE", 200);
+        settings.putLong("GFX_BL_VALUE", 50);
         settings.putLong("GFX_BL_TIME", 30);
-        settings.putLong("zone_pause", zone_pause);
+        settings.putLong("zone_pause", 0);
         settings.putLong("k_dw_time", 100);
-        uint32_t dw_time[PUMP_AMOUNT];
+        uint32_t dw_time[PUMP_AMOUNT] = {0};
         settings.putBytes("dw_time", dw_time, PUMP_AMOUNT * 4);
-        uint32_t cw_time[PUMP_AMOUNT];
+        uint32_t cw_time[PUMP_AMOUNT] = {0};
         settings.putBytes("cw_time", cw_time, PUMP_AMOUNT * 4);
 
         settings.putBool("nvsInit", true);
