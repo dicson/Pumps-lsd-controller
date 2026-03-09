@@ -4,7 +4,6 @@
 #include <lvgl.h>                /* 9.4.0 */
 #include <Arduino_GFX_Library.h> /* 1.6.4 */
 #include "TAMC_GT911.h"          /* 1.0.2 */
-//#include "ui/screens.h"
 
 // Configuration for Display and Touch
 // #define TFT_BL 2

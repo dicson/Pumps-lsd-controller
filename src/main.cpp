@@ -1,9 +1,10 @@
 #include "display.h"
 #include "ui/ui.h"
-#include "settings.h"
 #include "auto_pumps.h"
-#include "enow.h"
 #include "elegantota.h"
+extern void setup_settings();
+extern void fill_widgets();
+extern void esp_now_setup();
 
 void setup()
 {

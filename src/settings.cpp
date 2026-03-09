@@ -1,5 +1,7 @@
+#include <lvgl.h>
 #include <Preferences.h>
 #include "constants.h"
+#include "ui/screens.h"
 
 #define RW_MODE false
 #define RO_MODE true
