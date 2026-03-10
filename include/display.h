@@ -33,7 +33,7 @@ Arduino_ESP32RGBPanel rgbpanel(
     15 /* B0 */, 7 /* B1 */, 6 /* B2 */, 5 /* B3 */, 4 /* B4 */,
     0 /* hsync_polarity */, 210 /* hsync_front_porch */, 30 /* hsync_pulse_width */, 16 /* hsync_back_porch */,
     0 /* vsync_polarity */, 22 /* vsync_front_porch */, 13 /* vsync_pulse_width */, 10 /* vsync_back_porch */,
-    true /* pclk_active_neg */, 12500000 /* prefer_speed */);
+    true /* pclk_active_neg */, 12000000 /* prefer_speed */);
 
 Arduino_RGB_Display gfx(800, 480, &rgbpanel, 0 /* rotation */, true);
 
@@ -76,7 +76,8 @@ void my_touchpad_read(lv_indev_t *indev, lv_indev_data_t *data)
     }
     if (ledcRead(GFX_BL) == 0)
     {
-      ledcWrite(GFX_BL, GFX_BL_VALUE);
+      //ledcWrite(GFX_BL, GFX_BL_VALUE);
+      analogWrite(GFX_BL, GFX_BL_VALUE);
       lv_indev_wait_release(indev);
     }
   }
@@ -123,11 +124,11 @@ void setup_display()
   lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
   lv_indev_set_read_cb(indev, my_touchpad_read);
 
-  ledcAttach(GFX_BL, 1000, LEDC_TIMER_8_BIT);
+  //ledcAttach(GFX_BL, 1000, LEDC_TIMER_8_BIT);
   // ledcWrite(GFX_BL, GFX_BL_VALUE); /* Screen brightness can be modified by adjusting this parameter. (0-255) */
   for (int duty = 0; duty <= GFX_BL_VALUE; duty++)
   {
-    ledcWrite(GFX_BL, duty);
+    analogWrite(GFX_BL, duty);
     delay(4);
   }
   Serial.println("Display setup complete.");
@@ -139,7 +140,7 @@ void loop_display()
   delay(2);
   if ((lv_display_get_inactive_time(disp) > GFX_BL_TIME * 1000) && (ledcRead(GFX_BL) != 0))
   {
-    ledcWrite(GFX_BL, 0);
+    analogWrite(GFX_BL, 0);
   }
 }
 

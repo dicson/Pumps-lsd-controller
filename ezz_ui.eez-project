@@ -10704,7 +10704,8 @@
                         "definition": {
                           "MAIN": {
                             "DEFAULT": {
-                              "align": "DEFAULT"
+                              "align": "DEFAULT",
+                              "radius": 6
                             }
                           }
                         }
@@ -10787,7 +10788,7 @@
                           "left": -14,
                           "top": 112,
                           "width": 312,
-                          "height": 32,
+                          "height": 40,
                           "customInputs": [],
                           "customOutputs": [],
                           "style": {
@@ -10879,7 +10880,7 @@
                           "left": -14,
                           "top": 112,
                           "width": 312,
-                          "height": 32,
+                          "height": 40,
                           "customInputs": [],
                           "customOutputs": [],
                           "style": {
@@ -11366,10 +11367,10 @@
                         {
                           "objID": "5a6cc439-2aa5-4222-c032-82b27717f50b",
                           "type": "LVGLContainerWidget",
-                          "left": -2489,
-                          "top": 25,
+                          "left": -4504,
+                          "top": 94,
                           "width": 309,
-                          "height": 217,
+                          "height": 194,
                           "customInputs": [],
                           "customOutputs": [],
                           "style": {
@@ -11767,7 +11768,8 @@
                         "definition": {
                           "MAIN": {
                             "DEFAULT": {
-                              "align": "DEFAULT"
+                              "align": "DEFAULT",
+                              "radius": 6
                             }
                           }
                         }

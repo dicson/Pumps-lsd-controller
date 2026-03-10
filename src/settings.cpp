@@ -60,6 +60,17 @@ void setup_settings()
 
 void fill_widgets()
 {
+    /* Extend the clickable area by 10 pixels on all sides */
+    lv_obj_set_ext_click_area(objects.pult, 10);
+    lv_obj_set_ext_click_area(objects.debug, 10);
+    lv_obj_set_ext_click_area(objects.bl, 10);
+    // uint32_t i;
+    // uint32_t count = lv_obj_get_child_count(objects.k_container);
+    // for (i = 0; i < count; i++)
+    // {
+    //     lv_obj_t *child = lv_obj_get_child(objects.k_container, i);
+    //     lv_obj_set_ext_click_area(child, 20);
+    // }
     if (use_pult)
         lv_obj_add_state(objects.pult, LV_STATE_CHECKED);
     lv_slider_set_value(objects.bl, GFX_BL_VALUE, LV_ANIM_ON);
