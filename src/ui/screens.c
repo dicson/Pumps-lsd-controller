@@ -2412,6 +2412,30 @@ void create_screen_main() {
                                     {
                                         lv_obj_t *parent_obj = obj;
                                         {
+                                            // pult
+                                            lv_obj_t *obj = lv_checkbox_create(parent_obj);
+                                            objects.pult = obj;
+                                            lv_obj_set_pos(obj, 0, 0);
+                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                            lv_checkbox_set_text(obj, "Пульт");
+                                            lv_obj_add_event_cb(obj, action_use_pult, LV_EVENT_VALUE_CHANGED, (void *)0);
+                                        }
+                                    }
+                                }
+                                {
+                                    lv_obj_t *obj = lv_obj_create(parent_obj);
+                                    lv_obj_set_pos(obj, -14, 112);
+                                    lv_obj_set_size(obj, 312, 32);
+                                    lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    {
+                                        lv_obj_t *parent_obj = obj;
+                                        {
                                             // debug
                                             lv_obj_t *obj = lv_checkbox_create(parent_obj);
                                             objects.debug = obj;
@@ -2765,6 +2789,7 @@ void delete_screen_main() {
     objects.keyboard = 0;
     objects.tab_settings = 0;
     objects.obj35 = 0;
+    objects.pult = 0;
     objects.debug = 0;
     objects.bl = 0;
     objects.bl_idle = 0;

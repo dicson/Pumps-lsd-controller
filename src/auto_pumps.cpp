@@ -22,6 +22,7 @@ extern int8_t thisH, thisM, thisS;
 extern boolean now_pumping;
 extern boolean dryState;
 extern bool show_log;
+extern bool use_pult;
 extern int minutes;
 int current_zone = 255;
 uint32_t ping_timer;
@@ -185,6 +186,8 @@ void update_bars()
 
     if (lv_obj_has_flag(objects.stop, LV_OBJ_FLAG_HIDDEN))
     {
+        if (!use_pult)
+            return;
         if (millis() - ping_timer < 1000)
             return;
         xTaskCreatePinnedToCore(

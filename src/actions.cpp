@@ -25,13 +25,13 @@ extern boolean now_pumping;
 extern lv_obj_t *bar_list[PUMP_AMOUNT];
 extern uint32_t k_dw_time;
 extern int current_zone;
+extern bool use_pult;
 uint32_t water_num;
 lv_obj_t *obj;
 uint32_t start_time;
 uint32_t programm_time;
 extern int minutes;
 int8_t thisH, thisM, thisS;
-
 
 void update_zone_list()
 {
@@ -63,6 +63,14 @@ void action_debug(lv_event_t *e)
     minutes = 1;
   else
     minutes = 60;
+}
+
+void action_use_pult(lv_event_t *e)
+{
+  use_pult = lv_obj_has_state(objects.pult, LV_STATE_CHECKED);
+  settings.begin("Settings", RW_MODE);
+  settings.putBool("use_pult", use_pult);
+  settings.end();
 }
 
 void action_bl_changed(lv_event_t *e)

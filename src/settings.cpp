@@ -18,6 +18,7 @@ boolean now_pumping = false;        // идет полив
 boolean dryState = true;            // какой клапан открыт. true - dry(грязная) false - чистая
 uint32_t k_dw_time = 100;           // коэффициент
 int minutes = 60;                   // отладка
+bool use_pult;
 extern void update_zone_list();
 
 Preferences settings;
@@ -40,6 +41,7 @@ void setup_settings()
         settings.putBytes("dw_time", dw_time, PUMP_AMOUNT * 4);
         uint32_t cw_time[PUMP_AMOUNT] = {0};
         settings.putBytes("cw_time", cw_time, PUMP_AMOUNT * 4);
+        settings.putBool("use_pult", false);
 
         settings.putBool("nvsInit", true);
         settings.end();
@@ -50,6 +52,7 @@ void setup_settings()
     GFX_BL_VALUE = settings.getLong("GFX_BL_VALUE");
     GFX_BL_TIME = settings.getLong("GFX_BL_TIME");
     k_dw_time = settings.getLong("k_dw_time", 100);
+    use_pult = settings.getBool("use_pult");
     settings.getBytes("dw_time", dw_time, PUMP_AMOUNT * 4);
     settings.getBytes("cw_time", cw_time, PUMP_AMOUNT * 4);
     settings.end();
@@ -57,6 +60,8 @@ void setup_settings()
 
 void fill_widgets()
 {
+    if (use_pult)
+        lv_obj_add_state(objects.pult, LV_STATE_CHECKED);
     lv_slider_set_value(objects.bl, GFX_BL_VALUE, LV_ANIM_ON);
     lv_textarea_set_text(objects.bl_idle, String(GFX_BL_TIME).c_str());
     lv_textarea_set_text(objects.pause, String(zone_pause).c_str());

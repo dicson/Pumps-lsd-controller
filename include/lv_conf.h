@@ -410,7 +410,7 @@
  *-----------*/
 
 /** Enable log module */
-#define LV_USE_LOG 1
+#define LV_USE_LOG 0
 #if LV_USE_LOG
     /** Set value to one of the following levels of logging detail:
      *  - LV_LOG_LEVEL_TRACE    Log detailed information.
@@ -419,11 +419,11 @@
      *  - LV_LOG_LEVEL_ERROR    Log only critical issues, when system may fail.
      *  - LV_LOG_LEVEL_USER     Log only custom log messages added by the user.
      *  - LV_LOG_LEVEL_NONE     Do not log anything. */
-    #define LV_LOG_LEVEL LV_LOG_LEVEL_USER 
+    #define LV_LOG_LEVEL LV_LOG_LEVEL_TRACE 
 
     /** - 1: Print log with 'printf';
      *  - 0: User needs to register a callback with `lv_log_register_print_cb()`. */
-    #define LV_LOG_PRINTF 1
+    #define LV_LOG_PRINTF 0
 
     /** Set callback to print logs.
      *  E.g `my_print`. The prototype should be `void my_print(lv_log_level_t level, const char * buf)`.
@@ -1066,7 +1066,7 @@
     /** 1: Show used memory and memory fragmentation.
      *     - Requires `LV_USE_STDLIB_MALLOC = LV_STDLIB_BUILTIN`
      *     - Requires `LV_USE_SYSMON = 1`*/
-    #define LV_USE_MEM_MONITOR 0
+    #define LV_USE_MEM_MONITOR 1
     #if LV_USE_MEM_MONITOR
         #define LV_USE_MEM_MONITOR_POS LV_ALIGN_BOTTOM_LEFT
     #endif

@@ -144,6 +144,7 @@ typedef struct _objects_t {
     lv_obj_t *keyboard;
     lv_obj_t *tab_settings;
     lv_obj_t *obj35;
+    lv_obj_t *pult;
     lv_obj_t *debug;
     lv_obj_t *bl;
     lv_obj_t *bl_idle;

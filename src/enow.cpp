@@ -10,6 +10,7 @@ QueueHandle_t esp_now_queue;
 QueueHandle_t esp_now_queue_from_pult;
 const char *Message;
 const char *Message_from_pult;
+extern bool use_pult;
 
 typedef struct struct_message
 {
@@ -38,7 +39,7 @@ esp_now_peer_info_t peerInfo;
 void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, int len)
 {
   const uint8_t *mac_addr = info->src_addr;
-  if (memcmp(mac_addr, pultAddress, 6) != 0)
+  if ((memcmp(mac_addr, pultAddress, 6) != 0) || !use_pult)
     return;
   memcpy(&fromPult, incomingData, sizeof(fromPult));
   if (fromPult.relay == 0 && fromPult.state == false)
