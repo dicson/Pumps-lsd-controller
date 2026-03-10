@@ -30,6 +30,8 @@ extern void action_update_back(lv_event_t * e);
 extern void action_update_relay_1(lv_event_t * e);
 extern void action_update_relay_back(lv_event_t * e);
 extern void action_use_pult(lv_event_t * e);
+extern void action_decrement_10(lv_event_t * e);
+extern void action_increment_10(lv_event_t * e);
 
 #ifdef __cplusplus
 }

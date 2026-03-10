@@ -218,6 +218,18 @@ void save_k_dw_time()
   settings.end();
 }
 
+void action_decrement_10(lv_event_t *e)
+{
+  lv_event_code_t code = lv_event_get_code(e);
+  if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT)
+  {
+    k_dw_time = k_dw_time - 10;
+    if (k_dw_time < 50)
+      k_dw_time = 50;
+    save_k_dw_time();
+  }
+}
+
 void action_spinbox_decrement_event_cb(lv_event_t *e)
 {
   lv_event_code_t code = lv_event_get_code(e);
@@ -228,6 +240,18 @@ void action_spinbox_decrement_event_cb(lv_event_t *e)
       --k_dw_time;
       save_k_dw_time();
     }
+  }
+}
+
+void action_increment_10(lv_event_t *e)
+{
+  lv_event_code_t code = lv_event_get_code(e);
+  if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT)
+  {
+    k_dw_time = k_dw_time + 10;
+    if (k_dw_time > 200)
+      k_dw_time = 200;
+    save_k_dw_time();
   }
 }
 
