@@ -33,6 +33,24 @@ uint32_t programm_time;
 extern int minutes;
 int8_t thisH, thisM, thisS;
 
+void hide_k_buttons()
+{
+  lv_obj_add_flag(objects.button10, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_add_flag(objects.button_10, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_add_flag(objects.button_dec, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_add_flag(objects.button_inc, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_add_flag(objects.button_reset, LV_OBJ_FLAG_HIDDEN);
+}
+
+void show_k_buttons()
+{
+  lv_obj_remove_flag(objects.button10, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_remove_flag(objects.button_10, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_remove_flag(objects.button_dec, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_remove_flag(objects.button_inc, LV_OBJ_FLAG_HIDDEN);
+  lv_obj_remove_flag(objects.button_reset, LV_OBJ_FLAG_HIDDEN);
+}
+
 void update_zone_list()
 {
   for (int i = 0; i < PUMP_AMOUNT; i++)
@@ -140,7 +158,7 @@ void action_start(lv_event_t *e)
   lv_obj_add_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
-  lv_obj_add_flag(objects.k_container, LV_OBJ_FLAG_HIDDEN);
+  hide_k_buttons();
   lv_obj_add_state(objects.start, LV_STATE_DISABLED);
   lv_obj_remove_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
   lv_obj_clear_state(objects.stop, LV_STATE_DISABLED);
@@ -201,7 +219,7 @@ void action_stop(lv_event_t *e)
   lv_obj_add_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_state(objects.stop, LV_STATE_DISABLED);
   lv_obj_remove_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
-  lv_obj_remove_flag(objects.k_container, LV_OBJ_FLAG_HIDDEN);
+  show_k_buttons();
   lv_obj_remove_flag(objects.tab_1, LV_OBJ_FLAG_HIDDEN);
   lv_obj_remove_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
   lv_obj_remove_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
@@ -325,7 +343,7 @@ void action_zone_selected(lv_event_t *e)
     lv_obj_add_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(objects.k_container, LV_OBJ_FLAG_HIDDEN);
+    hide_k_buttons();
     lv_obj_add_state(objects.start, LV_STATE_DISABLED);
     lv_obj_remove_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
     lv_obj_clear_state(objects.stop, LV_STATE_DISABLED);

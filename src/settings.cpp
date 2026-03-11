@@ -64,12 +64,17 @@ void fill_widgets()
     lv_obj_set_ext_click_area(objects.pult, 10);
     lv_obj_set_ext_click_area(objects.debug, 10);
     lv_obj_set_ext_click_area(objects.bl, 10);
+    lv_obj_set_ext_click_area(objects.button_10, 20);
+    lv_obj_set_ext_click_area(objects.button_dec, 20);
+    lv_obj_set_ext_click_area(objects.button_reset, 20);
+    lv_obj_set_ext_click_area(objects.button_inc, 20);
+    lv_obj_set_ext_click_area(objects.button10, 20);
     // uint32_t i;
-    // uint32_t count = lv_obj_get_child_count(objects.k_container);
+    // uint32_t count = lv_obj_get_child_count(objects.k_panel);
     // for (i = 0; i < count; i++)
     // {
     //     lv_obj_t *child = lv_obj_get_child(objects.k_container, i);
-    //     lv_obj_set_ext_click_area(child, 20);
+    //     lv_obj_set_ext_click_area(child, 10);
     // }
     if (use_pult)
         lv_obj_add_state(objects.pult, LV_STATE_CHECKED);
