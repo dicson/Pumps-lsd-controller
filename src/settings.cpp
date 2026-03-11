@@ -89,9 +89,11 @@ void fill_widgets()
 
         lv_obj_t *dw = lv_obj_get_child(button, 1);
         lv_label_set_text(dw, String(dw_time[i]).c_str());
+        lv_obj_set_ext_click_area(dw, 10);
 
         lv_obj_t *cw = lv_obj_get_child(button, 2);
         lv_label_set_text(cw, String(cw_time[i]).c_str());
+        lv_obj_set_ext_click_area(cw, 10);
 
         if (cw_time[i] != 0 || dw_time[i] != 0)
         {
