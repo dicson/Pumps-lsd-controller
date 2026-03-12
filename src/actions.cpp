@@ -298,12 +298,12 @@ void action_tab_changed(lv_event_t *e)
 
 void action_update_back(lv_event_t *e)
 {
-  loadScreen(SCREEN_ID_MAIN);
+  lv_screen_load_anim(objects.main, LV_SCREEN_LOAD_ANIM_OUT_RIGHT, 1000, 0, true);
 }
 
 void action_update_relay_back(lv_event_t *e)
 {
-  loadScreen(SCREEN_ID_MAIN);
+  lv_screen_load_anim(objects.main, LV_SCREEN_LOAD_ANIM_OUT_RIGHT, 1000, 0, true);
 }
 
 void action_update(lv_event_t *e)
