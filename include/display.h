@@ -137,7 +137,7 @@ void setup_display()
 void loop_display()
 {
   lv_task_handler();
- // delay(5);
+  delay(2);
   if ((lv_display_get_inactive_time(disp) > GFX_BL_TIME * 1000) && (ledcRead(GFX_BL) != 0))
   {
     analogWrite(GFX_BL, 0);

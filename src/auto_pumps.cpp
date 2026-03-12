@@ -109,20 +109,14 @@ void periodTick()
             && !pump_finished[i]               // если зона еще не поливалась
             && !now_pumping)                   // если никакая зона не включена
         {
-            current_zone = i;             //
-            pump_state[i] = SWITCH_LEVEL; // зона поливается в данный момент
-            pump_timers[i] = millis();    // сброс счетчика полива зоны
-            now_pumping = true;           // идет полив
-            if (dw_time[i] > 0)           // если будет полив грязой
-            {                             //
-                if (!dryState)
-                    dry_water_on(); // если включена чистая вода
-            }
-            else
-            {
-                if (dryState)
-                    clear_water_on(); // если включена грязная вода
-            }
+            current_zone = i;                  //
+            pump_state[i] = SWITCH_LEVEL;      // зона поливается в данный момент
+            pump_timers[i] = millis();         // сброс счетчика полива зоны
+            now_pumping = true;                // идет полив
+            if ((dw_time[i] > 0) && !dryState) // если будет полив грязой и если включена чистая вода
+                dry_water_on();                // включить грязную
+            if ((dw_time[i] == 0) && dryState) // если будет полив чистой и если включена грязная вода
+                clear_water_on();
             if (zone_pause > 0) // если есть пауза между зонами -
                 pump_on();
             zone_on(i);

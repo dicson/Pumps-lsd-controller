@@ -14,23 +14,16 @@
 #define GFX_BL 2
 
 extern Preferences settings;
-extern int32_t GFX_BL_VALUE; // brightness
-extern int32_t GFX_BL_TIME;
-extern uint32_t dw_time[PUMP_AMOUNT];
-extern uint32_t cw_time[PUMP_AMOUNT];
-extern uint32_t zoneTimer, zone_pause;
-extern boolean pump_finished[PUMP_AMOUNT];
-extern boolean pump_state[PUMP_AMOUNT];
-extern boolean now_pumping;
+extern uint32_t dw_time[PUMP_AMOUNT], cw_time[PUMP_AMOUNT], zoneTimer, zone_pause;
+extern int32_t GFX_BL_VALUE, GFX_BL_TIME, k_dw_time;
+extern boolean pump_finished[PUMP_AMOUNT], pump_state[PUMP_AMOUNT], now_pumping;
 extern lv_obj_t *bar_list[PUMP_AMOUNT];
-extern uint32_t k_dw_time;
-extern int current_zone;
+extern int current_zone, minutes;
 extern bool use_pult;
 uint32_t water_num;
 lv_obj_t *obj;
 uint32_t start_time;
 uint32_t programm_time;
-extern int minutes;
 int8_t thisH, thisM, thisS;
 
 void hide_k_buttons()
