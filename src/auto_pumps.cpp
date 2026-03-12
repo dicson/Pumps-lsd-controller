@@ -8,29 +8,18 @@
 
 #define SWITCH_LEVEL 0 // реле: 1 - высокого уровня (или мосфет), 0 - низкого
 
-extern uint32_t dw_time[PUMP_AMOUNT];
-extern uint32_t cw_time[PUMP_AMOUNT];
-extern uint32_t pump_timers[PUMP_AMOUNT];
-extern boolean pump_state[PUMP_AMOUNT];
-extern boolean pump_finished[PUMP_AMOUNT]; // зона уже полита
-extern uint32_t zone_pause;
-extern uint32_t programm_time;
-extern uint32_t start_time;
-extern uint32_t zoneTimer;
-extern uint32_t k_dw_time;
+extern uint32_t dw_time[PUMP_AMOUNT], cw_time[PUMP_AMOUNT], pump_timers[PUMP_AMOUNT];
+extern boolean pump_state[PUMP_AMOUNT], pump_finished[PUMP_AMOUNT];
+extern uint32_t zone_pause, programm_time, start_time, zoneTimer, k_dw_time;
 extern int8_t thisH, thisM, thisS;
-extern boolean now_pumping;
-extern boolean dryState;
-extern bool show_log;
-extern bool use_pult;
+extern boolean now_pumping, dryState;
+extern bool show_log, use_pult;
 extern int minutes;
+extern QueueHandle_t esp_now_queue, esp_now_queue_from_pult;
+extern const char *Message, *Message_from_pult;
 int current_zone = 255;
 uint32_t ping_timer;
 boolean pump_water_state;
-extern QueueHandle_t esp_now_queue;
-extern QueueHandle_t esp_now_queue_from_pult;
-extern const char *Message;
-extern const char *Message_from_pult;
 void update_log();
 void update_bars();
 
@@ -105,25 +94,18 @@ void periodTick()
         if (millis() - zoneTimer < zone_pause * 1000 * minutes)
             break;                             // если пауза не закончилась - выход из цикла
         if ((dw_time[i] > 0 || cw_time[i] > 0) // если грязная или чистая вода не ноль
-                                               // если время полива зоны не ноль
             && !pump_finished[i]               // если зона еще не поливалась
             && !now_pumping)                   // если никакая зона не включена
-        {
-            current_zone = i;             //
-            pump_state[i] = SWITCH_LEVEL; // зона поливается в данный момент
-            pump_timers[i] = millis();    // сброс счетчика полива зоны
-            now_pumping = true;           // идет полив
-            if (dw_time[i] > 0)           // если будет полив грязой
-            {                             //
-                if (!dryState)
-                    dry_water_on(); // если включена чистая вода
-            }
-            else
-            {
-                if (dryState)
-                    clear_water_on(); // если включена грязная вода
-            }
-            if (zone_pause > 0) // если есть пауза между зонами -
+        {                                      //
+            current_zone = i;                  //
+            pump_state[i] = SWITCH_LEVEL;      // зона поливается в данный момент
+            pump_timers[i] = millis();         // сброс счетчика полива зоны
+            now_pumping = true;                // идет полив
+            if ((dw_time[i] > 0) && !dryState) // если будет полив грязой и если включена чистая вода
+                dry_water_on();                // включить грязную
+            if ((dw_time[i] = 0) && dryState)  // если будет полив чистой и если включена грязная вода
+                clear_water_on();              // включить чистую
+            if (zone_pause > 0)                // если есть пауза между зонами -
                 pump_on();
             zone_on(i);
         }
