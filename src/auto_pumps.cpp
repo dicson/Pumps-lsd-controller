@@ -8,29 +8,15 @@
 
 #define SWITCH_LEVEL 0 // реле: 1 - высокого уровня (или мосфет), 0 - низкого
 
-extern uint32_t dw_time[PUMP_AMOUNT];
-extern uint32_t cw_time[PUMP_AMOUNT];
-extern uint32_t pump_timers[PUMP_AMOUNT];
-extern boolean pump_state[PUMP_AMOUNT];
-extern boolean pump_finished[PUMP_AMOUNT]; // зона уже полита
-extern uint32_t zone_pause;
-extern uint32_t programm_time;
-extern uint32_t start_time;
-extern uint32_t zoneTimer;
-extern uint32_t k_dw_time;
+extern uint32_t dw_time[PUMP_AMOUNT],cw_time[PUMP_AMOUNT],pump_timers[PUMP_AMOUNT];
+extern uint32_t zone_pause,programm_time,start_time,zoneTimer,k_dw_time;
+extern boolean pump_state[PUMP_AMOUNT], pump_finished[PUMP_AMOUNT],now_pumping,dryState;
 extern int8_t thisH, thisM, thisS;
-extern boolean now_pumping;
-extern boolean dryState;
-extern bool show_log;
-extern bool use_pult;
+extern bool show_log,use_pult;
 extern int minutes;
 int current_zone = 255;
 uint32_t ping_timer;
 boolean pump_water_state;
-extern QueueHandle_t esp_now_queue;
-extern QueueHandle_t esp_now_queue_from_pult;
-extern const char *Message;
-extern const char *Message_from_pult;
 void update_log();
 void update_bars();
 

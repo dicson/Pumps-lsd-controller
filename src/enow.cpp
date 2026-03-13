@@ -12,24 +12,6 @@ const char *Message;
 const char *Message_from_pult;
 extern bool use_pult;
 
-typedef struct struct_message
-{
-  int relay;  // номер реле
-  bool state; // вкл/выкл
-} struct_message;
-
-typedef struct struct_message_pult
-{
-  bool state;             // вкл/выкл
-  bool pump_state;        // вкл/выкл
-  bool osmos_state;       // вкл/выкл
-  int current_zone;       // номер реле
-  uint32_t time_pass;     // прошло полива зоны
-  uint32_t time;          // время полива зоны
-  uint32_t prog_pass;     // прошло полива зоны
-  uint32_t programm_time; // время полива зоны
-} struct_message_pult;
-
 struct_message myData;
 struct_message fromPult;
 struct_message_pult toPult;
