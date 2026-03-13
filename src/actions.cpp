@@ -19,7 +19,7 @@ extern int32_t GFX_BL_VALUE, GFX_BL_TIME, k_dw_time;
 extern boolean pump_finished[PUMP_AMOUNT], pump_state[PUMP_AMOUNT], now_pumping;
 extern lv_obj_t *bar_list[PUMP_AMOUNT];
 extern int current_zone, minutes;
-extern bool use_pult;
+
 uint32_t water_num;
 lv_obj_t *obj;
 uint32_t start_time;

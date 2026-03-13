@@ -12,7 +12,7 @@ extern uint32_t dw_time[PUMP_AMOUNT],cw_time[PUMP_AMOUNT],pump_timers[PUMP_AMOUN
 extern uint32_t zone_pause,programm_time,start_time,zoneTimer,k_dw_time;
 extern boolean pump_state[PUMP_AMOUNT], pump_finished[PUMP_AMOUNT],now_pumping,dryState;
 extern int8_t thisH, thisM, thisS;
-extern bool show_log,use_pult;
+extern bool show_log;
 extern int minutes;
 int current_zone = 255;
 uint32_t ping_timer;

@@ -10,7 +10,6 @@ QueueHandle_t esp_now_queue;
 QueueHandle_t esp_now_queue_from_pult;
 const char *Message;
 const char *Message_from_pult;
-extern bool use_pult;
 
 struct_message myData;
 struct_message fromPult;

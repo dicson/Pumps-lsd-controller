@@ -12,6 +12,7 @@ void send_to_pult(bool state, bool pump_state, bool osmos_state, int current_zon
                   uint32_t time_pass, uint32_t time, uint32_t prog_pass, uint32_t programm_time);
 
 extern const char *Message, *Message_from_pult;
+extern bool use_pult;
 
 // // Define a queue handle
 extern QueueHandle_t esp_now_queue;
