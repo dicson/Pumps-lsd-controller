@@ -33,7 +33,7 @@ void setup_settings()
         settings.end();
         settings.begin("Settings", RW_MODE);
 
-        settings.putLong("GFX_BL_VALUE", 50);
+        settings.putLong("GFX_BL_VALUE", 80);
         settings.putLong("GFX_BL_TIME", 30);
         settings.putLong("zone_pause", 0);
         settings.putLong("k_dw_time", 100);

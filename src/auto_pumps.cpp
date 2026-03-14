@@ -243,6 +243,4 @@ void pump_loop()
     update_bars();
     // send_ping();
     update_log();
-    // lv_label_set_text(objects.error_zone, error_string.c_str());
-    // lv_obj_set_style_bg_color(objects.prog_bar, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR );
 }

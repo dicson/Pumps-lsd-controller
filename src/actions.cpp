@@ -20,11 +20,9 @@ extern boolean pump_finished[PUMP_AMOUNT], pump_state[PUMP_AMOUNT], now_pumping;
 extern lv_obj_t *bar_list[PUMP_AMOUNT];
 extern int current_zone, minutes;
 
-uint32_t water_num;
-lv_obj_t *obj;
-uint32_t start_time;
-uint32_t programm_time;
+uint32_t water_num, start_time, programm_time;
 int8_t thisH, thisM, thisS;
+lv_obj_t *obj;
 
 void hide_k_buttons()
 {
