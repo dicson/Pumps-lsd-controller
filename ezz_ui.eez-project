@@ -13100,9 +13100,9 @@
                   "objID": "661e63df-f889-465c-eb2f-67735c805f3f",
                   "type": "LVGLTextareaWidget",
                   "left": -2081,
-                  "top": 3,
+                  "top": 36,
                   "width": 326,
-                  "height": 76,
+                  "height": 60,
                   "customInputs": [],
                   "customOutputs": [],
                   "style": {
@@ -13119,9 +13119,9 @@
                   "widthUnit": "px",
                   "heightUnit": "px",
                   "children": [],
-                  "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_ON_FOCUS|SNAPPABLE",
+                  "widgetFlags": "GESTURE_BUBBLE|PRESS_LOCK|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SNAPPABLE",
                   "hiddenFlagType": "literal",
-                  "clickableFlag": true,
+                  "clickableFlag": false,
                   "clickableFlagType": "literal",
                   "flagScrollbarMode": "",
                   "flagScrollDirection": "",
@@ -13257,7 +13257,7 @@
                   "left": 104,
                   "top": -52,
                   "width": 268,
-                  "height": 76,
+                  "height": 60,
                   "customInputs": [],
                   "customOutputs": [],
                   "style": {
@@ -13274,9 +13274,9 @@
                   "widthUnit": "px",
                   "heightUnit": "px",
                   "children": [],
-                  "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_ON_FOCUS|SNAPPABLE",
+                  "widgetFlags": "GESTURE_BUBBLE|SNAPPABLE",
                   "hiddenFlagType": "literal",
-                  "clickableFlag": true,
+                  "clickableFlag": false,
                   "clickableFlagType": "literal",
                   "flagScrollbarMode": "",
                   "flagScrollDirection": "",
@@ -13293,8 +13293,6 @@
                           "bg_color": "#000000",
                           "border_color": "#000000",
                           "border_opa": 255,
-                          "grid_row_dsc_array": "",
-                          "grid_column_dsc_array": "",
                           "pad_right": 0
                         }
                       }

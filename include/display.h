@@ -1,8 +1,8 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-#include <lvgl.h>                /* 9.4.0 */
-#include <Arduino_GFX_Library.h> /* 1.6.4 */
+#include <lvgl.h>                /* 9.5.0 */
+#include <Arduino_GFX_Library.h> /* 1.6.5 */
 #include "TAMC_GT911.h"          /* 1.0.2 */
 
 // Configuration for Display and Touch
@@ -16,6 +16,8 @@
 #define TOUCH_MAP_Y1 480
 #define TOUCH_MAP_Y2 0
 #define CUSTOM_TFT_BL 2
+
+// #define DIRECT_MODE
 
 // Initialize touchscreen object
 TAMC_GT911 ts(TOUCH_GT911_SDA, TOUCH_GT911_SCL, TOUCH_GT911_INT, TOUCH_GT911_RST, max(TOUCH_MAP_X1, TOUCH_MAP_X2),
@@ -41,8 +43,8 @@ uint32_t screenWidth;
 uint32_t screenHeight;
 uint32_t bufSize;
 lv_display_t *disp;
-lv_color_t *disp_draw_buf;
-lv_color_t *disp_draw_buf1;
+static lv_color_t *disp_draw_buf;
+static lv_color_t *disp_draw_buf1;
 
 uint32_t millis_cb(void)
 {
@@ -51,7 +53,13 @@ uint32_t millis_cb(void)
 
 void my_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map)
 {
-#ifndef DIRECT_MODE
+#ifdef DIRECT_MODE
+  if (lv_disp_flush_is_last(disp))
+  {
+    // Передаем указатель на активный буфер в драйвер дисплея
+    gfx.draw16bitRGBBitmap(0, 0, (uint16_t *)px_map, 800, 480);
+  }
+#else
   uint32_t w = lv_area_get_width(area);
   uint32_t h = lv_area_get_height(area);
   gfx.draw16bitRGBBitmap(area->x1, area->y1, (uint16_t *)px_map, w, h);
@@ -76,7 +84,7 @@ void my_touchpad_read(lv_indev_t *indev, lv_indev_data_t *data)
     }
     if (ledcRead(GFX_BL) == 0)
     {
-      //ledcWrite(GFX_BL, GFX_BL_VALUE);
+      // ledcWrite(GFX_BL, GFX_BL_VALUE);
       analogWrite(GFX_BL, GFX_BL_VALUE);
       lv_indev_wait_release(indev);
     }
@@ -103,12 +111,13 @@ void setup_display()
   screenWidth = gfx.width();
   screenHeight = gfx.height();
 #ifdef DIRECT_MODE
-  bufSize = screenWidth * screenHeight;
+  bufSize = screenWidth * screenHeight * 2;
 #else
   bufSize = screenWidth * 120;
 #endif
-
-  disp_draw_buf = (lv_color_t *)malloc(bufSize * 2);
+  disp_draw_buf = (lv_color_t *)heap_caps_malloc(bufSize * 2, MALLOC_CAP_SPIRAM);
+  // disp_draw_buf1 = (lv_color_t *)heap_caps_malloc(bufSize * 2, MALLOC_CAP_SPIRAM);
+  // disp_draw_buf = (lv_color_t *)malloc(bufSize * 2);
   // disp_draw_buf1 = (lv_color_t *)malloc(bufSize * 2);
   if (!disp_draw_buf)
   {
@@ -118,14 +127,17 @@ void setup_display()
 
   disp = lv_display_create(screenWidth, screenHeight);
   lv_display_set_flush_cb(disp, my_disp_flush);
+#ifdef DIRECT_MODE
+  lv_display_set_buffers(disp, disp_draw_buf, NULL, bufSize * 2, LV_DISPLAY_RENDER_MODE_DIRECT);
+#else
   lv_display_set_buffers(disp, disp_draw_buf, NULL, bufSize * 2, LV_DISPLAY_RENDER_MODE_PARTIAL);
-
+#endif
   lv_indev_t *indev = lv_indev_create();
   lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
   lv_indev_set_read_cb(indev, my_touchpad_read);
 
-  //ledcAttach(GFX_BL, 1000, LEDC_TIMER_8_BIT);
-  // ledcWrite(GFX_BL, GFX_BL_VALUE); /* Screen brightness can be modified by adjusting this parameter. (0-255) */
+  // ledcAttach(GFX_BL, 1000, LEDC_TIMER_8_BIT);
+  //  ledcWrite(GFX_BL, GFX_BL_VALUE); /* Screen brightness can be modified by adjusting this parameter. (0-255) */
   for (int duty = 0; duty <= GFX_BL_VALUE; duty++)
   {
     analogWrite(GFX_BL, duty);
@@ -137,7 +149,7 @@ void setup_display()
 void loop_display()
 {
   lv_task_handler();
-  // delay(1);
+  // delay(2);
   if ((lv_display_get_inactive_time(disp) > GFX_BL_TIME * 1000) && (ledcRead(GFX_BL) != 0))
   {
     analogWrite(GFX_BL, 0);
