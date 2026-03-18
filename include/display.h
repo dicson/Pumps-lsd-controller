@@ -59,6 +59,25 @@ void my_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map)
     // Передаем указатель на активный буфер в драйвер дисплея
     gfx.draw16bitRGBBitmap(0, 0, (uint16_t *)px_map, 800, 480);
   }
+  /* 2. Синхронизация буферов */
+  /* В Direct Mode LVGL рисует изменения только в текущем буфере (px_map).
+     Чтобы при следующем переключении кадра изменения не пропали,
+     копируем их во второй (неактивный) буфер. */
+  if (lv_display_is_double_buffered(disp))
+  {
+    lv_color_t *inactive_buf = (px_map == (uint8_t *)disp_draw_buf) ? disp_draw_buf1 : disp_draw_buf;
+
+    uint32_t w = lv_area_get_width(area);
+    uint32_t h = lv_area_get_height(area);
+
+    // Построчное копирование измененной области
+    for (int32_t y = area->y1; y <= area->y2; y++)
+    {
+      memcpy(&inactive_buf[y * 800 + area->x1],
+             &((lv_color_t *)px_map)[y * 800 + area->x1],
+             w * sizeof(lv_color_t));
+    }
+  }
 #else
   uint32_t w = lv_area_get_width(area);
   uint32_t h = lv_area_get_height(area);
@@ -111,12 +130,12 @@ void setup_display()
   screenWidth = gfx.width();
   screenHeight = gfx.height();
 #ifdef DIRECT_MODE
-  bufSize = screenWidth * screenHeight * 2;
+  bufSize = screenWidth * screenHeight * sizeof(lv_color_t);
 #else
-  bufSize = screenWidth * 120;
+  bufSize = screenWidth * 480;
 #endif
-  disp_draw_buf = (lv_color_t *)heap_caps_malloc(bufSize * 2, MALLOC_CAP_SPIRAM);
-  // disp_draw_buf1 = (lv_color_t *)heap_caps_malloc(bufSize * 2, MALLOC_CAP_SPIRAM);
+  disp_draw_buf = (lv_color_t *)heap_caps_aligned_alloc(64, bufSize * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
+  // disp_draw_buf1 = (lv_color_t *)heap_caps_aligned_alloc(64, bufSize * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
   // disp_draw_buf = (lv_color_t *)malloc(bufSize * 2);
   // disp_draw_buf1 = (lv_color_t *)malloc(bufSize * 2);
   if (!disp_draw_buf)
@@ -128,9 +147,9 @@ void setup_display()
   disp = lv_display_create(screenWidth, screenHeight);
   lv_display_set_flush_cb(disp, my_disp_flush);
 #ifdef DIRECT_MODE
-  lv_display_set_buffers(disp, disp_draw_buf, NULL, bufSize * 2, LV_DISPLAY_RENDER_MODE_DIRECT);
+  lv_display_set_buffers(disp, disp_draw_buf, disp_draw_buf1, bufSize * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_DIRECT);
 #else
-  lv_display_set_buffers(disp, disp_draw_buf, NULL, bufSize * 2, LV_DISPLAY_RENDER_MODE_PARTIAL);
+  lv_display_set_buffers(disp, disp_draw_buf, NULL, bufSize * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_PARTIAL);
 #endif
   lv_indev_t *indev = lv_indev_create();
   lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
@@ -149,7 +168,7 @@ void setup_display()
 void loop_display()
 {
   lv_task_handler();
-  // delay(2);
+  delay(5);
   if ((lv_display_get_inactive_time(disp) > GFX_BL_TIME * 1000) && (ledcRead(GFX_BL) != 0))
   {
     analogWrite(GFX_BL, 0);

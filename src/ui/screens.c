@@ -32,6 +32,11 @@ void create_screen_main() {
     {
         lv_obj_t *parent_obj = obj;
         {
+            lv_obj_t *obj = lv_spinner_create(parent_obj);
+            lv_obj_set_pos(obj, 23, -66);
+            lv_obj_set_size(obj, 54, 53);
+        }
+        {
             // tabview
             lv_obj_t *obj = lv_tabview_create(parent_obj);
             objects.tabview = obj;
