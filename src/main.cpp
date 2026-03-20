@@ -15,8 +15,8 @@ void setup()
   setup_display();
   ui_init();
   fill_widgets();
-  pump_setup();
   esp_now_setup();
+  pump_setup();
 }
 
 void loop()

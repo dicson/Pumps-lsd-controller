@@ -8,8 +8,7 @@ constexpr uint8_t pultAddress[] = {0x58, 0x8c, 0x81, 0x52, 0xec, 0x84};      // 
 // void requestData(void *pvParameters);
 void esp_now_setup();
 void send_command(int relay, bool state);
-void send_to_pult(bool state, bool pump_state, bool osmos_state, int current_zone,
-                  uint32_t time_pass, uint32_t time, uint32_t prog_pass, uint32_t programm_time);
+
 
 extern const char *Message, *Message_from_pult;
 extern bool use_pult;
@@ -17,6 +16,7 @@ extern bool use_pult;
 // // Define a queue handle
 extern QueueHandle_t esp_now_queue;
 extern QueueHandle_t esp_now_queue_from_pult;
+extern QueueHandle_t esp_now_queue_to_pult;
 
 typedef struct struct_message
 {
@@ -36,4 +36,5 @@ typedef struct struct_message_pult
     uint32_t programm_time; // время полива зоны
 } struct_message_pult;
 
+void send_to_pult(struct_message_pult &toPult);
 #endif // ENOW_H

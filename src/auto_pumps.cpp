@@ -8,9 +8,9 @@
 
 #define SWITCH_LEVEL 0 // реле: 1 - высокого уровня (или мосфет), 0 - низкого
 
-extern uint32_t dw_time[PUMP_AMOUNT],cw_time[PUMP_AMOUNT],pump_timers[PUMP_AMOUNT];
-extern uint32_t zone_pause,programm_time,start_time,zoneTimer,k_dw_time;
-extern boolean pump_state[PUMP_AMOUNT], pump_finished[PUMP_AMOUNT],now_pumping,dryState;
+extern uint32_t dw_time[PUMP_AMOUNT], cw_time[PUMP_AMOUNT], pump_timers[PUMP_AMOUNT];
+extern uint32_t zone_pause, programm_time, start_time, zoneTimer, k_dw_time;
+extern boolean pump_state[PUMP_AMOUNT], pump_finished[PUMP_AMOUNT], now_pumping, dryState;
 extern int8_t thisH, thisM, thisS;
 extern bool show_log;
 extern int minutes;
@@ -19,6 +19,7 @@ uint32_t ping_timer;
 boolean pump_water_state;
 void update_log();
 void update_bars();
+void send_message_to_pult(void *pvParameters);
 
 void MessageToLog(String Message)
 {
@@ -82,6 +83,9 @@ void pump_setup()
     }
     pump_state[WATER_RELAY] = !SWITCH_LEVEL; // выкл
     pump_state[PUMP_RELAY] = !SWITCH_LEVEL;  // выкл
+
+    xTaskCreatePinnedToCore(send_message_to_pult /*Task function*/, "SendMessagesToPult" /* Name*/,
+                            2048 /*Stack size*/, NULL /*SParameters*/, 0 /*SPriority*/, NULL /*STask handle*/, 0);
 }
 
 void periodTick()
@@ -154,11 +158,20 @@ void flowTick()
     }
 }
 
-void vOneTimeTask(void *pvParameters)
+void send_message_to_pult(void *pvParameters)
 {
-    // Serial.println("Executing one-time task");
-    send_to_pult(false, pump_water_state, !dryState, 0, 0, 0, 0, 0);
-    vTaskDelete(NULL);
+    struct_message_pult message;
+
+    while (true)
+    {
+        // Ждем данные из очереди (блокировка до появления данных)
+        if (xQueueReceive(esp_now_queue_to_pult, &message, portMAX_DELAY) == pdPASS)
+        {
+            // Передаем полученную структуру в функцию
+            send_to_pult(message);
+            vTaskDelay(pdMS_TO_TICKS(50));
+        }
+    }
 }
 
 void update_bars()
@@ -170,9 +183,8 @@ void update_bars()
             return;
         if (millis() - ping_timer < 1000)
             return;
-        xTaskCreatePinnedToCore(
-            vOneTimeTask /*Task function*/, "OneTimeTask" /* Name*/, 2048 /*Stack size*/, NULL /*SParameters*/,
-            0 /*SPriority*/, NULL /*STask handle*/, 0);
+        static struct_message_pult msg = {false, pump_water_state, !dryState, 0, 0, 0, 0, 0};
+        xQueueSend(esp_now_queue_to_pult, &msg, 0);
         ping_timer = millis();
         return;
     }
@@ -190,11 +202,12 @@ void update_bars()
     int8_t M = floor((prog_pass / 1000 - (long)H * 3600) / 60);
     int8_t S = prog_pass / 1000 - (long)H * 3600 - M * 60;
     lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d", H, M, S, thisH, thisM, thisS);
-    // }
     lv_bar_set_value(objects.prog_bar, prog_pass, LV_ANIM_OFF);
     if (millis() - ping_timer < 1000)
         return;
-    send_to_pult(true, pump_water_state, !dryState, current_zone, time_pass, time, prog_pass, programm_time);
+   
+    struct_message_pult message1 = {true, pump_water_state, !dryState, current_zone, time_pass, time, prog_pass, programm_time};
+    xQueueSend(esp_now_queue_to_pult, &message1, 0);
     ping_timer = millis();
 }
 
