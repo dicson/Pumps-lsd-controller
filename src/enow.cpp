@@ -80,7 +80,7 @@ void esp_now_setup()
   {
     Serial.println("Failed to add peer");
   }
-  esp_now_queue = xQueueCreate(50, sizeof(Message));                     // Queue for 10 messages
+  esp_now_queue = xQueueCreate(10, sizeof(Message));                     // Queue for 10 messages
   esp_now_queue_from_pult = xQueueCreate(10, sizeof(Message_from_pult)); // Queue for 10 messages
   esp_now_queue_to_pult = xQueueCreate(10, sizeof(struct_message_pult)); // Queue for 10 messages
 }
@@ -105,29 +105,10 @@ void send_command(int relay, bool state)
 
 void send_to_pult(struct_message_pult &toPult)
 {
-  // Set values to send
-  // toPult.state = state;
-  // toPult.pump_state = pump_state;
-  // toPult.osmos_state = osmos_state;
-  // toPult.current_zone = current_zone;
-  // toPult.time_pass = time_pass;
-  // toPult.time = time;
-  // toPult.prog_pass = prog_pass;
-  // toPult.programm_time = programm_time;
-  // Send message via ESP-NOW
   esp_err_t result = esp_now_send(pultAddress, (uint8_t *)&toPult, sizeof(toPult));
 
   if (result == ESP_OK)
   {
-    //  Serial.println("Sent with success(pult)");
-    //  Serial.println(state);
-    //  Serial.println(pump_state);
-    //  Serial.println(osmos_state);
-    //  Serial.println(current_zone);
-    //  Serial.println(time_pass);
-    //  Serial.println(time);
-    //  Serial.println(prog_pass);
-    //  Serial.println(programm_time);
   }
   else
   {

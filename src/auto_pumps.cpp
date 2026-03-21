@@ -205,22 +205,11 @@ void update_bars()
     lv_bar_set_value(objects.prog_bar, prog_pass, LV_ANIM_OFF);
     if (millis() - ping_timer < 1000)
         return;
-   
+
     struct_message_pult message1 = {true, pump_water_state, !dryState, current_zone, time_pass, time, prog_pass, programm_time};
     xQueueSend(esp_now_queue_to_pult, &message1, 0);
     ping_timer = millis();
 }
-
-// void send_ping()
-// {
-//     if (current_zone == 255 && lv_obj_has_flag(objects.relay_zone_led, LV_OBJ_FLAG_HIDDEN))
-//     {
-//         if (millis() - ping_timer < 1000)
-//             return;
-//         send_command(0, false);
-//         ping_timer = millis();
-//     }
-// }
 
 void update_log()
 {
@@ -241,9 +230,7 @@ void update_log()
     if (xQueueReceive(esp_now_queue_from_pult, &Message_from_pult, 0) == pdTRUE)
     {
         if (Message_from_pult == "start")
-        {
             action_start(NULL);
-        }
         if (Message_from_pult == "stop")
             action_stop(NULL);
     }
@@ -254,6 +241,5 @@ void pump_loop()
     periodTick();
     flowTick();
     update_bars();
-    // send_ping();
     update_log();
 }
