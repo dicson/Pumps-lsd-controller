@@ -13,6 +13,13 @@
 #define RO_MODE true
 #define GFX_BL 2
 
+static constexpr uint32_t MS_PER_SECOND = 1000;
+static constexpr uint16_t MIN_K_DW_TIME = 50;
+static constexpr uint16_t MAX_K_DW_TIME = 200;
+static constexpr uint16_t K_DW_STEP = 10;
+static constexpr uint16_t MIN_GFX_BL_TIME = 10;
+static constexpr uint16_t SCREEN_ANIM_DURATION_MS = 1000;
+
 extern Preferences settings;
 extern uint32_t dw_time[PUMP_AMOUNT], cw_time[PUMP_AMOUNT], zoneTimer, zone_pause;
 extern int32_t GFX_BL_VALUE, GFX_BL_TIME, k_dw_time;
@@ -20,7 +27,8 @@ extern boolean pump_finished[PUMP_AMOUNT], pump_state[PUMP_AMOUNT], now_pumping;
 extern lv_obj_t *bar_list[PUMP_AMOUNT];
 extern int current_zone, minutes;
 
-uint32_t water_num, start_time, programm_time;
+uint32_t water_num, start_time;
+int32_t programm_time;
 int8_t thisH, thisM, thisS;
 lv_obj_t *obj;
 
@@ -114,11 +122,11 @@ void action_pause_ready(lv_event_t *e)
 {
   lv_obj_add_flag(objects.settings_kb, LV_OBJ_FLAG_HIDDEN);
   const char *txt = lv_textarea_get_text(objects.pause);
-  zone_pause = atol(lv_textarea_get_text(objects.pause));
+  zone_pause = atol(txt);
   if (String(txt) == "")
   {
     zone_pause = 0;
-    lv_textarea_set_text(objects.pause, String("0").c_str());
+    lv_textarea_set_text(objects.pause, "0");
   }
   // lv_obj_clear_state(objects.bl_idle, LV_STATE_FOCUSED);
   settings.begin("Settings", RW_MODE);
@@ -130,10 +138,10 @@ void action_idle_time_unfocused(lv_event_t *e)
 {
   lv_obj_add_flag(objects.settings_kb, LV_OBJ_FLAG_HIDDEN);
   GFX_BL_TIME = atol(lv_textarea_get_text(objects.bl_idle));
-  if (GFX_BL_TIME < 10)
+  if (GFX_BL_TIME < MIN_GFX_BL_TIME)
   {
-    GFX_BL_TIME = 10;
-    lv_textarea_set_text(objects.bl_idle, String("10").c_str());
+    GFX_BL_TIME = MIN_GFX_BL_TIME;
+    lv_textarea_set_text(objects.bl_idle, String(MIN_GFX_BL_TIME).c_str());
   }
   // lv_obj_clear_state(objects.bl_idle, LV_STATE_FOCUSED);
   settings.begin("Settings", RW_MODE);
@@ -145,6 +153,30 @@ void action_idle_time_unfocused(lv_event_t *e)
 void action_start(lv_event_t *e)
 {
   start_time = millis();
+  zoneTimer = millis() - zone_pause * MS_PER_SECOND * minutes; // убираем паузу перед запуском полива
+  now_pumping = true;
+  programm_time = 0;
+  for (byte i = 0; i < PUMP_AMOUNT; i++) // считаем время программы
+  {                                      // пробегаем по всем помпам
+    pump_finished[i] = false;            // сброс переменных политых зон(старт полива)
+    if (dw_time[i] > 0 || cw_time[i] > 0)
+    {
+      uint32_t dw_t = dw_time[i] * MS_PER_SECOND * minutes / 100 * k_dw_time;
+      programm_time = programm_time + dw_t + (cw_time[i] + zone_pause) * MS_PER_SECOND * minutes;
+    }
+    lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
+    lv_bar_set_value(bar, 0, LV_ANIM_OFF);
+  }
+  programm_time = programm_time - (zone_pause * MS_PER_SECOND * minutes);
+  thisH = floor((long)programm_time / 3600 / MS_PER_SECOND); // секунды в часы
+  thisM = floor((programm_time / MS_PER_SECOND - (long)thisH * 3600) / 60);
+  thisS = programm_time / MS_PER_SECOND - (long)thisH * 3600 - thisM * 60;
+  now_pumping = false;
+  if (programm_time <= 0)
+    return;
+  pump_on();
+  lv_bar_set_range(objects.prog_bar, 0, programm_time);
+  lv_obj_remove_flag(objects.prog_bar, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_flag(objects.tab_1, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
@@ -155,29 +187,6 @@ void action_start(lv_event_t *e)
   lv_obj_clear_state(objects.stop, LV_STATE_DISABLED);
   lv_obj_remove_flag(objects.spinner, LV_OBJ_FLAG_HIDDEN);
   lv_bar_set_value(objects.prog_bar, 0, LV_ANIM_OFF);
-
-  zoneTimer = millis() - zone_pause * 1000 * minutes; // убираем паузу перед запуском полива
-  pump_on();
-  now_pumping = true;
-  programm_time = 0;
-  for (byte i = 0; i < PUMP_AMOUNT; i++) // считаем время программы
-  {                                      // пробегаем по всем помпам
-    pump_finished[i] = false;            // сброс переменных политых зон(старт полива)
-    if (dw_time[i] > 0 || cw_time[i] > 0)
-    {
-      uint32_t dw_t = dw_time[i] * 1000 * minutes / 100 * k_dw_time;
-      programm_time = programm_time + dw_t + (cw_time[i] + zone_pause) * 1000 * minutes;
-    }
-    lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
-    lv_bar_set_value(bar, 0, LV_ANIM_OFF);
-  }
-  programm_time = programm_time - (zone_pause * 1000 * minutes);
-  thisH = floor((long)programm_time / 3600 / 1000); // секунды в часы
-  thisM = floor((programm_time / 1000 - (long)thisH * 3600) / 60);
-  thisS = programm_time / 1000 - (long)thisH * 3600 - thisM * 60;
-  lv_bar_set_range(objects.prog_bar, 0, programm_time);
-  lv_obj_remove_flag(objects.prog_bar, LV_OBJ_FLAG_HIDDEN);
-  now_pumping = false;
 }
 
 void action_stop(lv_event_t *e)
@@ -232,9 +241,9 @@ void action_decrement_10(lv_event_t *e)
   lv_event_code_t code = lv_event_get_code(e);
   if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT)
   {
-    k_dw_time = k_dw_time - 10;
-    if (k_dw_time < 50)
-      k_dw_time = 50;
+    k_dw_time = k_dw_time - K_DW_STEP;
+    if (k_dw_time < MIN_K_DW_TIME)
+      k_dw_time = MIN_K_DW_TIME;
     save_k_dw_time();
   }
 }
@@ -244,7 +253,7 @@ void action_spinbox_decrement_event_cb(lv_event_t *e)
   lv_event_code_t code = lv_event_get_code(e);
   if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT)
   {
-    if (k_dw_time > 50)
+    if (k_dw_time > MIN_K_DW_TIME)
     {
       --k_dw_time;
       save_k_dw_time();
@@ -257,9 +266,9 @@ void action_increment_10(lv_event_t *e)
   lv_event_code_t code = lv_event_get_code(e);
   if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT)
   {
-    k_dw_time = k_dw_time + 10;
-    if (k_dw_time > 200)
-      k_dw_time = 200;
+    k_dw_time = k_dw_time + K_DW_STEP;
+    if (k_dw_time > MAX_K_DW_TIME)
+      k_dw_time = MAX_K_DW_TIME;
     save_k_dw_time();
   }
 }
@@ -269,7 +278,7 @@ void action_spinbox_increment_event_cb(lv_event_t *e)
   lv_event_code_t code = lv_event_get_code(e);
   if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT)
   {
-    if (k_dw_time < 200)
+    if (k_dw_time < MAX_K_DW_TIME)
     {
       ++k_dw_time;
       save_k_dw_time();
@@ -279,7 +288,7 @@ void action_spinbox_increment_event_cb(lv_event_t *e)
 
 void action_k_reset(lv_event_t *e)
 {
-  k_dw_time = 100;
+  k_dw_time = DEFAULT_K_DW_TIME;
   save_k_dw_time();
 }
 
@@ -289,12 +298,12 @@ void action_tab_changed(lv_event_t *e)
 
 void action_update_back(lv_event_t *e)
 {
-  lv_screen_load_anim(objects.main, LV_SCREEN_LOAD_ANIM_OUT_RIGHT, 1000, 0, true);
+  lv_screen_load_anim(objects.main, LV_SCREEN_LOAD_ANIM_OUT_RIGHT, SCREEN_ANIM_DURATION_MS, 0, true);
 }
 
 void action_update_relay_back(lv_event_t *e)
 {
-  lv_screen_load_anim(objects.main, LV_SCREEN_LOAD_ANIM_OUT_RIGHT, 1000, 0, true);
+  lv_screen_load_anim(objects.main, LV_SCREEN_LOAD_ANIM_OUT_RIGHT, SCREEN_ANIM_DURATION_MS, 0, true);
 }
 
 void action_update(lv_event_t *e)
@@ -345,7 +354,7 @@ void action_zone_selected(lv_event_t *e)
       lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
       lv_bar_set_value(bar, 0, LV_ANIM_OFF);
     }
-    zoneTimer = millis() - zone_pause * 1000 * minutes; // убираем паузу перед запуском полива
+    zoneTimer = millis() - zone_pause * MS_PER_SECOND * minutes; // убираем паузу перед запуском полива
     pump_on();
   }
   programm_time = 0;
@@ -354,17 +363,17 @@ void action_zone_selected(lv_event_t *e)
     lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
     if ((dw_time[i] > 0 || cw_time[i] > 0) && pump_finished[i] == false)
     {
-      uint32_t dw_t = dw_time[i] * 1000 * minutes / 100 * k_dw_time;
-      programm_time = programm_time + dw_t + (cw_time[i] + zone_pause) * 1000 * minutes;
+      uint32_t dw_t = dw_time[i] * MS_PER_SECOND * minutes / 100 * k_dw_time;
+      programm_time = programm_time + dw_t + (cw_time[i] + zone_pause) * MS_PER_SECOND * minutes;
       lv_obj_remove_flag(bar, LV_OBJ_FLAG_HIDDEN);
     }
     else
       lv_obj_add_flag(bar, LV_OBJ_FLAG_HIDDEN);
   }
-  programm_time = programm_time - (zone_pause * 1000 * minutes);
-  thisH = floor((long)programm_time / 3600 / 1000); // секунды в часы
-  thisM = floor((programm_time / 1000 - (long)thisH * 3600) / 60);
-  thisS = programm_time / 1000 - (long)thisH * 3600 - thisM * 60;
+  programm_time = programm_time - (zone_pause * MS_PER_SECOND * minutes);
+  thisH = floor((long)programm_time / 3600 / MS_PER_SECOND); // секунды в часы
+  thisM = floor((programm_time / MS_PER_SECOND - (long)thisH * 3600) / 60);
+  thisS = programm_time / MS_PER_SECOND - (long)thisH * 3600 - thisM * 60;
   lv_bar_set_range(objects.prog_bar, 0, programm_time);
 }
 

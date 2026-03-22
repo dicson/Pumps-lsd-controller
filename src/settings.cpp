@@ -16,8 +16,8 @@ uint32_t zone_pause;                // пауза между зонами
 uint32_t zoneTimer;                 // таймер паузы
 boolean now_pumping = false;        // идет полив
 boolean dryState = true;            // какой клапан открыт. true - dry(грязная) false - чистая
-uint32_t k_dw_time = 100;           // коэффициент
-int minutes = 60;                   // отладка
+uint32_t k_dw_time = DEFAULT_K_DW_TIME;           // коэффициент
+int minutes = DEFAULT_MINUTES;                   // отладка
 bool use_pult;
 extern void update_zone_list();
 
@@ -33,14 +33,14 @@ void setup_settings()
         settings.end();
         settings.begin("Settings", RW_MODE);
 
-        settings.putLong("GFX_BL_VALUE", 80);
-        settings.putLong("GFX_BL_TIME", 30);
-        settings.putLong("zone_pause", 0);
-        settings.putLong("k_dw_time", 100);
+        settings.putLong("GFX_BL_VALUE", DEFAULT_GFX_BL_VALUE);
+        settings.putLong("GFX_BL_TIME", DEFAULT_GFX_BL_TIME);
+        settings.putLong("zone_pause", DEFAULT_ZONE_PAUSE);
+        settings.putLong("k_dw_time", DEFAULT_K_DW_TIME);
         uint32_t dw_time[PUMP_AMOUNT] = {0};
-        settings.putBytes("dw_time", dw_time, PUMP_AMOUNT * 4);
+        settings.putBytes("dw_time", dw_time, PUMP_AMOUNT * sizeof(uint32_t));
         uint32_t cw_time[PUMP_AMOUNT] = {0};
-        settings.putBytes("cw_time", cw_time, PUMP_AMOUNT * 4);
+        settings.putBytes("cw_time", cw_time, PUMP_AMOUNT * sizeof(uint32_t));
         settings.putBool("use_pult", false);
 
         settings.putBool("nvsInit", true);
@@ -51,7 +51,7 @@ void setup_settings()
     zone_pause = settings.getLong("zone_pause");
     GFX_BL_VALUE = settings.getLong("GFX_BL_VALUE");
     GFX_BL_TIME = settings.getLong("GFX_BL_TIME");
-    k_dw_time = settings.getLong("k_dw_time", 100);
+    k_dw_time = settings.getLong("k_dw_time");
     use_pult = settings.getBool("use_pult");
     settings.getBytes("dw_time", dw_time, PUMP_AMOUNT * 4);
     settings.getBytes("cw_time", cw_time, PUMP_AMOUNT * 4);
@@ -60,15 +60,15 @@ void setup_settings()
 
 void fill_widgets()
 {
-    /* Extend the clickable area by 10 pixels on all sides */
-    lv_obj_set_ext_click_area(objects.pult, 10);
-    lv_obj_set_ext_click_area(objects.debug, 10);
-    lv_obj_set_ext_click_area(objects.bl, 10);
-    lv_obj_set_ext_click_area(objects.button_10, 20);
-    lv_obj_set_ext_click_area(objects.button_dec, 20);
-    lv_obj_set_ext_click_area(objects.button_reset, 20);
-    lv_obj_set_ext_click_area(objects.button_inc, 20);
-    lv_obj_set_ext_click_area(objects.button10, 20);
+    /* Extend the clickable area by constants */
+    lv_obj_set_ext_click_area(objects.pult, EXT_CLICK_AREA_SMALL);
+    lv_obj_set_ext_click_area(objects.debug, EXT_CLICK_AREA_SMALL);
+    lv_obj_set_ext_click_area(objects.bl, EXT_CLICK_AREA_SMALL);
+    lv_obj_set_ext_click_area(objects.button_10, EXT_CLICK_AREA_LARGE);
+    lv_obj_set_ext_click_area(objects.button_dec, EXT_CLICK_AREA_LARGE);
+    lv_obj_set_ext_click_area(objects.button_reset, EXT_CLICK_AREA_LARGE);
+    lv_obj_set_ext_click_area(objects.button_inc, EXT_CLICK_AREA_LARGE);
+    lv_obj_set_ext_click_area(objects.button10, EXT_CLICK_AREA_LARGE);
     // uint32_t i;
     // uint32_t count = lv_obj_get_child_count(objects.k_panel);
     // for (i = 0; i < count; i++)
@@ -89,19 +89,19 @@ void fill_widgets()
 
         lv_obj_t *dw = lv_obj_get_child(button, 1);
         lv_label_set_text(dw, String(dw_time[i]).c_str());
-        lv_obj_set_ext_click_area(dw, 10);  /* Extend the clickable area by 10 pixels on all sides */
+        lv_obj_set_ext_click_area(dw, EXT_CLICK_AREA_SMALL);  /* Extend the clickable area by constant */
 
         lv_obj_t *cw = lv_obj_get_child(button, 2);
         lv_label_set_text(cw, String(cw_time[i]).c_str());
-        lv_obj_set_ext_click_area(cw, 10);  /* Extend the clickable area by 10 pixels on all sides */
+        lv_obj_set_ext_click_area(cw, EXT_CLICK_AREA_SMALL);  /* Extend the clickable area by constant */
 
         if (cw_time[i] != 0 || dw_time[i] != 0)
         {
-            lv_obj_set_style_bg_opa(button, 255, LV_PART_MAIN);
+            lv_obj_set_style_bg_opa(button, FULL_OPACITY, LV_PART_MAIN);
         }
         else
         {
-            lv_obj_set_style_bg_opa(button, 100, LV_PART_MAIN);
+            lv_obj_set_style_bg_opa(button, LOW_OPACITY, LV_PART_MAIN);
         }
         lv_task_handler();
     }
