@@ -192,15 +192,14 @@ void update_bars()
     uint32_t dw_t = dw_time[current_zone] * 1000 * minutes / 100 * k_dw_time;
     uint32_t time = dw_t + (cw_time[current_zone] + zone_pause) * 1000 * minutes;
     if (programm_time - prog_pass <= dw_t + cw_time[current_zone] * 1000 * minutes)
-    {
         time = time - zone_pause * 1000;
-    }
     uint32_t time_pass = millis() - pump_timers[current_zone];
     lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, current_zone);
     lv_bar_set_value(bar, map(time_pass, 0, time, 0, 100), LV_ANIM_ON);
-    int8_t H = floor((long)prog_pass / 3600 / 1000); // секунды в часы
-    int8_t M = floor((prog_pass / 1000 - (long)H * 3600) / 60);
-    int8_t S = prog_pass / 1000 - (long)H * 3600 - M * 60;
+    unsigned long allSeconds = prog_pass / 1000;
+    int8_t H = (allSeconds / 3600) % 24;
+    int8_t M = (allSeconds / 60) % 60;
+    int8_t S = allSeconds % 60; // Секунды
     lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d", H, M, S, thisH, thisM, thisS);
     lv_bar_set_value(objects.prog_bar, prog_pass, LV_ANIM_OFF);
     if (millis() - ping_timer < 1000)
@@ -215,7 +214,7 @@ void update_log()
 {
     if (xQueueReceive(esp_now_queue, &Message, 0) == pdTRUE)
     {
-        if (Message == " - не выполнено\r\n")
+        if (Message == "esp_now_send_fail")
         {
             ledcWrite(2, 70);
             lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);

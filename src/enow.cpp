@@ -39,7 +39,7 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
 // callback when data is sent
 void OnDataSent(const esp_now_recv_info_t *info, esp_now_send_status_t status)
 {
-  const char *Message = status == ESP_NOW_SEND_SUCCESS ? "\r\n" : " - не выполнено\r\n";
+  const char *Message = status == ESP_NOW_SEND_SUCCESS ? "ok" : "esp_now_send_fail";
   const uint8_t *mac_addr = info->src_addr;
   if (!memcmp(mac_addr, broadcastAddress, sizeof(mac_addr)))
     xQueueSendFromISR(esp_now_queue, &Message, NULL); // Send to queue from ISR

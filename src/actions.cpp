@@ -32,6 +32,14 @@ int32_t programm_time;
 int8_t thisH, thisM, thisS;
 lv_obj_t *obj;
 
+void millis_to_HMS(unsigned long ms)
+{
+  unsigned long allSeconds = ms / 1000;
+  thisH = (allSeconds / 3600) % 24; // Часы
+  thisM = (allSeconds / 60) % 60;   // Минуты
+  thisS = allSeconds % 60;          // Секунды
+}
+
 void hide_k_buttons()
 {
   lv_obj_add_flag(objects.button10, LV_OBJ_FLAG_HIDDEN);
@@ -168,9 +176,7 @@ void action_start(lv_event_t *e)
     lv_bar_set_value(bar, 0, LV_ANIM_OFF);
   }
   programm_time = programm_time - (zone_pause * MS_PER_SECOND * minutes);
-  thisH = floor((long)programm_time / 3600 / MS_PER_SECOND); // секунды в часы
-  thisM = floor((programm_time / MS_PER_SECOND - (long)thisH * 3600) / 60);
-  thisS = programm_time / MS_PER_SECOND - (long)thisH * 3600 - thisM * 60;
+  millis_to_HMS(programm_time);
   now_pumping = false;
   if (programm_time <= 0)
     return;
@@ -209,9 +215,7 @@ void action_stop(lv_event_t *e)
     }
     pump_finished[i] = true;
     if (pump_state[i] == SWITCH_LEVEL)
-    {
       pump_state[i] = !SWITCH_LEVEL;
-    }
   }
   now_pumping = false;
   // lv_bar_set_value(objects.prog_bar, 0, LV_ANIM_OFF);
@@ -371,9 +375,7 @@ void action_zone_selected(lv_event_t *e)
       lv_obj_add_flag(bar, LV_OBJ_FLAG_HIDDEN);
   }
   programm_time = programm_time - (zone_pause * MS_PER_SECOND * minutes);
-  thisH = floor((long)programm_time / 3600 / MS_PER_SECOND); // секунды в часы
-  thisM = floor((programm_time / MS_PER_SECOND - (long)thisH * 3600) / 60);
-  thisS = programm_time / MS_PER_SECOND - (long)thisH * 3600 - thisM * 60;
+  millis_to_HMS(programm_time);
   lv_bar_set_range(objects.prog_bar, 0, programm_time);
 }
 
