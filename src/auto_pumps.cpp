@@ -191,6 +191,8 @@ void update_bars()
     uint32_t prog_pass = millis() - start_time;
     uint32_t dw_t = dw_time[current_zone] * 1000 * minutes / 100 * k_dw_time;
     uint32_t time = dw_t + (cw_time[current_zone] + zone_pause) * 1000 * minutes;
+    if (programm_time < prog_pass)
+        prog_pass = programm_time;
     if (programm_time - prog_pass <= dw_t + cw_time[current_zone] * 1000 * minutes)
         time = time - zone_pause * 1000;
     uint32_t time_pass = millis() - pump_timers[current_zone];
@@ -210,7 +212,6 @@ void update_bars()
     ping_timer = millis();
 }
 
-
 bool system_error_state = false;
 
 void update_log()
@@ -220,7 +221,8 @@ void update_log()
     {
         if (msg == EnowMessage::SEND_FAIL)
         {
-            if (!system_error_state) {
+            if (!system_error_state)
+            {
                 system_error_state = true;
                 ledcWrite(2, 70);
                 lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
@@ -229,7 +231,7 @@ void update_log()
             }
         }
     }
-    
+
     EnowMessage pultMsg;
     if (xQueueReceive(esp_now_queue_from_pult, &pultMsg, 0) == pdTRUE)
     {
@@ -242,9 +244,10 @@ void update_log()
 
 void pump_loop()
 {
-    if (system_error_state) {
+    if (system_error_state)
+    {
         // In error state, we only allow UI updates or critical checks, no pump logic
-        return; 
+        return;
     }
     periodTick();
     flowTick();
