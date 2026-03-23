@@ -1,12 +1,11 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-#include <lvgl.h>                /* 9.5.0 */
-#include <Arduino_GFX_Library.h> /* 1.6.5 */
-#include "TAMC_GT911.h"          /* 1.0.2 */
+#include <lvgl.h>
+#include <Arduino_GFX_Library.h>
+#include "TAMC_GT911.h"
 
-// Configuration for Display and Touch
-// #define TFT_BL 2
+// --- Hardware Configuration ---
 #define TOUCH_GT911_SCL 20
 #define TOUCH_GT911_SDA 19
 #define TOUCH_GT911_INT -1
@@ -16,163 +15,18 @@
 #define TOUCH_MAP_Y1 480
 #define TOUCH_MAP_Y2 0
 #define CUSTOM_TFT_BL 2
-
-// #define DIRECT_MODE
-
-// Initialize touchscreen object
-TAMC_GT911 ts(TOUCH_GT911_SDA, TOUCH_GT911_SCL, TOUCH_GT911_INT, TOUCH_GT911_RST, max(TOUCH_MAP_X1, TOUCH_MAP_X2),
-              max(TOUCH_MAP_Y1, TOUCH_MAP_Y2));
-
-extern int32_t GFX_BL_VALUE; // brightness
-extern int32_t GFX_BL_TIME;  // idle time (sec)
-
 #define GFX_BL 2
 
-Arduino_ESP32RGBPanel rgbpanel(
-    41 /* DE */, 40 /* VSYNC */, 39 /* HSYNC */, 42 /* PCLK */,
-    14 /* R0 */, 21 /* R1 */, 47 /* R2 */, 48 /* R3 */, 45 /* R4 */,
-    9 /* G0 */, 46 /* G1 */, 3 /* G2 */, 8 /* G3 */, 16 /* G4 */, 1 /* G5 */,
-    15 /* B0 */, 7 /* B1 */, 6 /* B2 */, 5 /* B3 */, 4 /* B4 */,
-    0 /* hsync_polarity */, 210 /* hsync_front_porch */, 30 /* hsync_pulse_width */, 16 /* hsync_back_porch */,
-    0 /* vsync_polarity */, 22 /* vsync_front_porch */, 13 /* vsync_pulse_width */, 10 /* vsync_back_porch */,
-    true /* pclk_active_neg */, 12000000 /* prefer_speed */);
+// --- External variables (defined in settings or elsewhere) ---
+extern int32_t GFX_BL_VALUE; 
+extern int32_t GFX_BL_TIME;  
 
-Arduino_RGB_Display gfx(800, 480, &rgbpanel, 0 /* rotation */, true);
+// --- Function Prototypes ---
+void setup_display();
+void loop_display();
 
-uint32_t screenWidth;
-uint32_t screenHeight;
-uint32_t bufSize;
-lv_display_t *disp;
-static lv_color_t *disp_draw_buf;
-static lv_color_t *disp_draw_buf1;
-
-uint32_t millis_cb(void)
-{
-  return millis();
-}
-
-void my_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map)
-{
-#ifdef DIRECT_MODE
-  if (lv_disp_flush_is_last(disp))
-  {
-    // Передаем указатель на активный буфер в драйвер дисплея
-    gfx.draw16bitRGBBitmap(0, 0, (uint16_t *)px_map, 800, 480);
-  }
-  /* 2. Синхронизация буферов */
-  /* В Direct Mode LVGL рисует изменения только в текущем буфере (px_map).
-     Чтобы при следующем переключении кадра изменения не пропали,
-     копируем их во второй (неактивный) буфер. */
-  if (lv_display_is_double_buffered(disp))
-  {
-    lv_color_t *inactive_buf = (px_map == (uint8_t *)disp_draw_buf) ? disp_draw_buf1 : disp_draw_buf;
-
-    uint32_t w = lv_area_get_width(area);
-    uint32_t h = lv_area_get_height(area);
-
-    // Построчное копирование измененной области
-    for (int32_t y = area->y1; y <= area->y2; y++)
-    {
-      memcpy(&inactive_buf[y * 800 + area->x1],
-             &((lv_color_t *)px_map)[y * 800 + area->x1],
-             w * sizeof(lv_color_t));
-    }
-  }
-#else
-  uint32_t w = lv_area_get_width(area);
-  uint32_t h = lv_area_get_height(area);
-  gfx.draw16bitRGBBitmap(area->x1, area->y1, (uint16_t *)px_map, w, h);
-#endif
-  lv_disp_flush_ready(disp);
-}
-
-void my_touchpad_read(lv_indev_t *indev, lv_indev_data_t *data)
-{
-  ts.read();        // Read touch data
-  if (ts.isTouched) // Check if the screen is touched
-  {
-    for (int i = 0; i < ts.touches; i++) // Loop through all detected touch points
-    {
-      // We can use the first touch (or other logic for multiple touches)
-      if (i == 0)
-      {
-        data->state = LV_INDEV_STATE_PRESSED;
-        data->point.x = ts.points[i].x; // Get x coordinate
-        data->point.y = ts.points[i].y; // Get y coordinate
-      }
-    }
-    if (ledcRead(GFX_BL) == 0)
-    {
-      // ledcWrite(GFX_BL, GFX_BL_VALUE);
-      analogWrite(GFX_BL, GFX_BL_VALUE);
-      lv_indev_wait_release(indev);
-    }
-  }
-  else
-  {
-    data->state = LV_INDEV_STATE_RELEASED;
-  }
-}
-
-void setup_display()
-{
-  Serial.println("Initializing display...");
-
-  gfx.begin();
-  gfx.fillScreen(0x000000);
-
-  ts.begin(); // Initialize the touchscreen
-  ts.setRotation(1);
-
-  lv_init();
-  lv_tick_set_cb(millis_cb);
-
-  screenWidth = gfx.width();
-  screenHeight = gfx.height();
-#ifdef DIRECT_MODE
-  bufSize = screenWidth * screenHeight * sizeof(lv_color_t);
-#else
-  bufSize = screenWidth * 480;
-#endif
-  disp_draw_buf = (lv_color_t *)heap_caps_aligned_alloc(64, bufSize * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
-  // disp_draw_buf1 = (lv_color_t *)heap_caps_aligned_alloc(64, bufSize * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
-  // disp_draw_buf = (lv_color_t *)malloc(bufSize * 2);
-  // disp_draw_buf1 = (lv_color_t *)malloc(bufSize * 2);
-  if (!disp_draw_buf)
-  {
-    Serial.println("Failed to allocate display buffer!");
-    return;
-  }
-
-  disp = lv_display_create(screenWidth, screenHeight);
-  lv_display_set_flush_cb(disp, my_disp_flush);
-#ifdef DIRECT_MODE
-  lv_display_set_buffers(disp, disp_draw_buf, disp_draw_buf1, bufSize * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_DIRECT);
-#else
-  lv_display_set_buffers(disp, disp_draw_buf, NULL, bufSize * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_PARTIAL);
-#endif
-  lv_indev_t *indev = lv_indev_create();
-  lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
-  lv_indev_set_read_cb(indev, my_touchpad_read);
-
-  // ledcAttach(GFX_BL, 1000, LEDC_TIMER_8_BIT);
-  //  ledcWrite(GFX_BL, GFX_BL_VALUE); /* Screen brightness can be modified by adjusting this parameter. (0-255) */
-  for (int duty = 0; duty <= GFX_BL_VALUE; duty++)
-  {
-    analogWrite(GFX_BL, duty);
-    delay(4);
-  }
-  Serial.println("Display setup complete.");
-}
-
-void loop_display()
-{
-  lv_task_handler();
-  delay(5);
-  if ((lv_display_get_inactive_time(disp) > GFX_BL_TIME * 1000) && (ledcRead(GFX_BL) != 0))
-  {
-    analogWrite(GFX_BL, 0);
-  }
-}
+// --- Hardware Objects (externally accessible if needed) ---
+extern Arduino_RGB_Display gfx;
+extern TAMC_GT911 ts;
 
 #endif // DISPLAY_H
