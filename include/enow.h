@@ -1,22 +1,29 @@
 #ifndef ENOW_H
 #define ENOW_H
 #include <stdint.h>
-//  uint8_t broadcastAddress[] = {0x68, 0x25, 0xDD, 0xFD, 0x24, 0x94};
-//  uint8_t broadcastAddress[] = {0xD4, 0xE9, 0xF4, 0xF1, 0x20, 0xA8};   12v relay
-constexpr uint8_t broadcastAddress[] = {0xa4, 0xf0, 0x0f, 0x8d, 0x02, 0xec}; // a4:f0:0f:8d:02:ec 5v relay
-constexpr uint8_t pultAddress[] = {0x58, 0x8c, 0x81, 0x52, 0xec, 0x84};      // 58:8c:81:52:ec:84 pult
-// void requestData(void *pvParameters);
+#include <freertos/FreeRTOS.h>
+#include <freertos/queue.h>
+
+constexpr uint8_t broadcastAddress[] = {0xa4, 0xf0, 0x0f, 0x8d, 0x02, 0xec}; // 5v relay
+constexpr uint8_t pultAddress[] = {0x58, 0x8c, 0x81, 0x52, 0xec, 0x84};      // pult
+
 void esp_now_setup();
 void send_command(int relay, bool state);
 
-
-extern const char *Message, *Message_from_pult;
 extern bool use_pult;
 
-// // Define a queue handle
+// Queue handles
 extern QueueHandle_t esp_now_queue;
 extern QueueHandle_t esp_now_queue_from_pult;
 extern QueueHandle_t esp_now_queue_to_pult;
+
+enum class EnowMessage {
+    NONE,
+    OK,
+    SEND_FAIL,
+    START,
+    STOP
+};
 
 typedef struct struct_message
 {
@@ -36,5 +43,5 @@ typedef struct struct_message_pult
     uint32_t programm_time; // время полива зоны
 } struct_message_pult;
 
-void send_to_pult(struct_message_pult &toPult);
+void send_to_pult(const struct_message_pult &toPult);
 #endif // ENOW_H

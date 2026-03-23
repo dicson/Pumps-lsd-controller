@@ -210,33 +210,42 @@ void update_bars()
     ping_timer = millis();
 }
 
+
+bool system_error_state = false;
+
 void update_log()
 {
-    if (xQueueReceive(esp_now_queue, &Message, 0) == pdTRUE)
+    EnowMessage msg;
+    if (xQueueReceive(esp_now_queue, &msg, 0) == pdTRUE)
     {
-        if (Message == "esp_now_send_fail")
+        if (msg == EnowMessage::SEND_FAIL)
         {
-            ledcWrite(2, 70);
-            lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
-            lv_obj_add_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
-            while (true)
-            {
-                lv_task_handler();
-                delay(2);
+            if (!system_error_state) {
+                system_error_state = true;
+                ledcWrite(2, 70);
+                lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
+                lv_obj_add_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
+                pump_off(); // Ensure pumps are off for safety
             }
         }
     }
-    if (xQueueReceive(esp_now_queue_from_pult, &Message_from_pult, 0) == pdTRUE)
+    
+    EnowMessage pultMsg;
+    if (xQueueReceive(esp_now_queue_from_pult, &pultMsg, 0) == pdTRUE)
     {
-        if (Message_from_pult == "start")
+        if (pultMsg == EnowMessage::START)
             action_start(NULL);
-        if (Message_from_pult == "stop")
+        if (pultMsg == EnowMessage::STOP)
             action_stop(NULL);
     }
 }
 
 void pump_loop()
 {
+    if (system_error_state) {
+        // In error state, we only allow UI updates or critical checks, no pump logic
+        return; 
+    }
     periodTick();
     flowTick();
     update_bars();
