@@ -69,16 +69,15 @@ void update_zone_list()
     if (cw_time[i] != 0 || dw_time[i] != 0)
     {
       lv_obj_remove_flag(bar, LV_OBJ_FLAG_HIDDEN);
-      lv_obj_set_style_bg_opa(button, 255, LV_PART_MAIN);
+      lv_obj_set_style_bg_opa(button, FULL_OPACITY, LV_PART_MAIN);
       lv_obj_remove_flag(checkbox, LV_OBJ_FLAG_HIDDEN);
     }
     else
     {
       lv_obj_add_flag(bar, LV_OBJ_FLAG_HIDDEN);
-      lv_obj_set_style_bg_opa(button, 100, LV_PART_MAIN);
+      lv_obj_set_style_bg_opa(button, LOW_OPACITY, LV_PART_MAIN);
       lv_obj_add_flag(checkbox, LV_OBJ_FLAG_HIDDEN);
     }
-    lv_task_handler();
   }
 }
 
@@ -130,13 +129,11 @@ void action_pause_ready(lv_event_t *e)
 {
   lv_obj_add_flag(objects.settings_kb, LV_OBJ_FLAG_HIDDEN);
   const char *txt = lv_textarea_get_text(objects.pause);
-  zone_pause = atol(txt);
-  if (String(txt) == "")
+  zone_pause = (txt[0] == '\0') ? 0 : atol(txt);
+  if (txt[0] == '\0')
   {
-    zone_pause = 0;
     lv_textarea_set_text(objects.pause, "0");
   }
-  // lv_obj_clear_state(objects.bl_idle, LV_STATE_FOCUSED);
   settings.begin("Settings", RW_MODE);
   settings.putLong("zone_pause", zone_pause);
   settings.end();
@@ -145,41 +142,53 @@ void action_pause_ready(lv_event_t *e)
 void action_idle_time_unfocused(lv_event_t *e)
 {
   lv_obj_add_flag(objects.settings_kb, LV_OBJ_FLAG_HIDDEN);
-  GFX_BL_TIME = atol(lv_textarea_get_text(objects.bl_idle));
+  const char *txt = lv_textarea_get_text(objects.bl_idle);
+  GFX_BL_TIME = (txt[0] == '\0') ? MIN_GFX_BL_TIME : atol(txt);
   if (GFX_BL_TIME < MIN_GFX_BL_TIME)
   {
     GFX_BL_TIME = MIN_GFX_BL_TIME;
     lv_textarea_set_text(objects.bl_idle, String(MIN_GFX_BL_TIME).c_str());
   }
-  // lv_obj_clear_state(objects.bl_idle, LV_STATE_FOCUSED);
   settings.begin("Settings", RW_MODE);
-  // Serial.println(settings.freeEntries());
   settings.putLong("GFX_BL_TIME", GFX_BL_TIME);
   settings.end();
+}
+
+// Helper to calculate total program time
+void calculate_program_time()
+{
+  programm_time = 0;
+  for (byte i = 0; i < PUMP_AMOUNT; i++)
+  {
+    if ((dw_time[i] > 0 || cw_time[i] > 0) && pump_finished[i] == false)
+    {
+      uint32_t dw_t = dw_time[i] * MS_PER_SECOND * minutes / 100 * k_dw_time;
+      programm_time += dw_t + (cw_time[i] + zone_pause) * MS_PER_SECOND * minutes;
+    }
+  }
+  if (programm_time > 0) {
+    programm_time -= (zone_pause * MS_PER_SECOND * minutes);
+  }
+  millis_to_HMS(programm_time > 0 ? (uint32_t)programm_time : 0);
 }
 
 void action_start(lv_event_t *e)
 {
   start_time = millis();
-  zoneTimer = millis() - zone_pause * MS_PER_SECOND * minutes; // убираем паузу перед запуском полива
+  zoneTimer = millis() - (zone_pause * MS_PER_SECOND * minutes);
   now_pumping = true;
-  programm_time = 0;
-  for (byte i = 0; i < PUMP_AMOUNT; i++) // считаем время программы
-  {                                      // пробегаем по всем помпам
-    pump_finished[i] = false;            // сброс переменных политых зон(старт полива)
-    if (dw_time[i] > 0 || cw_time[i] > 0)
-    {
-      uint32_t dw_t = dw_time[i] * MS_PER_SECOND * minutes / 100 * k_dw_time;
-      programm_time = programm_time + dw_t + (cw_time[i] + zone_pause) * MS_PER_SECOND * minutes;
-    }
+  
+  for (byte i = 0; i < PUMP_AMOUNT; i++) {
+    pump_finished[i] = false;
     lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
     lv_bar_set_value(bar, 0, LV_ANIM_OFF);
   }
-  programm_time = programm_time - (zone_pause * MS_PER_SECOND * minutes);
-  millis_to_HMS(programm_time);
+
+  calculate_program_time();
   now_pumping = false;
-  if (programm_time <= 0)
-    return;
+
+  if (programm_time <= 0) return;
+
   pump_on();
   lv_bar_set_range(objects.prog_bar, 0, programm_time);
   lv_obj_remove_flag(objects.prog_bar, LV_OBJ_FLAG_HIDDEN);
@@ -202,10 +211,9 @@ void action_stop(lv_event_t *e)
   dry_water_on();
   if (!pump_finished[current_zone])
     zone_off(current_zone);
+    
   for (byte i = 0; i < PUMP_AMOUNT; i++)
   {
-    // lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
-    // lv_bar_set_value(bar, 0, LV_ANIM_ON);
     lv_obj_t *zone_button = lv_obj_get_child(objects.tab_1, i);
     if (!lv_obj_has_flag(zone_button, LV_OBJ_FLAG_CHECKABLE))
     {
@@ -217,9 +225,8 @@ void action_stop(lv_event_t *e)
     if (pump_state[i] == SWITCH_LEVEL)
       pump_state[i] = !SWITCH_LEVEL;
   }
+  
   now_pumping = false;
-  // lv_bar_set_value(objects.prog_bar, 0, LV_ANIM_OFF);
-  // lv_obj_add_flag(objects.prog_bar, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_state(objects.stop, LV_STATE_DISABLED);
   lv_obj_remove_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
@@ -245,9 +252,8 @@ void action_decrement_10(lv_event_t *e)
   lv_event_code_t code = lv_event_get_code(e);
   if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT)
   {
-    k_dw_time = k_dw_time - K_DW_STEP;
-    if (k_dw_time < MIN_K_DW_TIME)
-      k_dw_time = MIN_K_DW_TIME;
+    k_dw_time -= K_DW_STEP;
+    if (k_dw_time < MIN_K_DW_TIME) k_dw_time = MIN_K_DW_TIME;
     save_k_dw_time();
   }
 }
@@ -270,9 +276,8 @@ void action_increment_10(lv_event_t *e)
   lv_event_code_t code = lv_event_get_code(e);
   if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT)
   {
-    k_dw_time = k_dw_time + K_DW_STEP;
-    if (k_dw_time > MAX_K_DW_TIME)
-      k_dw_time = MAX_K_DW_TIME;
+    k_dw_time += K_DW_STEP;
+    if (k_dw_time > MAX_K_DW_TIME) k_dw_time = MAX_K_DW_TIME;
     save_k_dw_time();
   }
 }
@@ -296,9 +301,7 @@ void action_k_reset(lv_event_t *e)
   save_k_dw_time();
 }
 
-void action_tab_changed(lv_event_t *e)
-{
-}
+void action_tab_changed(lv_event_t *e) {}
 
 void action_update_back(lv_event_t *e)
 {
@@ -340,7 +343,9 @@ void action_zone_selected(lv_event_t *e)
   lv_obj_t *zone_button = lv_event_get_current_target_obj(e);
   int32_t zone_num = lv_obj_get_index(zone_button);
   lv_obj_remove_flag(lv_event_get_target_obj(e), LV_OBJ_FLAG_CLICKABLE);
+  
   pump_finished[zone_num] = false;
+  
   if (lv_obj_has_flag(objects.stop, LV_OBJ_FLAG_HIDDEN))
   {
     start_time = millis();
@@ -353,29 +358,27 @@ void action_zone_selected(lv_event_t *e)
     lv_obj_clear_state(objects.stop, LV_STATE_DISABLED);
     lv_obj_remove_flag(objects.spinner, LV_OBJ_FLAG_HIDDEN);
     lv_obj_remove_flag(objects.prog_bar, LV_OBJ_FLAG_HIDDEN);
-    for (byte i = 0; i < PUMP_AMOUNT; i++) // считаем время программы
-    {                                      // пробегаем по всем помпам
+    
+    for (byte i = 0; i < PUMP_AMOUNT; i++) {
       lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
       lv_bar_set_value(bar, 0, LV_ANIM_OFF);
     }
-    zoneTimer = millis() - zone_pause * MS_PER_SECOND * minutes; // убираем паузу перед запуском полива
+    
+    zoneTimer = millis() - (zone_pause * MS_PER_SECOND * minutes);
     pump_on();
   }
-  programm_time = 0;
-  for (byte i = 0; i < PUMP_AMOUNT; i++) // считаем время программы
-  {                                      // пробегаем по всем помпам
+
+  calculate_program_time();
+  
+  for (byte i = 0; i < PUMP_AMOUNT; i++) {
     lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
-    if ((dw_time[i] > 0 || cw_time[i] > 0) && pump_finished[i] == false)
-    {
-      uint32_t dw_t = dw_time[i] * MS_PER_SECOND * minutes / 100 * k_dw_time;
-      programm_time = programm_time + dw_t + (cw_time[i] + zone_pause) * MS_PER_SECOND * minutes;
+    if ((dw_time[i] > 0 || cw_time[i] > 0) && pump_finished[i] == false) {
       lv_obj_remove_flag(bar, LV_OBJ_FLAG_HIDDEN);
-    }
-    else
+    } else {
       lv_obj_add_flag(bar, LV_OBJ_FLAG_HIDDEN);
+    }
   }
-  programm_time = programm_time - (zone_pause * MS_PER_SECOND * minutes);
-  millis_to_HMS(programm_time);
+  
   lv_bar_set_range(objects.prog_bar, 0, programm_time);
 }
 
@@ -387,7 +390,7 @@ void action_zone_time_clicked(lv_event_t *e)
   {
     lv_obj_remove_flag(objects.keyboard, LV_OBJ_FLAG_HIDDEN);
     lv_obj_remove_flag(objects.input_area, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_state(objects.input_area, LV_STATE_FOCUSED); /*To be sure the cursor is visible*/
+    lv_obj_add_state(objects.input_area, LV_STATE_FOCUSED);
   }
 }
 
@@ -395,28 +398,33 @@ void action_input_done(lv_event_t *e)
 {
   const char *txt = lv_textarea_get_text(objects.input_area);
   lv_obj_t *ob = lv_obj_get_child(obj, water_num);
-  if ((int)txt[0] == 0 || String(txt) == "0" || String(txt) == "00")
+  
+  if (txt[0] == '\0' || strcmp(txt, "0") == 0 || strcmp(txt, "00") == 0) {
     txt = "0";
+  }
+  
   lv_obj_add_flag(objects.keyboard, LV_OBJ_FLAG_HIDDEN);
   lv_obj_add_flag(objects.input_area, LV_OBJ_FLAG_HIDDEN);
+  
   settings.begin("Settings", RW_MODE);
   int zone_num = (int)lv_obj_get_index(obj);
-  if (water_num == 1)
-  {
+  
+  if (water_num == 1) {
     dw_time[zone_num] = atol(txt);
-    settings.putBytes("dw_time", dw_time, PUMP_AMOUNT * 4);
-  }
-  else
-  {
+    settings.putBytes("dw_time", dw_time, sizeof(dw_time));
+  } else {
     cw_time[zone_num] = atol(txt);
-    settings.putBytes("cw_time", cw_time, PUMP_AMOUNT * 4);
+    settings.putBytes("cw_time", cw_time, sizeof(cw_time));
   }
   settings.end();
+  
   lv_label_set_text(ob, txt);
   lv_textarea_set_text(objects.input_area, "");
+  
   if (cw_time[zone_num] == 0 && dw_time[zone_num] == 0)
-    lv_obj_set_style_bg_opa(obj, 100, LV_PART_MAIN);
+    lv_obj_set_style_bg_opa(obj, LOW_OPACITY, LV_PART_MAIN);
   else
-    lv_obj_set_style_bg_opa(obj, 255, LV_PART_MAIN);
+    lv_obj_set_style_bg_opa(obj, FULL_OPACITY, LV_PART_MAIN);
+    
   update_zone_list();
 }
