@@ -28,7 +28,7 @@ void setup_settings()
     settings.begin("Settings", RO_MODE);
     bool tpInit = settings.isKey("nvsInit");
 
-    if (tpInit == false)
+    if (!tpInit)
     {
         settings.end();
         settings.begin("Settings", RW_MODE);
@@ -37,10 +37,13 @@ void setup_settings()
         settings.putLong("GFX_BL_TIME", DEFAULT_GFX_BL_TIME);
         settings.putLong("zone_pause", DEFAULT_ZONE_PAUSE);
         settings.putLong("k_dw_time", DEFAULT_K_DW_TIME);
-        uint32_t dw_time[PUMP_AMOUNT] = {0};
-        settings.putBytes("dw_time", dw_time, PUMP_AMOUNT * sizeof(uint32_t));
-        uint32_t cw_time[PUMP_AMOUNT] = {0};
-        settings.putBytes("cw_time", cw_time, PUMP_AMOUNT * sizeof(uint32_t));
+        
+        // Zero out global arrays directly and store
+        memset(dw_time, 0, sizeof(dw_time));
+        memset(cw_time, 0, sizeof(cw_time));
+        
+        settings.putBytes("dw_time", dw_time, sizeof(dw_time));
+        settings.putBytes("cw_time", cw_time, sizeof(cw_time));
         settings.putBool("use_pult", false);
 
         settings.putBool("nvsInit", true);
@@ -53,8 +56,9 @@ void setup_settings()
     GFX_BL_TIME = settings.getLong("GFX_BL_TIME");
     k_dw_time = settings.getLong("k_dw_time");
     use_pult = settings.getBool("use_pult");
-    settings.getBytes("dw_time", dw_time, PUMP_AMOUNT * 4);
-    settings.getBytes("cw_time", cw_time, PUMP_AMOUNT * 4);
+    
+    settings.getBytes("dw_time", dw_time, sizeof(dw_time));
+    settings.getBytes("cw_time", cw_time, sizeof(cw_time));
     settings.end();
 }
 
@@ -69,16 +73,11 @@ void fill_widgets()
     lv_obj_set_ext_click_area(objects.button_reset, EXT_CLICK_AREA_LARGE);
     lv_obj_set_ext_click_area(objects.button_inc, EXT_CLICK_AREA_LARGE);
     lv_obj_set_ext_click_area(objects.button10, EXT_CLICK_AREA_LARGE);
-    // uint32_t i;
-    // uint32_t count = lv_obj_get_child_count(objects.k_panel);
-    // for (i = 0; i < count; i++)
-    // {
-    //     lv_obj_t *child = lv_obj_get_child(objects.k_container, i);
-    //     lv_obj_set_ext_click_area(child, 10);
-    // }
+
     if (use_pult)
         lv_obj_add_state(objects.pult, LV_STATE_CHECKED);
-    lv_slider_set_value(objects.bl, GFX_BL_VALUE, LV_ANIM_ON);
+        
+    lv_slider_set_value(objects.bl, GFX_BL_VALUE, LV_ANIM_OFF);
     lv_textarea_set_text(objects.bl_idle, String(GFX_BL_TIME).c_str());
     lv_textarea_set_text(objects.pause, String(zone_pause).c_str());
     lv_label_set_text(objects.k_dw_time, String(k_dw_time).c_str());
@@ -89,11 +88,11 @@ void fill_widgets()
 
         lv_obj_t *dw = lv_obj_get_child(button, 1);
         lv_label_set_text(dw, String(dw_time[i]).c_str());
-        lv_obj_set_ext_click_area(dw, EXT_CLICK_AREA_SMALL);  /* Extend the clickable area by constant */
+        lv_obj_set_ext_click_area(dw, EXT_CLICK_AREA_SMALL);
 
         lv_obj_t *cw = lv_obj_get_child(button, 2);
         lv_label_set_text(cw, String(cw_time[i]).c_str());
-        lv_obj_set_ext_click_area(cw, EXT_CLICK_AREA_SMALL);  /* Extend the clickable area by constant */
+        lv_obj_set_ext_click_area(cw, EXT_CLICK_AREA_SMALL);
 
         if (cw_time[i] != 0 || dw_time[i] != 0)
         {
@@ -103,7 +102,6 @@ void fill_widgets()
         {
             lv_obj_set_style_bg_opa(button, LOW_OPACITY, LV_PART_MAIN);
         }
-        lv_task_handler();
     }
     update_zone_list();
 }
