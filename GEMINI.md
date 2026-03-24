@@ -49,4 +49,7 @@ The project uses **PlatformIO**.
 ### Code Quality
 - Prefer `constexpr` for constants (see `include/constants.h`).
 - Use `Preferences` library for persistent settings (`src/settings.cpp`).
-- UI-related strings are often Russian (Cyrillic), ensure proper UTF-8 handling.
+- UI-related strings are often Russian (Cyrillic), ensure proper UTF-8 handling..
+
+
+- Use 4 spaces for indentation.
