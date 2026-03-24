@@ -206,7 +206,8 @@ void update_bars()
     lv_bar_set_value(objects.prog_bar, prog_pass, LV_ANIM_OFF);
     if (millis() - ping_timer < 1000)
         return;
-
+    if (!use_pult)
+        return;
     struct_message_pult message1 = {true, pump_water_state, !dryState, current_zone, time_pass, time, prog_pass, programm_time};
     xQueueSend(esp_now_queue_to_pult, &message1, 0);
     ping_timer = millis();
