@@ -18,23 +18,19 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
         return;
 
     struct_message fromPult;
-    if (len != sizeof(fromPult)) return; // Safety check
+    if (len != sizeof(fromPult))
+        return; // Safety check
     memcpy(&fromPult, incomingData, sizeof(fromPult));
 
     EnowMessage msg = EnowMessage::NONE;
 
     if (fromPult.relay == 0 && fromPult.state == false)
-    {
         msg = EnowMessage::STOP;
-    }
     else if (fromPult.relay == 1 && fromPult.state == true)
-    {
         msg = EnowMessage::START;
-    }
 
-    if (msg != EnowMessage::NONE) {
+    if (msg != EnowMessage::NONE)
         xQueueSendFromISR(esp_now_queue_from_pult, &msg, NULL);
-    }
 }
 
 // Callback when data is sent
@@ -71,11 +67,9 @@ void esp_now_setup()
     memcpy(peerInfo.peer_addr, broadcastAddress, 6);
     peerInfo.channel = 0;
     peerInfo.encrypt = false;
-    
+
     if (esp_now_add_peer(&peerInfo) != ESP_OK)
-    {
         Serial.println("Failed to add relay peer");
-    }
 
     // Register Pult Peer
     memset(&peerInfo, 0, sizeof(peerInfo)); // Reset for safety
@@ -84,9 +78,7 @@ void esp_now_setup()
     peerInfo.encrypt = false;
 
     if (esp_now_add_peer(&peerInfo) != ESP_OK)
-    {
         Serial.println("Failed to add pult peer");
-    }
 
     // Create queues
     esp_now_queue = xQueueCreate(10, sizeof(EnowMessage));
@@ -103,9 +95,7 @@ void send_command(int relay, bool state)
     esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
 
     if (result != ESP_OK)
-    {
         Serial.println("Error sending command to relays");
-    }
 }
 
 void send_to_pult(const struct_message_pult &toPult)
@@ -113,7 +103,5 @@ void send_to_pult(const struct_message_pult &toPult)
     esp_err_t result = esp_now_send(pultAddress, (uint8_t *)&toPult, sizeof(toPult));
 
     if (result != ESP_OK)
-    {
         Serial.println("Error sending data to pult");
-    }
 }

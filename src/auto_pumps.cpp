@@ -227,7 +227,7 @@ void update_log()
                 ledcWrite(2, 70);
                 lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
                 lv_obj_add_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
-                pump_off(); // Ensure pumps are off for safety
+                // pump_off(); // Ensure pumps are off for safety
             }
         }
     }
