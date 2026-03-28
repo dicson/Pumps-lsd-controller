@@ -15,7 +15,6 @@ extern int8_t thisH, thisM, thisS;
 extern bool show_log;
 extern int minutes;
 int current_zone = 255;
-uint32_t ping_timer;
 boolean pump_water_state;
 void update_log();
 void update_bars();
@@ -86,7 +85,7 @@ void pump_setup()
     pump_state[PUMP_RELAY] = !SWITCH_LEVEL;  // выкл
 
     xTaskCreatePinnedToCore(send_message_to_pult /*Task function*/, "SendMessagesToPult" /* Name*/,
-                            2048 /*Stack size*/, NULL /*SParameters*/, 0 /*SPriority*/, NULL /*STask handle*/, 0);
+                            2048 /*Stack size*/, NULL /*SParameters*/, 1 /*SPriority*/, NULL /*STask handle*/, 0);
 }
 
 void periodTick()
@@ -146,12 +145,9 @@ void flowTick()
                     break;                                                   //
                 if (n == PUMP_AMOUNT - 1)                                    // если нет не политых
                 {
-                    if (millis() - ping_timer > 100)
-                        ping_timer = ping_timer - 1000;
+                    delay(900);
                     update_bars();
                     action_stop(NULL);
-                    // lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
-                    // lv_msgbox_add_close_button(objects.message_box);
                 }
             }
             // ---------------------------------------------------------------------------------------------------------------
@@ -170,23 +166,26 @@ void send_message_to_pult(void *pvParameters)
         {
             // Передаем полученную структуру в функцию
             send_to_pult(message);
+            lora_send_status(message);
             vTaskDelay(pdMS_TO_TICKS(50));
         }
     }
 }
 
+void send_status_to_pult(struct_message_pult msg = {false, pump_water_state, !dryState, 0, 0, 0, 0, 0})
+{
+    static uint32_t ping_timer;
+    if (millis() - ping_timer < 1000)
+        return;
+    xQueueSend(esp_now_queue_to_pult, &msg, 0);
+    ping_timer = millis();
+}
+
 void update_bars()
 {
-
     if (lv_obj_has_flag(objects.stop, LV_OBJ_FLAG_HIDDEN))
     {
-        if (!use_pult)
-            return;
-        if (millis() - ping_timer < 1000)
-            return;
-        static struct_message_pult msg = {false, pump_water_state, !dryState, 0, 0, 0, 0, 0};
-        xQueueSend(esp_now_queue_to_pult, &msg, 0);
-        ping_timer = millis();
+        send_status_to_pult();
         return;
     }
     uint32_t prog_pass = millis() - start_time;
@@ -205,14 +204,12 @@ void update_bars()
     int8_t S = allSeconds % 60; // Секунды
     lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d", H, M, S, thisH, thisM, thisS);
     lv_bar_set_value(objects.prog_bar, prog_pass, LV_ANIM_OFF);
-    if (millis() - ping_timer < 1000)
-        return;
     if (!use_pult)
         return;
     struct_message_pult message1 = {true, pump_water_state, !dryState, current_zone, time_pass, time, prog_pass, programm_time};
-    xQueueSend(esp_now_queue_to_pult, &message1, 0);
-    lora_send_status(message1);
-    ping_timer = millis();
+    send_status_to_pult(message1);
+    // xQueueSend(esp_now_queue_to_pult, &message1, 0);
+    // lora_send_status(message1);
 }
 
 bool system_error_state = false;
