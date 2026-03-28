@@ -20,6 +20,7 @@ boolean pump_water_state;
 void update_log();
 void update_bars();
 void send_message_to_pult(void *pvParameters);
+extern void lora_send_status(const struct_message_pult &toPult);
 
 void MessageToLog(String Message)
 {
@@ -210,6 +211,7 @@ void update_bars()
         return;
     struct_message_pult message1 = {true, pump_water_state, !dryState, current_zone, time_pass, time, prog_pass, programm_time};
     xQueueSend(esp_now_queue_to_pult, &message1, 0);
+    lora_send_status(message1);
     ping_timer = millis();
 }
 

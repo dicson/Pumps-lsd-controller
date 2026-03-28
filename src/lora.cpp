@@ -1,0 +1,121 @@
+#include <Arduino.h>
+#include <HardwareSerial.h>
+#include <cstring>
+#include "ui/actions.h"
+
+// ВНИМАНИЕ: На ESP32-8048S070C GPIO 18 может использоваться как прерывание тачскрина (Touch INT).
+// Если тачскрин работает нестабильно при передаче через LoRa, проверьте назначение пинов.
+#define RX2_PIN 17
+#define TX2_PIN 18
+
+HardwareSerial LoraSerial(1); // Используем UART1
+
+#define MAX_BUF 64    // Максимальная длина команды
+char buffer[MAX_BUF]; // Массив для хранения байтов
+int pos = 0;          // Текущая позиция в массиве
+extern bool use_pult;
+
+void processCommand(char *cmd)
+{
+    Serial.print("Получено через LoRa: ");
+    Serial.println(cmd);
+
+    // Сравнение строк
+    if (strcmp(cmd, "START") == 0)
+    {
+        Serial.println("Команда: START");
+        action_start(NULL);
+        return;
+    }
+
+    if (strcmp(cmd, "STOP") == 0)
+    {
+        Serial.println("Команда: STOP");
+        action_stop(NULL);
+        return;
+    }
+
+    // Парсинг команд вида "K <значение>"
+    char *spacePtr = strchr(cmd, ' ');
+    if (spacePtr != NULL)
+    {
+        *spacePtr = '\0'; // Временно разделяем строку
+        if (strcmp(cmd, "K") == 0)
+        {
+            Serial.print("Значение K: ");
+            Serial.println(spacePtr + 1);
+            const char *myString = (spacePtr + 1);
+            uint32_t k_dw_time = strtoul(myString, NULL, 10); // 10 is the base (decimal)
+            Serial.println(k_dw_time);
+        }
+        *spacePtr = ' '; // Восстанавливаем строку (опционально)
+    }
+}
+
+void lora_setup()
+{
+    LoraSerial.begin(9600, SERIAL_8N1, RX2_PIN, TX2_PIN);
+    Serial.println("LoRa инициализирована. UART1 (17/18), 9600 бод.");
+}
+
+void lora_loop()
+{
+    if (!use_pult)
+        return;
+    while (LoraSerial.available() > 0)
+    {
+        char inChar = (char)LoraSerial.read();
+
+        // Обработка конца строки (\n или \r)
+        if (inChar == '\n' || inChar == '\r')
+        {
+            if (pos > 0)
+            {
+                buffer[pos] = '\0';
+                processCommand(buffer);
+                pos = 0;
+            }
+        }
+        // Добавление символа в буфер с защитой от переполнения
+        else if (pos < MAX_BUF - 1)
+        {
+            buffer[pos] = inChar;
+            pos++;
+        }
+        else
+        {
+            // Буфер переполнен - сбрасываем, чтобы не застрять в невалидном состоянии
+            Serial.println("Ошибка: Буфер LoRa переполнен!");
+            pos = 0;
+        }
+    }
+}
+
+#include "enow.h" // Для доступа к определению struct_message_pult
+// #include "constants.h"
+
+// Внешние переменные из auto_pumps.cpp и actions.cpp
+// extern boolean pump_water_state;
+// extern boolean dryState;
+// extern int current_zone;
+// extern uint32_t pump_timers[PUMP_AMOUNT];
+// extern uint32_t start_time, programm_time, k_dw_time, zone_pause;
+// extern uint32_t dw_time[PUMP_AMOUNT], cw_time[PUMP_AMOUNT];
+// extern int minutes;
+
+// Функция для заполнения и отправки структуры
+void lora_send_status(const struct_message_pult &toPult)
+{
+    // if (!use_pult)
+    //     return;
+    // Отправка структуры как набора байтов
+    LoraSerial.write((uint8_t *)&toPult, sizeof(toPult));
+    LoraSerial.flush(); // Дожидаемся окончания отправки
+}
+
+// // В src/lora.cpp -> lora_loop()
+// static uint32_t lora_tx_timer = 0;
+// if (millis() - lora_tx_timer > 1000) {
+//     lora_send_status();
+//     lora_tx_timer = millis();
+// }

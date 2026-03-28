@@ -196,28 +196,25 @@ void create_screen_main() {
                             add_style_1style(obj);
                             lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_COLUMN, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_SPACE_AROUND, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_bg_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_flex_cross_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_obj_set_style_flex_track_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_flex_track_place(obj, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_row(obj, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
                             {
                                 lv_obj_t *parent_obj = obj;
                                 {
                                     lv_obj_t *obj = lv_obj_create(parent_obj);
                                     lv_obj_set_pos(obj, 593, -4);
-                                    lv_obj_set_size(obj, 170, 29);
+                                    lv_obj_set_size(obj, 170, 30);
                                     lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
-                                    lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_ROW, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_pad_top(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_pad_left(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_pad_right(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -225,8 +222,14 @@ void create_screen_main() {
                                     {
                                         lv_obj_t *parent_obj = obj;
                                         {
+                                            lv_obj_t *obj = lv_image_create(parent_obj);
+                                            lv_obj_set_pos(obj, 0, 0);
+                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                            lv_image_set_src(obj, &img_pump);
+                                        }
+                                        {
                                             lv_obj_t *obj = lv_label_create(parent_obj);
-                                            lv_obj_set_pos(obj, 26, 13);
+                                            lv_obj_set_pos(obj, 43, 0);
                                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                             lv_label_set_text(obj, "Насос");
                                         }
@@ -234,9 +237,9 @@ void create_screen_main() {
                                             // pump
                                             lv_obj_t *obj = lv_led_create(parent_obj);
                                             objects.pump = obj;
-                                            lv_obj_set_pos(obj, 149, 8);
+                                            lv_obj_set_pos(obj, 141, 2);
                                             lv_obj_set_size(obj, 23, 22);
-                                            lv_led_set_color(obj, lv_color_hex(0xffff0000));
+                                            lv_led_set_color(obj, lv_color_hex(0xff00ff00));
                                             lv_led_set_brightness(obj, 200);
                                             lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
                                             lv_obj_set_style_shadow_width(obj, 12, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -246,14 +249,11 @@ void create_screen_main() {
                                 {
                                     lv_obj_t *obj = lv_obj_create(parent_obj);
                                     lv_obj_set_pos(obj, 593, 36);
-                                    lv_obj_set_size(obj, 170, 29);
+                                    lv_obj_set_size(obj, 170, 30);
                                     lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
-                                    lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_ROW, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_pad_top(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_pad_left(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_pad_right(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -261,8 +261,15 @@ void create_screen_main() {
                                     {
                                         lv_obj_t *parent_obj = obj;
                                         {
+                                            lv_obj_t *obj = lv_image_create(parent_obj);
+                                            lv_obj_set_pos(obj, -4, -5);
+                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                            lv_image_set_src(obj, &img_oil);
+                                            lv_image_set_scale(obj, 210);
+                                        }
+                                        {
                                             lv_obj_t *obj = lv_label_create(parent_obj);
-                                            lv_obj_set_pos(obj, 186, -15);
+                                            lv_obj_set_pos(obj, 43, 0);
                                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                             lv_label_set_text(obj, "Скважина");
                                         }
@@ -270,9 +277,9 @@ void create_screen_main() {
                                             // pipe
                                             lv_obj_t *obj = lv_led_create(parent_obj);
                                             objects.pipe = obj;
-                                            lv_obj_set_pos(obj, 149, 7);
+                                            lv_obj_set_pos(obj, 141, 1);
                                             lv_obj_set_size(obj, 23, 22);
-                                            lv_led_set_color(obj, lv_color_hex(0xff449dda));
+                                            lv_led_set_color(obj, lv_color_hex(0xff00ff00));
                                             lv_led_set_brightness(obj, 200);
                                         }
                                     }
@@ -280,14 +287,11 @@ void create_screen_main() {
                                 {
                                     lv_obj_t *obj = lv_obj_create(parent_obj);
                                     lv_obj_set_pos(obj, 593, 75);
-                                    lv_obj_set_size(obj, 170, 29);
+                                    lv_obj_set_size(obj, 170, 30);
                                     lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
-                                    lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_ROW, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_pad_top(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_pad_left(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_pad_right(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -295,8 +299,14 @@ void create_screen_main() {
                                     {
                                         lv_obj_t *parent_obj = obj;
                                         {
+                                            lv_obj_t *obj = lv_image_create(parent_obj);
+                                            lv_obj_set_pos(obj, 0, -5);
+                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                            lv_image_set_src(obj, &img_osmos);
+                                        }
+                                        {
                                             lv_obj_t *obj = lv_label_create(parent_obj);
-                                            lv_obj_set_pos(obj, 186, -15);
+                                            lv_obj_set_pos(obj, 43, 2);
                                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                             lv_label_set_text(obj, "Осмос");
                                         }
@@ -304,9 +314,9 @@ void create_screen_main() {
                                             // osmos
                                             lv_obj_t *obj = lv_led_create(parent_obj);
                                             objects.osmos = obj;
-                                            lv_obj_set_pos(obj, 149, 8);
+                                            lv_obj_set_pos(obj, 141, 3);
                                             lv_obj_set_size(obj, 23, 22);
-                                            lv_led_set_color(obj, lv_color_hex(0xff449dda));
+                                            lv_led_set_color(obj, lv_color_hex(0xff00ff00));
                                             lv_led_set_brightness(obj, 200);
                                             lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
                                         }
@@ -886,7 +896,7 @@ void create_screen_main() {
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "-");
+                                    lv_label_set_text(obj, "-1");
                                 }
                             }
                         }
@@ -901,14 +911,21 @@ void create_screen_main() {
                             {
                                 lv_obj_t *parent_obj = obj;
                                 {
+                                    lv_obj_t *obj = lv_image_create(parent_obj);
+                                    lv_obj_set_pos(obj, -10, 0);
+                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                    lv_image_set_src(obj, &img_revers);
+                                    lv_image_set_inner_align(obj, LV_IMAGE_ALIGN_DEFAULT);
+                                }
+                                {
                                     // k_reset
                                     lv_obj_t *obj = lv_label_create(parent_obj);
                                     objects.k_reset = obj;
-                                    lv_obj_set_pos(obj, 0, 0);
+                                    lv_obj_set_pos(obj, 7, 1);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "сброс");
+                                    lv_label_set_text(obj, "100");
                                 }
                             }
                         }
@@ -932,7 +949,7 @@ void create_screen_main() {
                                     lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
                                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_label_set_text(obj, "+");
+                                    lv_label_set_text(obj, "+1");
                                 }
                             }
                         }
@@ -2412,7 +2429,7 @@ void create_screen_main() {
                 }
                 {
                     // tab_settings
-                    lv_obj_t *obj = lv_tabview_add_tab(parent_obj, "Настройки");
+                    lv_obj_t *obj = lv_tabview_add_tab(parent_obj, "Сервис");
                     objects.tab_settings = obj;
                     lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
                     lv_obj_set_style_margin_top(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2662,6 +2679,7 @@ void create_screen_main() {
                                             lv_obj_set_pos(obj, 0, -1);
                                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                                             lv_label_set_text(obj, "Обновление прошивок");
                                         }
                                     }
@@ -3048,6 +3066,7 @@ void create_screen_update_selector() {
         lv_obj_t *parent_obj = obj;
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
+            objects.obj46 = obj;
             lv_obj_set_pos(obj, 0, 165);
             lv_obj_set_size(obj, 800, 150);
             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3062,6 +3081,7 @@ void create_screen_update_selector() {
             lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_SPACE_EVENLY, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_flex_cross_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_flex_track_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_text_font(obj, &ui_font_ubuntu_20, LV_PART_MAIN | LV_STATE_DEFAULT);
             {
                 lv_obj_t *parent_obj = obj;
@@ -3074,9 +3094,11 @@ void create_screen_update_selector() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
+                            objects.obj47 = obj;
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_label_set_text(obj, "Обновление дисплея");
                         }
                     }
@@ -3090,9 +3112,11 @@ void create_screen_update_selector() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
+                            objects.obj48 = obj;
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_label_set_text(obj, "Обновление реле");
                         }
                     }
@@ -3106,10 +3130,18 @@ void create_screen_update_selector() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            lv_obj_set_pos(obj, 0, 0);
+                            objects.obj49 = obj;
+                            lv_obj_set_pos(obj, 8, 0);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_label_set_text(obj, "Назад");
+                        }
+                        {
+                            lv_obj_t *obj = lv_image_create(parent_obj);
+                            lv_obj_set_pos(obj, -9, 5);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_image_set_src(obj, &img_revers);
                         }
                     }
                 }
@@ -3123,6 +3155,10 @@ void create_screen_update_selector() {
 void delete_screen_update_selector() {
     lv_obj_delete(objects.update_selector);
     objects.update_selector = 0;
+    objects.obj46 = 0;
+    objects.obj47 = 0;
+    objects.obj48 = 0;
+    objects.obj49 = 0;
 }
 
 void tick_screen_update_selector() {
@@ -3189,9 +3225,11 @@ void create_screen_update_relay() {
                                 lv_obj_t *parent_obj = obj;
                                 {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
+                                    objects.obj50 = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_label_set_text(obj, "Блок реле 1");
                                 }
                             }
@@ -3202,7 +3240,7 @@ void create_screen_update_relay() {
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.obj46 = obj;
+            objects.obj51 = obj;
             lv_obj_set_pos(obj, 0, 199);
             lv_obj_set_size(obj, 330, 281);
             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3230,7 +3268,7 @@ void create_screen_update_relay() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_textarea_create(parent_obj);
-                    objects.obj47 = obj;
+                    objects.obj52 = obj;
                     lv_obj_set_pos(obj, -2081, 36);
                     lv_obj_set_size(obj, 326, 60);
                     lv_textarea_set_max_length(obj, 128);
@@ -3245,7 +3283,7 @@ void create_screen_update_relay() {
                 }
                 {
                     lv_obj_t *obj = lv_qrcode_create(parent_obj);
-                    objects.obj48 = obj;
+                    objects.obj53 = obj;
                     lv_obj_set_pos(obj, 2405, -987);
                     lv_obj_set_size(obj, 211, 213);
                     lv_qrcode_set_size(obj, 211);
@@ -3258,7 +3296,7 @@ void create_screen_update_relay() {
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.obj49 = obj;
+            objects.obj54 = obj;
             lv_obj_set_pos(obj, 523, 199);
             lv_obj_set_size(obj, 277, 281);
             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3278,7 +3316,7 @@ void create_screen_update_relay() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_textarea_create(parent_obj);
-                    objects.obj50 = obj;
+                    objects.obj55 = obj;
                     lv_obj_set_pos(obj, 104, -52);
                     lv_obj_set_size(obj, 268, 60);
                     lv_textarea_set_max_length(obj, 128);
@@ -3293,7 +3331,7 @@ void create_screen_update_relay() {
                 }
                 {
                     lv_obj_t *obj = lv_qrcode_create(parent_obj);
-                    objects.obj51 = obj;
+                    objects.obj56 = obj;
                     lv_obj_set_pos(obj, -11, 70);
                     lv_obj_set_size(obj, 211, 209);
                     lv_qrcode_set_size(obj, 209);
@@ -3315,10 +3353,18 @@ void create_screen_update_relay() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    lv_obj_set_pos(obj, 0, 0);
+                    objects.obj57 = obj;
+                    lv_obj_set_pos(obj, 9, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_label_set_text(obj, "Выход");
+                }
+                {
+                    lv_obj_t *obj = lv_image_create(parent_obj);
+                    lv_obj_set_pos(obj, -9, 5);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_image_set_src(obj, &img_revers);
                 }
             }
         }
@@ -3330,13 +3376,15 @@ void create_screen_update_relay() {
 void delete_screen_update_relay() {
     lv_obj_delete(objects.update_relay);
     objects.update_relay = 0;
-    objects.obj46 = 0;
-    objects.obj47 = 0;
-    objects.obj48 = 0;
-    objects.obj49 = 0;
     objects.obj50 = 0;
     objects.obj51 = 0;
+    objects.obj52 = 0;
+    objects.obj53 = 0;
+    objects.obj54 = 0;
+    objects.obj55 = 0;
+    objects.obj56 = 0;
     objects.update_relay_back = 0;
+    objects.obj57 = 0;
 }
 
 void tick_screen_update_relay() {

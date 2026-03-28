@@ -6,6 +6,8 @@
 extern void setup_settings();
 extern void fill_widgets();
 extern void esp_now_setup();
+extern void lora_setup();
+extern void lora_loop();
 
 void setup()
 {
@@ -17,6 +19,7 @@ void setup()
   fill_widgets();
   esp_now_setup();
   pump_setup();
+  lora_setup();
 }
 
 void loop()
@@ -24,4 +27,5 @@ void loop()
   loop_display();
   pump_loop();
   ota_loop();
+  lora_loop();
 }

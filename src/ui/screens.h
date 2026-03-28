@@ -173,7 +173,13 @@ typedef struct _objects_t {
     lv_obj_t *obj49;
     lv_obj_t *obj50;
     lv_obj_t *obj51;
+    lv_obj_t *obj52;
+    lv_obj_t *obj53;
+    lv_obj_t *obj54;
+    lv_obj_t *obj55;
+    lv_obj_t *obj56;
     lv_obj_t *update_relay_back;
+    lv_obj_t *obj57;
 } objects_t;
 
 extern objects_t objects;
