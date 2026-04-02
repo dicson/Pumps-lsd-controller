@@ -85,10 +85,10 @@ void fill_widgets()
     }
     if (esp_now)
         lv_obj_add_state(objects.esp_now, LV_STATE_CHECKED);
-        lv_obj_set_radio_button(objects.esp_now, true);
+    lv_obj_set_radio_button(objects.esp_now, true);
     if (lora)
         lv_obj_add_state(objects.lora, LV_STATE_CHECKED);
-        lv_obj_set_radio_button(objects.lora, true);
+    lv_obj_set_radio_button(objects.lora, true);
     lv_slider_set_value(objects.bl, GFX_BL_VALUE, LV_ANIM_OFF);
     lv_textarea_set_text(objects.bl_idle, String(GFX_BL_TIME).c_str());
     lv_textarea_set_text(objects.pause, String(zone_pause).c_str());

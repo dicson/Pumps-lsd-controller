@@ -57,7 +57,7 @@ void lora_setup()
 {
     LoraSerial.begin(9600, SERIAL_8N1, RX2_PIN, TX2_PIN);
     while(LoraSerial.available()) LoraSerial.read(); // Очистка буфера от мусора при старте
-    Serial.println("LoRa инициализирована. UART1 (17/18), 9600 бод.");
+    Serial.printf("LoRa инициализирована. UART на пинах RX:%d, TX:%d, 9600 бод.\n", RX2_PIN, TX2_PIN);
 }
 
 void lora_loop()
