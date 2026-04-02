@@ -4,4 +4,4 @@ void pump_on();
 void pump_off();
 void dry_water_on();
 void zone_off(int);
-void update_log();
+void handle_messages();

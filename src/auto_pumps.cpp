@@ -16,7 +16,7 @@ extern bool show_log;
 extern int minutes;
 int current_zone = 255;
 boolean pump_water_state;
-void update_log();
+void handle_messages();
 void update_bars();
 void send_message_to_pult(void *pvParameters);
 extern void lora_send_status(const struct_message_pult &toPult);
@@ -213,7 +213,7 @@ void update_bars()
 
 bool system_error_state = false;
 
-void update_log()
+void handle_messages()
 {
     EnowMessage msg;
     if (xQueueReceive(esp_now_queue, &msg, 0) == pdTRUE)
@@ -251,5 +251,5 @@ void pump_loop()
     periodTick();
     flowTick();
     update_bars();
-    update_log();
+    handle_messages();
 }

@@ -224,7 +224,7 @@ void action_start(lv_event_t *e)
 void action_stop(lv_event_t *e)
 {
   pump_off();
-  update_log();
+  handle_messages();
   dry_water_on();
   if (!pump_finished[current_zone])
     zone_off(current_zone);
