@@ -18,7 +18,7 @@ boolean now_pumping = false;            // идет полив
 boolean dryState = true;                // какой клапан открыт. true - dry(грязная) false - чистая
 uint32_t k_dw_time = DEFAULT_K_DW_TIME; // коэффициент
 int minutes = DEFAULT_MINUTES;          // отладка
-bool use_pult;
+bool use_pult, lora, esp_now;
 extern void update_zone_list();
 
 Preferences settings;
@@ -45,6 +45,8 @@ void setup_settings()
         settings.putBytes("dw_time", dw_time, sizeof(dw_time));
         settings.putBytes("cw_time", cw_time, sizeof(cw_time));
         settings.putBool("use_pult", false);
+        settings.putBool("lora", false);
+        settings.putBool("esp_now", true);
 
         settings.putBool("nvsInit", true);
         settings.end();
@@ -56,6 +58,8 @@ void setup_settings()
     GFX_BL_TIME = settings.getLong("GFX_BL_TIME");
     k_dw_time = settings.getLong("k_dw_time");
     use_pult = settings.getBool("use_pult");
+    lora = settings.getBool("lora");
+    esp_now = settings.getBool("esp_now");
 
     settings.getBytes("dw_time", dw_time, sizeof(dw_time));
     settings.getBytes("cw_time", cw_time, sizeof(cw_time));
@@ -75,8 +79,16 @@ void fill_widgets()
     lv_obj_set_ext_click_area(objects.button10, EXT_CLICK_AREA_LARGE);
 
     if (use_pult)
+    {
         lv_obj_add_state(objects.pult, LV_STATE_CHECKED);
-
+        lv_obj_remove_flag(objects.esp_lora, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (esp_now)
+        lv_obj_add_state(objects.esp_now, LV_STATE_CHECKED);
+        lv_obj_set_radio_button(objects.esp_now, true);
+    if (lora)
+        lv_obj_add_state(objects.lora, LV_STATE_CHECKED);
+        lv_obj_set_radio_button(objects.lora, true);
     lv_slider_set_value(objects.bl, GFX_BL_VALUE, LV_ANIM_OFF);
     lv_textarea_set_text(objects.bl_idle, String(GFX_BL_TIME).c_str());
     lv_textarea_set_text(objects.pause, String(zone_pause).c_str());

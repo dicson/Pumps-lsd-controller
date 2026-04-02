@@ -10,14 +10,15 @@ constexpr uint8_t pultAddress[] = {0x58, 0x8c, 0x81, 0x52, 0xec, 0x84};      // 
 void esp_now_setup();
 void send_command(int relay, bool state);
 
-extern bool use_pult;
+extern bool use_pult, lora, esp_now;
 
 // Queue handles
 extern QueueHandle_t esp_now_queue;
 extern QueueHandle_t esp_now_queue_from_pult;
 extern QueueHandle_t esp_now_queue_to_pult;
 
-enum class EnowMessage {
+enum class EnowMessage
+{
     NONE,
     OK,
     SEND_FAIL,
@@ -33,6 +34,7 @@ typedef struct struct_message
 
 typedef struct struct_message_pult
 {
+    uint16_t sync;          // Маркер начала (0xABCD)
     bool state;             // вкл/выкл
     bool pump_state;        // вкл/выкл
     bool osmos_state;       // вкл/выкл
@@ -42,6 +44,8 @@ typedef struct struct_message_pult
     uint32_t prog_pass;     // прошло полива зоны
     uint32_t programm_time; // время полива зоны
 } struct_message_pult;
+
+const uint16_t SYNC_WORD = 0xABCD;
 
 void send_to_pult(const struct_message_pult &toPult);
 #endif // ENOW_H

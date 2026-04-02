@@ -77,7 +77,6 @@ void pump_setup()
     // --------------------- КОНФИГУРИРУЕМ ПИНЫ ---------------------
     for (byte i = 0; i < PUMP_AMOUNT; i++)
     { // пробегаем по всем помпам
-
         pump_finished[i] = true;
         pump_state[i] = !SWITCH_LEVEL;
     }
@@ -95,7 +94,6 @@ void periodTick()
         if (millis() - zoneTimer < zone_pause * 1000 * minutes)
             break;                             // если пауза не закончилась - выход из цикла
         if ((dw_time[i] > 0 || cw_time[i] > 0) // если грязная или чистая вода не ноль
-                                               // если время полива зоны не ноль
             && !pump_finished[i]               // если зона еще не поливалась
             && !now_pumping)                   // если никакая зона не включена
         {
@@ -165,18 +163,23 @@ void send_message_to_pult(void *pvParameters)
         if (xQueueReceive(esp_now_queue_to_pult, &message, portMAX_DELAY) == pdPASS)
         {
             // Передаем полученную структуру в функцию
-            send_to_pult(message);
-            lora_send_status(message);
+            if (esp_now)
+                send_to_pult(message);
+            else
+                lora_send_status(message);
             vTaskDelay(pdMS_TO_TICKS(50));
         }
     }
 }
 
-void send_status_to_pult(struct_message_pult msg = {false, pump_water_state, !dryState, 0, 0, 0, 0, 0})
+void send_status_to_pult(struct_message_pult msg = {SYNC_WORD, false, pump_water_state, !dryState, 0, 0, 0, 0, 0})
 {
     static uint32_t ping_timer;
+    if (!use_pult)
+        return;
     if (millis() - ping_timer < 1000)
         return;
+
     xQueueSend(esp_now_queue_to_pult, &msg, 0);
     ping_timer = millis();
 }
@@ -204,12 +207,8 @@ void update_bars()
     int8_t S = allSeconds % 60; // Секунды
     lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d", H, M, S, thisH, thisM, thisS);
     lv_bar_set_value(objects.prog_bar, prog_pass, LV_ANIM_OFF);
-    if (!use_pult)
-        return;
-    struct_message_pult message1 = {true, pump_water_state, !dryState, current_zone, time_pass, time, prog_pass, programm_time};
+    struct_message_pult message1 = {SYNC_WORD, true, pump_water_state, !dryState, current_zone, time_pass, time, prog_pass, programm_time};
     send_status_to_pult(message1);
-    // xQueueSend(esp_now_queue_to_pult, &message1, 0);
-    // lora_send_status(message1);
 }
 
 bool system_error_state = false;
