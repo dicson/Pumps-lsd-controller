@@ -53,3 +53,4 @@ The project uses **PlatformIO**.
 
 
 - Use 4 spaces for indentation.
+- помпы управляются по esp-now

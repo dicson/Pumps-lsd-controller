@@ -47,5 +47,5 @@ typedef struct struct_message_pult
 
 const uint16_t SYNC_WORD = 0xABCD;
 
-void send_to_pult(const struct_message_pult &toPult);
+void espnow_send_status(const struct_message_pult &toPult);
 #endif // ENOW_H

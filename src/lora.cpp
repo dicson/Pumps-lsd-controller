@@ -56,13 +56,14 @@ void processCommand(char *cmd)
 void lora_setup()
 {
     LoraSerial.begin(9600, SERIAL_8N1, RX2_PIN, TX2_PIN);
-    while(LoraSerial.available()) LoraSerial.read(); // Очистка буфера от мусора при старте
+    while (LoraSerial.available())
+        LoraSerial.read(); // Очистка буфера от мусора при старте
     Serial.printf("LoRa инициализирована. UART на пинах RX:%d, TX:%d, 9600 бод.\n", RX2_PIN, TX2_PIN);
 }
 
 void lora_loop()
 {
-    if (!lora)
+    if (!lora || !use_pult)
         return;
     while (LoraSerial.available() > 0)
     {
@@ -91,7 +92,6 @@ void lora_loop()
             pos = 0;
         }
     }
-    
 }
 
 // Функция для заполнения и отправки структуры

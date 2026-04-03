@@ -98,7 +98,7 @@ void send_command(int relay, bool state)
         Serial.println("Error sending command to relays");
 }
 
-void send_to_pult(const struct_message_pult &toPult)
+void espnow_send_status(const struct_message_pult &toPult)
 {
     esp_err_t result = esp_now_send(pultAddress, (uint8_t *)&toPult, sizeof(toPult));
 

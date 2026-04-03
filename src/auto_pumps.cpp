@@ -164,7 +164,7 @@ void send_message_to_pult(void *pvParameters)
         {
             // Передаем полученную структуру в функцию
             if (esp_now)
-                send_to_pult(message);
+                espnow_send_status(message);
             else
                 lora_send_status(message);
             vTaskDelay(pdMS_TO_TICKS(50));
@@ -226,7 +226,6 @@ void handle_messages()
                 ledcWrite(2, 70);
                 lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
                 lv_obj_add_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
-                // pump_off(); // Ensure pumps are off for safety
             }
         }
     }
@@ -234,10 +233,13 @@ void handle_messages()
     EnowMessage pultMsg;
     if (xQueueReceive(esp_now_queue_from_pult, &pultMsg, 0) == pdTRUE)
     {
-        if (pultMsg == EnowMessage::START)
-            action_start(NULL);
-        if (pultMsg == EnowMessage::STOP)
-            action_stop(NULL);
+        if (esp_now && use_pult)
+        {
+            if (pultMsg == EnowMessage::START)
+                action_start(NULL);
+            if (pultMsg == EnowMessage::STOP)
+                action_stop(NULL);
+        }
     }
 }
 
