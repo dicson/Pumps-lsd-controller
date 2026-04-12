@@ -172,7 +172,8 @@ void send_message_to_pult(void *pvParameters)
     }
 }
 
-void send_status_to_pult(struct_message_pult msg = {SYNC_WORD, false, pump_water_state, !dryState, 0, 0, 0, 0, 0})
+void send_status_to_pult(struct_message_pult msg = {
+                             SYNC_WORD, false, pump_water_state, !dryState, 0, 0, 0, 0, 0})
 {
     static uint32_t ping_timer;
     if (!use_pult)

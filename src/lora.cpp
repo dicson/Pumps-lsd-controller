@@ -15,6 +15,8 @@ HardwareSerial LoraSerial(1); // Используем UART1
 char buffer[MAX_BUF]; // Массив для хранения байтов
 int pos = 0;          // Текущая позиция в массиве
 extern bool use_pult;
+extern void save_k_dw_time();
+extern int32_t k_dw_time;
 
 void processCommand(char *cmd)
 {
@@ -46,8 +48,8 @@ void processCommand(char *cmd)
             Serial.print("Значение K: ");
             Serial.println(spacePtr + 1);
             const char *myString = (spacePtr + 1);
-            uint32_t k_dw_time = strtoul(myString, NULL, 10); // 10 is the base (decimal)
-            Serial.println(k_dw_time);
+            k_dw_time = strtoul(myString, NULL, 10); // 10 is the base (decimal)
+            save_k_dw_time();
         }
         *spacePtr = ' '; // Восстанавливаем строку (опционально)
     }
