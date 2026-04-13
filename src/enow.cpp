@@ -10,16 +10,22 @@ QueueHandle_t esp_now_queue;
 QueueHandle_t esp_now_queue_from_pult;
 QueueHandle_t esp_now_queue_to_pult;
 
+// Флаг: ESP-NOW полностью инициализирован
+static bool esp_now_ready = false;
+
 // Callback function that will be executed when data is received
 void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, int len)
 {
-    const uint8_t *mac_addr = info->src_addr;
-    if ((memcmp(mac_addr, pultAddress, 6) != 0) || !use_pult)
+    if (info == NULL || info->src_addr == NULL || incomingData == NULL)
+        return;
+
+    if (memcmp(info->src_addr, pultAddress, 6) != 0 || !use_pult)
         return;
 
     struct_message fromPult;
     if (len != sizeof(fromPult))
-        return; // Safety check
+        return;
+
     memcpy(&fromPult, incomingData, sizeof(fromPult));
 
     EnowMessage msg = EnowMessage::NONE;
@@ -34,13 +40,11 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
 }
 
 // Callback when data is sent
-void OnDataSent(const esp_now_recv_info_t *info, esp_now_send_status_t status)
+void OnDataSent(const wifi_tx_info_t *info, esp_now_send_status_t status)
 {
-    const uint8_t *mac_addr = info->src_addr;
-    // Check if the message was sent to the broadcast address (relays)
-    if (memcmp(mac_addr, broadcastAddress, 6) == 0)
+    if (status == ESP_NOW_SEND_SUCCESS)
     {
-        EnowMessage msg = (status == ESP_NOW_SEND_SUCCESS) ? EnowMessage::OK : EnowMessage::SEND_FAIL;
+        EnowMessage msg = EnowMessage::OK;
         xQueueSendFromISR(esp_now_queue, &msg, NULL);
     }
 }
@@ -50,40 +54,50 @@ void esp_now_setup()
     // Set device as a Wi-Fi Station
     WiFi.mode(WIFI_STA);
     WiFi.enableAP(false);
-    // esp_wifi_set_channel(0, WIFI_SECOND_CHAN_NONE); // Ensure channel matches peers if not using CSP
 
     if (esp_now_init() != ESP_OK)
     {
-        Serial.println("Error initializing ESP-NOW");
         return;
     }
 
+    // Устанавливаем канал 1
+    esp_wifi_set_channel(1, WIFI_SECOND_CHAN_NONE);
+    
     // Register callbacks
     esp_now_register_recv_cb(OnDataRecv);
-    esp_now_register_send_cb(esp_now_send_cb_t(OnDataSent));
+    esp_now_register_send_cb(OnDataSent);
 
     // Register Relay Peer
-    esp_now_peer_info_t peerInfo = {}; // Zero-initialize
+    esp_now_peer_info_t peerInfo = {};
     memcpy(peerInfo.peer_addr, broadcastAddress, 6);
     peerInfo.channel = 0;
     peerInfo.encrypt = false;
 
-    if (esp_now_add_peer(&peerInfo) != ESP_OK)
-        Serial.println("Failed to add relay peer");
+    esp_now_add_peer(&peerInfo);
 
     // Register Pult Peer
-    memset(&peerInfo, 0, sizeof(peerInfo)); // Reset for safety
+    memset(&peerInfo, 0, sizeof(peerInfo));
     memcpy(peerInfo.peer_addr, pultAddress, 6);
     peerInfo.channel = 0;
     peerInfo.encrypt = false;
 
-    if (esp_now_add_peer(&peerInfo) != ESP_OK)
-        Serial.println("Failed to add pult peer");
+    esp_now_add_peer(&peerInfo);
+    
+    // Также добавляем broadcast peer для надёжности приёма
+    memset(&peerInfo, 0, sizeof(peerInfo));
+    uint8_t broadcast_mac[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+    memcpy(peerInfo.peer_addr, broadcast_mac, 6);
+    peerInfo.channel = 0;
+    peerInfo.encrypt = false;
+
+    esp_now_add_peer(&peerInfo);
 
     // Create queues
     esp_now_queue = xQueueCreate(10, sizeof(EnowMessage));
     esp_now_queue_from_pult = xQueueCreate(10, sizeof(EnowMessage));
     esp_now_queue_to_pult = xQueueCreate(10, sizeof(struct_message_pult));
+
+    esp_now_ready = true;
 }
 
 void send_command(int relay, bool state)
@@ -92,16 +106,18 @@ void send_command(int relay, bool state)
     myData.relay = relay;
     myData.state = state;
 
-    esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
-
-    if (result != ESP_OK)
-        Serial.println("Error sending command to relays");
+    esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
 }
 
 void espnow_send_status(const struct_message_pult &toPult)
 {
-    esp_err_t result = esp_now_send(pultAddress, (uint8_t *)&toPult, sizeof(toPult));
-
-    if (result != ESP_OK)
-        Serial.println("Error sending data to pult");
+    if (!esp_now_ready) {
+        return;
+    }
+    
+    // Копируем в локальный буфер
+    uint8_t send_buffer[sizeof(toPult)];
+    memcpy(send_buffer, &toPult, sizeof(toPult));
+    
+    esp_now_send(pultAddress, send_buffer, sizeof(send_buffer));
 }

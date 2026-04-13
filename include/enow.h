@@ -43,6 +43,7 @@ typedef struct struct_message_pult
     uint32_t time;          // время полива зоны
     uint32_t prog_pass;     // прошло полива зоны
     uint32_t programm_time; // время полива зоны
+    uint32_t k_dw_time;     // коэффициент полива зоны
 } struct_message_pult;
 
 const uint16_t SYNC_WORD = 0xABCD;

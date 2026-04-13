@@ -156,26 +156,28 @@ void flowTick()
 void send_message_to_pult(void *pvParameters)
 {
     struct_message_pult message;
+    
+    // Ждём стабилизации WiFi
+    vTaskDelay(pdMS_TO_TICKS(3000));
 
     while (true)
     {
         // Ждем данные из очереди (блокировка до появления данных)
         if (xQueueReceive(esp_now_queue_to_pult, &message, portMAX_DELAY) == pdPASS)
         {
-            // Передаем полученную структуру в функцию
             if (esp_now)
                 espnow_send_status(message);
             else
                 lora_send_status(message);
-            vTaskDelay(pdMS_TO_TICKS(50));
         }
     }
 }
 
 void send_status_to_pult(struct_message_pult msg = {
-                             SYNC_WORD, false, pump_water_state, !dryState, 0, 0, 0, 0, 0})
+                             SYNC_WORD, false, pump_water_state, !dryState, 0, 0, 0, 0, 0, k_dw_time})
 {
     static uint32_t ping_timer;
+    
     if (!use_pult)
         return;
     if (millis() - ping_timer < 1000)
@@ -208,7 +210,8 @@ void update_bars()
     int8_t S = allSeconds % 60; // Секунды
     lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d", H, M, S, thisH, thisM, thisS);
     lv_bar_set_value(objects.prog_bar, prog_pass, LV_ANIM_OFF);
-    struct_message_pult message1 = {SYNC_WORD, true, pump_water_state, !dryState, current_zone, time_pass, time, prog_pass, programm_time};
+    struct_message_pult message1 = {SYNC_WORD, true, pump_water_state, !dryState, current_zone,
+                                    time_pass, time, prog_pass, programm_time, k_dw_time};
     send_status_to_pult(message1);
 }
 
