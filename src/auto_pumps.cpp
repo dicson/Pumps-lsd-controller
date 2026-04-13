@@ -110,7 +110,7 @@ void periodTick()
             zone_on(i);
         }
         // ------------------переключение воды с грязной на чистую
-        uint32_t dw_t = dw_time[i] * 1000 * minutes / 100 * k_dw_time;
+        uint32_t dw_t = (dw_time[i] * 1000 * minutes / 100) * k_dw_time;
         if (dw_time[i] > 0 && millis() - pump_timers[i] >= dw_t // если время полива грязной вышло
             && pump_state[i] == SWITCH_LEVEL                    // если зона поливается в данный момент
             && cw_time[i] > 0                                   // если время чистой воды больше нуля

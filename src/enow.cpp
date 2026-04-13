@@ -40,13 +40,10 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
 }
 
 // Callback when data is sent
-void OnDataSent(const wifi_tx_info_t *info, esp_now_send_status_t status)
+void OnDataSent(const esp_now_send_info_t *tx_info, esp_now_send_status_t status)
 {
-    if (status == ESP_NOW_SEND_SUCCESS)
-    {
-        EnowMessage msg = EnowMessage::OK;
-        xQueueSendFromISR(esp_now_queue, &msg, NULL);
-    }
+    EnowMessage msg = (status == ESP_NOW_SEND_SUCCESS) ? EnowMessage::OK : EnowMessage::SEND_FAIL;
+    xQueueSendFromISR(esp_now_queue, &msg, NULL);
 }
 
 void esp_now_setup()
