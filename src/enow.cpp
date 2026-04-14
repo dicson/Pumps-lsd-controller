@@ -59,7 +59,7 @@ void esp_now_setup()
 
     // Устанавливаем канал 1
     esp_wifi_set_channel(1, WIFI_SECOND_CHAN_NONE);
-    
+
     // Register callbacks
     esp_now_register_recv_cb(OnDataRecv);
     esp_now_register_send_cb(OnDataSent);
@@ -79,7 +79,7 @@ void esp_now_setup()
     peerInfo.encrypt = false;
 
     esp_now_add_peer(&peerInfo);
-    
+
     // Также добавляем broadcast peer для надёжности приёма
     memset(&peerInfo, 0, sizeof(peerInfo));
     uint8_t broadcast_mac[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
@@ -108,13 +108,14 @@ void send_command(int relay, bool state)
 
 void espnow_send_status(const struct_message_pult &toPult)
 {
-    if (!esp_now_ready) {
+    if (!esp_now_ready)
+    {
         return;
     }
-    
+
     // Копируем в локальный буфер
     uint8_t send_buffer[sizeof(toPult)];
     memcpy(send_buffer, &toPult, sizeof(toPult));
-    
+
     esp_now_send(pultAddress, send_buffer, sizeof(send_buffer));
 }
