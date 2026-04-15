@@ -23,22 +23,30 @@ enum class EnowMessage
     OK,
     SEND_FAIL,
     START,
-    STOP
+    STOP,
+    SET_K
 };
 
-typedef struct struct_message
+typedef struct __attribute__((packed))
 {
-    int relay;  // номер реле
-    bool state; // вкл/выкл
+    int32_t relay;   // номер реле (255 = установка K)
+    uint8_t state;   // вкл/выкл
+    uint32_t k_value; // коэффициент K (используется при relay == 255)
 } struct_message;
 
-typedef struct struct_message_pult
+typedef struct __attribute__((packed))
+{
+    EnowMessage type;
+    uint32_t value; // payload (e.g. K value)
+} QueuePultMessage;
+
+typedef struct __attribute__((packed))
 {
     uint16_t sync;          // Маркер начала (0xABCD)
-    bool state;             // вкл/выкл
-    bool pump_state;        // вкл/выкл
-    bool osmos_state;       // вкл/выкл
-    int current_zone;       // номер реле
+    uint8_t state;          // вкл/выкл
+    uint8_t pump_state;     // вкл/выкл
+    uint8_t osmos_state;    // вкл/выкл
+    int32_t current_zone;   // номер реле
     uint32_t time_pass;     // прошло полива зоны
     uint32_t time;          // время полива зоны
     uint32_t prog_pass;     // прошло полива зоны
@@ -49,4 +57,7 @@ typedef struct struct_message_pult
 const uint16_t SYNC_WORD = 0xABCD;
 
 void espnow_send_status(const struct_message_pult &toPult);
+
+extern uint32_t k_dw_time;
+
 #endif // ENOW_H

@@ -13,6 +13,8 @@ QueueHandle_t esp_now_queue_to_pult;
 // Флаг: ESP-NOW полностью инициализирован
 static bool esp_now_ready = false;
 
+extern void save_k_dw_time();
+
 // Callback function that will be executed when data is received
 void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, int len)
 {
@@ -28,15 +30,26 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
 
     memcpy(&fromPult, incomingData, sizeof(fromPult));
 
-    EnowMessage msg = EnowMessage::NONE;
+    QueuePultMessage qMsg;
+    qMsg.type = EnowMessage::NONE;
+    qMsg.value = 0;
+
+    // Команда установки K (relay == 255)
+    if (fromPult.relay == 255)
+    {
+        qMsg.type = EnowMessage::SET_K;
+        qMsg.value = fromPult.k_value;
+        xQueueSendFromISR(esp_now_queue_from_pult, &qMsg, NULL);
+        return;
+    }
 
     if (fromPult.relay == 0 && fromPult.state == false)
-        msg = EnowMessage::STOP;
+        qMsg.type = EnowMessage::STOP;
     else if (fromPult.relay == 1 && fromPult.state == true)
-        msg = EnowMessage::START;
+        qMsg.type = EnowMessage::START;
 
-    if (msg != EnowMessage::NONE)
-        xQueueSendFromISR(esp_now_queue_from_pult, &msg, NULL);
+    if (qMsg.type != EnowMessage::NONE)
+        xQueueSendFromISR(esp_now_queue_from_pult, &qMsg, NULL);
 }
 
 // Callback when data is sent
@@ -91,7 +104,7 @@ void esp_now_setup()
 
     // Create queues
     esp_now_queue = xQueueCreate(10, sizeof(EnowMessage));
-    esp_now_queue_from_pult = xQueueCreate(10, sizeof(EnowMessage));
+    esp_now_queue_from_pult = xQueueCreate(10, sizeof(QueuePultMessage));
     esp_now_queue_to_pult = xQueueCreate(10, sizeof(struct_message_pult));
 
     esp_now_ready = true;

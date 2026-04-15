@@ -16,7 +16,7 @@ char buffer[MAX_BUF]; // Массив для хранения байтов
 int pos = 0;          // Текущая позиция в массиве
 extern bool use_pult;
 extern void save_k_dw_time();
-extern int32_t k_dw_time;
+extern uint32_t k_dw_time;
 
 void processCommand(char *cmd)
 {

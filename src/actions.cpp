@@ -22,7 +22,7 @@ static constexpr uint16_t SCREEN_ANIM_DURATION_MS = 1000;
 
 extern Preferences settings;
 extern uint32_t dw_time[PUMP_AMOUNT], cw_time[PUMP_AMOUNT], zoneTimer, zone_pause;
-extern int32_t GFX_BL_VALUE, GFX_BL_TIME, k_dw_time;
+extern uint32_t GFX_BL_VALUE, GFX_BL_TIME, k_dw_time;
 extern boolean pump_finished[PUMP_AMOUNT], pump_state[PUMP_AMOUNT], now_pumping;
 extern lv_obj_t *bar_list[PUMP_AMOUNT];
 extern int current_zone, minutes;
@@ -114,7 +114,7 @@ void action_esp_lora_clicked(lv_event_t *e)
 void action_bl_changed(lv_event_t *e)
 {
   GFX_BL_VALUE = lv_slider_get_value(objects.bl);
-  ledcWrite(GFX_BL, GFX_BL_VALUE);
+  analogWrite(GFX_BL, GFX_BL_VALUE);
 }
 
 void action_bl_released(lv_event_t *e)

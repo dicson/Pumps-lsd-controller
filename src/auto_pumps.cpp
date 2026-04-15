@@ -6,6 +6,8 @@
 #include "constants.h"
 #include <freertos/queue.h>
 
+extern void save_k_dw_time();
+
 #define SWITCH_LEVEL 0 // реле: 1 - высокого уровня (или мосфет), 0 - низкого
 
 extern uint32_t dw_time[PUMP_AMOUNT], cw_time[PUMP_AMOUNT], pump_timers[PUMP_AMOUNT];
@@ -174,7 +176,7 @@ void send_message_to_pult(void *pvParameters)
 }
 
 void send_status_to_pult(struct_message_pult msg = {
-                             SYNC_WORD, false, pump_water_state, !dryState, 0, 0, 0, 0, 0, k_dw_time})
+                             SYNC_WORD, 0, 0, 0, 0, 0, 0, 0, 0, 0})
 {
     static uint32_t ping_timer;
     
@@ -182,6 +184,14 @@ void send_status_to_pult(struct_message_pult msg = {
         return;
     if (millis() - ping_timer < 1000)
         return;
+
+    // Default values if called with no args
+    if (msg.sync == SYNC_WORD && msg.time == 0) {
+        msg.state = false;
+        msg.pump_state = pump_water_state;
+        msg.osmos_state = !dryState;
+        msg.k_dw_time = k_dw_time;
+    }
 
     xQueueSend(esp_now_queue_to_pult, &msg, 0);
     ping_timer = millis();
@@ -210,7 +220,7 @@ void update_bars()
     int8_t S = allSeconds % 60; // Секунды
     lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d", H, M, S, thisH, thisM, thisS);
     lv_bar_set_value(objects.prog_bar, prog_pass, LV_ANIM_OFF);
-    struct_message_pult message1 = {SYNC_WORD, true, pump_water_state, !dryState, current_zone,
+    struct_message_pult message1 = {SYNC_WORD, 1, (uint8_t)pump_water_state, (uint8_t)!dryState, (int32_t)current_zone,
                                     time_pass, time, prog_pass, programm_time, k_dw_time};
     send_status_to_pult(message1);
 }
@@ -234,15 +244,20 @@ void handle_messages()
         }
     }
 
-    EnowMessage pultMsg;
-    if (xQueueReceive(esp_now_queue_from_pult, &pultMsg, 0) == pdTRUE)
+    QueuePultMessage qpMsg;
+    if (xQueueReceive(esp_now_queue_from_pult, &qpMsg, 0) == pdTRUE)
     {
         if (esp_now && use_pult)
         {
-            if (pultMsg == EnowMessage::START)
+            if (qpMsg.type == EnowMessage::START)
                 action_start(NULL);
-            if (pultMsg == EnowMessage::STOP)
+            if (qpMsg.type == EnowMessage::STOP)
                 action_stop(NULL);
+            if (qpMsg.type == EnowMessage::SET_K)
+            {
+                k_dw_time = qpMsg.value;
+                save_k_dw_time();
+            }
         }
     }
 }

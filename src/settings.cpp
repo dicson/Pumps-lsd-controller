@@ -6,7 +6,7 @@
 #define RW_MODE false
 #define RO_MODE true
 
-int32_t GFX_BL_VALUE, GFX_BL_TIME;      // яркость, время подсветки экрана
+uint32_t GFX_BL_VALUE, GFX_BL_TIME;      // яркость, время подсветки экрана
 uint32_t dw_time[PUMP_AMOUNT];          // время полива грязной водой
 uint32_t cw_time[PUMP_AMOUNT];          // время полива чистой водой
 uint32_t pump_timers[PUMP_AMOUNT];      // таймеры зон

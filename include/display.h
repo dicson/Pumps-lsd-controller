@@ -18,8 +18,8 @@
 #define GFX_BL 2
 
 // --- External variables (defined in settings or elsewhere) ---
-extern int32_t GFX_BL_VALUE; 
-extern int32_t GFX_BL_TIME;  
+extern uint32_t GFX_BL_VALUE; 
+extern uint32_t GFX_BL_TIME;  
 
 // --- Function Prototypes ---
 void setup_display();
