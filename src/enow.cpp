@@ -5,7 +5,7 @@
 #include "ui/screens.h"
 #include "enow.h"
 
-// Queue handles
+// Дескрипторы очередей
 QueueHandle_t esp_now_queue;
 QueueHandle_t esp_now_queue_from_pult;
 QueueHandle_t esp_now_queue_to_pult;
@@ -15,7 +15,7 @@ static bool esp_now_ready = false;
 
 extern void save_k_dw_time();
 
-// Callback function that will be executed when data is received
+// Функция обратного вызова, которая выполняется при получении данных
 void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, int len)
 {
     if (info == NULL || info->src_addr == NULL || incomingData == NULL)
@@ -52,7 +52,7 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
         xQueueSendFromISR(esp_now_queue_from_pult, &qMsg, NULL);
 }
 
-// Callback when data is sent
+// Обратный вызов при отправке данных
 void OnDataSent(const esp_now_send_info_t *tx_info, esp_now_send_status_t status)
 {
     EnowMessage msg = (status == ESP_NOW_SEND_SUCCESS) ? EnowMessage::OK : EnowMessage::SEND_FAIL;
@@ -61,7 +61,7 @@ void OnDataSent(const esp_now_send_info_t *tx_info, esp_now_send_status_t status
 
 void esp_now_setup()
 {
-    // Set device as a Wi-Fi Station
+    // Настройка устройства как Wi-Fi станции
     WiFi.mode(WIFI_STA);
     WiFi.enableAP(false);
 
@@ -73,11 +73,11 @@ void esp_now_setup()
     // Устанавливаем канал 1
     esp_wifi_set_channel(1, WIFI_SECOND_CHAN_NONE);
 
-    // Register callbacks
+    // Регистрация обратных вызовов
     esp_now_register_recv_cb(OnDataRecv);
     esp_now_register_send_cb(OnDataSent);
 
-    // Register Relay Peer
+    // Регистрация узла реле (Peer)
     esp_now_peer_info_t peerInfo = {};
     memcpy(peerInfo.peer_addr, broadcastAddress, 6);
     peerInfo.channel = 0;
@@ -85,7 +85,7 @@ void esp_now_setup()
 
     esp_now_add_peer(&peerInfo);
 
-    // Register Pult Peer
+    // Регистрация узла пульта (Peer)
     memset(&peerInfo, 0, sizeof(peerInfo));
     memcpy(peerInfo.peer_addr, pultAddress, 6);
     peerInfo.channel = 0;
@@ -102,7 +102,7 @@ void esp_now_setup()
 
     esp_now_add_peer(&peerInfo);
 
-    // Create queues
+    // Создание очередей
     esp_now_queue = xQueueCreate(10, sizeof(EnowMessage));
     esp_now_queue_from_pult = xQueueCreate(10, sizeof(QueuePultMessage));
     esp_now_queue_to_pult = xQueueCreate(10, sizeof(struct_message_pult));

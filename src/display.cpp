@@ -1,7 +1,7 @@
 #include "display.h"
 #include <Arduino.h>
 
-// Initialize objects
+// Инициализация объектов
 TAMC_GT911 ts(TOUCH_GT911_SDA, TOUCH_GT911_SCL, TOUCH_GT911_INT, TOUCH_GT911_RST,
               max(TOUCH_MAP_X1, TOUCH_MAP_X2), max(TOUCH_MAP_Y1, TOUCH_MAP_Y2));
 
@@ -14,7 +14,7 @@ Arduino_ESP32RGBPanel rgbpanel(
     0 /* vsync_polarity */, 22 /* vsync_front_porch */, 13 /* vsync_pulse_width */, 10 /* vsync_back_porch */,
     true /* pclk_active_neg */, 12000000 /* prefer_speed */);
 
-Arduino_RGB_Display gfx(800, 480, &rgbpanel, 0 /* rotation */, true);
+Arduino_RGB_Display gfx(800, 480, &rgbpanel, 0 /* поворот */, true);
 
 lv_display_t *disp;
 static lv_color_t *disp_draw_buf;
@@ -53,17 +53,17 @@ void my_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map)
 
 void my_touchpad_read(lv_indev_t *indev, lv_indev_data_t *data)
 {
-  ts.read();        // Read touch data
-  if (ts.isTouched) // Check if the screen is touched
+  ts.read();        // Чтение данных о касании
+  if (ts.isTouched) // Проверка, коснулись ли экрана
   {
-    for (int i = 0; i < ts.touches; i++) // Loop through all detected touch points
+    for (int i = 0; i < ts.touches; i++) // Перебор всех обнаруженных точек касания
     {
-      // We can use the first touch (or other logic for multiple touches)
+      // Можно использовать первое касание (или другую логику для нескольких касаний)
       if (i == 0)
       {
         data->state = LV_INDEV_STATE_PRESSED;
-        data->point.x = ts.points[i].x; // Get x coordinate
-        data->point.y = ts.points[i].y; // Get y coordinate
+        data->point.x = ts.points[i].x; // Получение координаты X
+        data->point.y = ts.points[i].y; // Получение координаты Y
       }
     }
     if (ledcRead(GFX_BL) == 0)
@@ -94,7 +94,7 @@ void setup_display()
     uint32_t screenWidth = gfx.width();
     uint32_t screenHeight = gfx.height();
 
-    // Fixed buffer size calculation (in bytes)
+    // Расчет фиксированного размера буфера (в байтах)
 #ifdef DIRECT_MODE
     uint32_t bufSizeInBytes = screenWidth * screenHeight * sizeof(lv_color_t);
 #else
@@ -122,7 +122,7 @@ void setup_display()
     lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
     lv_indev_set_read_cb(indev, my_touchpad_read);
 
-    // Smooth fade in
+    // Плавное включение подсветки
     for (int duty = 0; duty <= GFX_BL_VALUE; duty++)
     {
         analogWrite(GFX_BL, duty);
@@ -135,7 +135,7 @@ void loop_display()
 {
     lv_task_handler();
     delay(4);
-    // Simple idle management (needs analogRead/Write consistency check)
+    // Простое управление простоем (требуется проверка согласованности analogRead/Write)
     if (lv_display_get_inactive_time(disp) > GFX_BL_TIME * 1000)
     {
         analogWrite(GFX_BL, 0);

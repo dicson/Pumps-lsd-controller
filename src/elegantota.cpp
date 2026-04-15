@@ -13,14 +13,14 @@ unsigned long ota_progress_millis = 0;
 
 void onOTAStart()
 {
-    // Log when OTA has started
+    // Логирование начала OTA-обновления
     Serial.println("OTA update started!");
-    // <Add your own code here>
+    // <Добавьте здесь свой код>
 }
 
 void onOTAProgress(size_t current, size_t final)
 {
-    // Log every 1 second
+    // Логирование каждую секунду
     if (millis() - ota_progress_millis > 1000)
     {
         ota_progress_millis = millis();
@@ -30,7 +30,7 @@ void onOTAProgress(size_t current, size_t final)
 
 void onOTAEnd(bool success)
 {
-    // Log when OTA has finished
+    // Логирование завершения OTA-обновления
     if (success)
     {
         Serial.println("OTA update finished successfully!");
@@ -39,7 +39,7 @@ void onOTAEnd(bool success)
     {
         Serial.println("There was an error during OTA update!");
     }
-    // <Add your own code here>
+    // <Добавьте здесь свой код>
 }
 
 void ota_setup(void)
@@ -61,8 +61,8 @@ void ota_setup(void)
     server.on("/", []()
               { server.send(200, "text/plain", "Hi! This is ElegantOTA Demo."); });
 
-    ElegantOTA.begin(&server); // Start ElegantOTA
-                               // ElegantOTA callbacks
+    ElegantOTA.begin(&server); // Запуск ElegantOTA
+                               // Обратные вызовы ElegantOTA
     ElegantOTA.onStart(onOTAStart);
     ElegantOTA.onProgress(onOTAProgress);
     ElegantOTA.onEnd(onOTAEnd);

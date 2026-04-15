@@ -48,7 +48,7 @@ void processCommand(char *cmd)
             Serial.print("Значение K: ");
             Serial.println(spacePtr + 1);
             const char *myString = (spacePtr + 1);
-            k_dw_time = strtoul(myString, NULL, 10); // 10 is the base (decimal)
+            k_dw_time = strtoul(myString, NULL, 10); // 10 - основание системы счисления (десятичная)
             save_k_dw_time();
         }
         *spacePtr = ' '; // Восстанавливаем строку (опционально)

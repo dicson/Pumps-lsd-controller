@@ -85,8 +85,8 @@ void pump_setup()
     pump_state[WATER_RELAY] = !SWITCH_LEVEL; // выкл
     pump_state[PUMP_RELAY] = !SWITCH_LEVEL;  // выкл
 
-    xTaskCreatePinnedToCore(send_message_to_pult /*Task function*/, "SendMessagesToPult" /* Name*/,
-                            2048 /*Stack size*/, NULL /*SParameters*/, 1 /*SPriority*/, NULL /*STask handle*/, 0);
+    xTaskCreatePinnedToCore(send_message_to_pult /*Функция задачи*/, "SendMessagesToPult" /* Имя*/,
+                            2048 /*Размер стека*/, NULL /*Параметры*/, 1 /*Приоритет*/, NULL /*Дескриптор задачи*/, 0);
 }
 
 void periodTick()
@@ -185,7 +185,7 @@ void send_status_to_pult(struct_message_pult msg = {
     if (millis() - ping_timer < 1000)
         return;
 
-    // Default values if called with no args
+    // Значения по умолчанию, если функция вызвана без аргументов
     if (msg.sync == SYNC_WORD && msg.time == 0) {
         msg.state = false;
         msg.pump_state = pump_water_state;
@@ -266,7 +266,7 @@ void pump_loop()
 {
     if (system_error_state)
     {
-        // In error state, we only allow UI updates or critical checks, no pump logic
+        // В состоянии ошибки разрешены только обновления интерфейса или критические проверки, логика насоса отключена
         return;
     }
     periodTick();

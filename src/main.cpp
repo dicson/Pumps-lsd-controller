@@ -12,7 +12,7 @@ extern void lora_loop();
 void setup()
 {
   Serial.begin(115200);
-  delay(500); // Short delay to ensure serial is ready
+  delay(500); // Короткая задержка для готовности последовательного порта
   setup_settings();
   setup_display();
   ui_init();

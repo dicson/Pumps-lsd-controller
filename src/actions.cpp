@@ -168,7 +168,7 @@ void action_idle_time_unfocused(lv_event_t *e)
   settings.end();
 }
 
-// Helper to calculate total program time
+// Вспомогательная функция для расчета общего времени программы
 void calculate_program_time()
 {
   programm_time = 0;
@@ -408,7 +408,7 @@ void action_zone_selected(lv_event_t *e)
 
 void action_zone_time_clicked(lv_event_t *e)
 {
-  obj = lv_event_get_current_target_obj(e); // zone
+  obj = lv_event_get_current_target_obj(e); // зона
   water_num = lv_obj_get_index(lv_event_get_target_obj(e));
   if (lv_obj_has_flag(objects.keyboard, LV_OBJ_FLAG_HIDDEN))
   {
