@@ -226,7 +226,7 @@ void update_bars()
         lv_grad_dsc_t *grad = &bars_grads[current_zone];
 
         grad->dir = LV_GRAD_DIR_HOR;
-        grad->stops_count = 4;
+        grad->stops_count = 2;
 
         uint32_t sp = 255;
         if (time > 0)
@@ -243,14 +243,17 @@ void update_bars()
         grad->stops[1].color = lv_color_hex(ZONE_BAR_COLOR_DW);
         grad->stops[1].frac = (uint8_t)sp;
         grad->stops[1].opa = 255;
-
         // Цвет чистой воды (после границы sp)
-        grad->stops[2].color = lv_color_hex(0x2196F3);
-        grad->stops[2].frac = (uint8_t)sp;
-        grad->stops[2].opa = 255;
-        grad->stops[3].color = lv_color_hex(0x2196F3);
-        grad->stops[3].frac = 255;
-        grad->stops[3].opa = 255;
+        if (grad->stops[1].frac < 255)
+        {
+            grad->stops_count = 4;
+            grad->stops[2].color = lv_color_hex(0x2196F3);
+            grad->stops[2].frac = (uint8_t)sp;
+            grad->stops[2].opa = 255;
+            grad->stops[3].color = lv_color_hex(0x2196F3);
+            grad->stops[3].frac = 255;
+            grad->stops[3].opa = 255;
+        }
 
         lv_obj_set_style_bg_grad(bar, grad, LV_PART_INDICATOR);
         lv_obj_set_style_bg_opa(bar, 255, LV_PART_INDICATOR);

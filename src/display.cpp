@@ -12,7 +12,7 @@ Arduino_ESP32RGBPanel rgbpanel(
     15 /* B0 */, 7 /* B1 */, 6 /* B2 */, 5 /* B3 */, 4 /* B4 */,
     0 /* hsync_polarity */, 210 /* hsync_front_porch */, 30 /* hsync_pulse_width */, 16 /* hsync_back_porch */,
     0 /* vsync_polarity */, 22 /* vsync_front_porch */, 13 /* vsync_pulse_width */, 10 /* vsync_back_porch */,
-    true /* pclk_active_neg */, 12000000 /* prefer_speed */);
+    true /* pclk_active_neg */, 8000000 /* prefer_speed */);
 
 Arduino_RGB_Display gfx(800, 480, &rgbpanel, ROTATION /* поворот */, true);
 
@@ -82,7 +82,7 @@ void my_touchpad_read(lv_indev_t *indev, lv_indev_data_t *data)
 void setup_display()
 {
     Serial.println("Initializing display...");
-    gfx.begin();
+    gfx.begin(8000000);
     gfx.setRotation(ROTATION);
     gfx.fillScreen(0x000000);
 
@@ -153,7 +153,7 @@ void revert_display()
 void loop_display()
 {
     lv_task_handler();
-    delay(5);
+    delay(4);
     // Простое управление простоем (требуется проверка согласованности analogRead/Write)
     if (lv_display_get_inactive_time(disp) > GFX_BL_TIME * 1000)
     {
