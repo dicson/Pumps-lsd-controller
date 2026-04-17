@@ -14,7 +14,7 @@ Arduino_ESP32RGBPanel rgbpanel(
     0 /* vsync_polarity */, 22 /* vsync_front_porch */, 13 /* vsync_pulse_width */, 10 /* vsync_back_porch */,
     true /* pclk_active_neg */, 12000000 /* prefer_speed */);
 
-Arduino_RGB_Display gfx(800, 480, &rgbpanel, 0 /* поворот */, true);
+Arduino_RGB_Display gfx(800, 480, &rgbpanel, ROTATION /* поворот */, true);
 
 lv_display_t *disp;
 static lv_color_t *disp_draw_buf;
@@ -53,40 +53,44 @@ void my_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map)
 
 void my_touchpad_read(lv_indev_t *indev, lv_indev_data_t *data)
 {
-  ts.read();        // Чтение данных о касании
-  if (ts.isTouched) // Проверка, коснулись ли экрана
-  {
-    for (int i = 0; i < ts.touches; i++) // Перебор всех обнаруженных точек касания
+    ts.read();        // Чтение данных о касании
+    if (ts.isTouched) // Проверка, коснулись ли экрана
     {
-      // Можно использовать первое касание (или другую логику для нескольких касаний)
-      if (i == 0)
-      {
-        data->state = LV_INDEV_STATE_PRESSED;
-        data->point.x = ts.points[i].x; // Получение координаты X
-        data->point.y = ts.points[i].y; // Получение координаты Y
-      }
+        for (int i = 0; i < ts.touches; i++) // Перебор всех обнаруженных точек касания
+        {
+            // Можно использовать первое касание (или другую логику для нескольких касаний)
+            if (i == 0)
+            {
+                data->state = LV_INDEV_STATE_PRESSED;
+                data->point.x = ts.points[i].x; // Получение координаты X
+                data->point.y = ts.points[i].y; // Получение координаты Y
+            }
+        }
+        if (ledcRead(GFX_BL) == 0)
+        {
+            // ledcWrite(GFX_BL, GFX_BL_VALUE);
+            analogWrite(GFX_BL, GFX_BL_VALUE);
+            lv_indev_wait_release(indev);
+        }
     }
-    if (ledcRead(GFX_BL) == 0)
+    else
     {
-      // ledcWrite(GFX_BL, GFX_BL_VALUE);
-      analogWrite(GFX_BL, GFX_BL_VALUE);
-      lv_indev_wait_release(indev);
+        data->state = LV_INDEV_STATE_RELEASED;
     }
-  }
-  else
-  {
-    data->state = LV_INDEV_STATE_RELEASED;
-  }
 }
 
 void setup_display()
 {
     Serial.println("Initializing display...");
     gfx.begin();
+    gfx.setRotation(ROTATION);
     gfx.fillScreen(0x000000);
 
     ts.begin();
-    ts.setRotation(1);
+    if (ROTATION == 0)
+        ts.setRotation(1);
+    else
+        ts.setRotation(3);
 
     lv_init();
     lv_tick_set_cb(millis_cb);
@@ -130,11 +134,26 @@ void setup_display()
     }
     Serial.println("Display setup complete.");
 }
+void revert_display()
+{
+    if (ROTATION == 0)
+    {
+        gfx.setRotation(2);
+        ts.setRotation(3);
+        ROTATION = 2;
+    }
+    else
+    {
+        gfx.setRotation(0);
+        ts.setRotation(1);
+        ROTATION = 0;
+    }
+}
 
 void loop_display()
 {
     lv_task_handler();
-    delay(4);
+    delay(5);
     // Простое управление простоем (требуется проверка согласованности analogRead/Write)
     if (lv_display_get_inactive_time(disp) > GFX_BL_TIME * 1000)
     {

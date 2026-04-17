@@ -20,7 +20,9 @@
       "resourceFiles": [],
       "hiddenWidgetLines": "dimmed",
       "dimmedLinesOpacity": "20",
-      "embedFonts": true
+      "embedBitmaps": true,
+      "embedFonts": true,
+      "cacheFonts": false
     },
     "build": {
       "objID": "72794a43-a0fc-13c2-7eb5-67dd952141a4",
@@ -347,6 +349,15 @@
       "componentGroups": [],
       "userProperties": [],
       "name": "esp_lora_clicked"
+    },
+    {
+      "objID": "5fd1b454-de9c-4501-f3bb-299a44f45df4",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "componentGroups": [],
+      "userProperties": [],
+      "name": "revert_display"
     }
   ],
   "userPages": [
@@ -673,7 +684,9 @@
                       "group": "",
                       "groupIndex": 0,
                       "min": 0,
+                      "minType": "literal",
                       "max": 100,
+                      "maxType": "literal",
                       "mode": "NORMAL",
                       "value": 0,
                       "valueType": "literal",
@@ -1721,7 +1734,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -1776,7 +1789,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -1846,7 +1861,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -1901,7 +1916,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -1971,7 +1988,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -2026,7 +2043,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -2096,7 +2115,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -2151,7 +2170,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -2221,7 +2242,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -2276,7 +2297,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -2346,7 +2369,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -2401,7 +2424,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -2471,7 +2496,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -2526,7 +2551,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -2596,7 +2623,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -2651,7 +2678,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -2721,7 +2750,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -2776,7 +2805,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -2846,7 +2877,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -2901,7 +2932,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -2971,7 +3004,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -3026,7 +3059,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -3096,7 +3131,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -3151,7 +3186,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -3221,7 +3258,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -3276,7 +3313,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -3346,7 +3385,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -3401,7 +3440,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -3471,7 +3512,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -3526,7 +3567,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -3596,7 +3639,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "text_color": "#000000"
+                                      "text_color": "#ffffff"
                                     }
                                   }
                                 }
@@ -3651,7 +3694,9 @@
                           "group": "",
                           "groupIndex": 0,
                           "min": 0,
+                          "minType": "literal",
                           "max": 100,
+                          "maxType": "literal",
                           "mode": "NORMAL",
                           "value": 0,
                           "valueType": "literal",
@@ -12170,6 +12215,112 @@
                       },
                       "group": "",
                       "groupIndex": 0
+                    },
+                    {
+                      "objID": "ec7f1cc3-5466-4151-b648-bc4b1cb6e3aa",
+                      "type": "LVGLButtonWidget",
+                      "left": -8,
+                      "top": 328,
+                      "width": 300,
+                      "height": 32,
+                      "customInputs": [],
+                      "customOutputs": [],
+                      "style": {
+                        "objID": "86d28160-676f-42e5-930d-8aec9625e6c2",
+                        "useStyle": "default",
+                        "conditionalStyles": [],
+                        "childStyles": []
+                      },
+                      "timeline": [],
+                      "eventHandlers": [
+                        {
+                          "objID": "d3b74613-a8f4-4a03-d722-e4216464a198",
+                          "eventName": "RELEASED",
+                          "handlerType": "action",
+                          "action": "revert_display",
+                          "userData": 0
+                        }
+                      ],
+                      "identifier": "r_display",
+                      "leftUnit": "px",
+                      "topUnit": "px",
+                      "widthUnit": "px",
+                      "heightUnit": "px",
+                      "children": [
+                        {
+                          "objID": "093ef23d-6fa0-472b-abbc-37000faa9fe7",
+                          "type": "LVGLLabelWidget",
+                          "left": 0,
+                          "top": 0,
+                          "width": 170,
+                          "height": 22,
+                          "customInputs": [],
+                          "customOutputs": [],
+                          "style": {
+                            "objID": "49b668f9-a035-477e-b483-7b9b15039598",
+                            "useStyle": "default",
+                            "conditionalStyles": [],
+                            "childStyles": []
+                          },
+                          "timeline": [],
+                          "eventHandlers": [],
+                          "leftUnit": "px",
+                          "topUnit": "px",
+                          "widthUnit": "content",
+                          "heightUnit": "content",
+                          "children": [],
+                          "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
+                          "hiddenFlagType": "literal",
+                          "clickableFlagType": "literal",
+                          "flagScrollbarMode": "",
+                          "flagScrollDirection": "",
+                          "scrollSnapX": "",
+                          "scrollSnapY": "",
+                          "checkedStateType": "literal",
+                          "disabledStateType": "literal",
+                          "states": "",
+                          "localStyles": {
+                            "objID": "03e9a88f-5044-4616-a86c-4688fe9101f1",
+                            "definition": {
+                              "MAIN": {
+                                "DEFAULT": {
+                                  "align": "CENTER",
+                                  "text_color": "#000000"
+                                }
+                              }
+                            }
+                          },
+                          "group": "",
+                          "groupIndex": 0,
+                          "text": "Перевернуть экран",
+                          "textType": "literal",
+                          "longMode": "WRAP",
+                          "recolor": false
+                        }
+                      ],
+                      "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_ON_FOCUS|SCROLL_WITH_ARROW|SNAPPABLE",
+                      "hiddenFlagType": "literal",
+                      "clickableFlag": true,
+                      "clickableFlagType": "literal",
+                      "flagScrollbarMode": "",
+                      "flagScrollDirection": "",
+                      "scrollSnapX": "",
+                      "scrollSnapY": "",
+                      "checkedStateType": "literal",
+                      "disabledStateType": "literal",
+                      "states": "",
+                      "localStyles": {
+                        "objID": "fe10c483-842c-413b-fdf5-bfa30b32c6bb",
+                        "definition": {
+                          "MAIN": {
+                            "DEFAULT": {
+                              "radius": 8
+                            }
+                          }
+                        }
+                      },
+                      "group": "",
+                      "groupIndex": 0
                     }
                   ],
                   "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
@@ -14041,6 +14192,7 @@
       "glyphs": [],
       "lvglRanges": "32-127,1030-1126",
       "lvglSymbols": "",
+      "lvglAdditionalSources": [],
       "lvglGlyphs": {
         "encodings": [
           {

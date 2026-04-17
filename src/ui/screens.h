@@ -162,10 +162,11 @@ typedef struct _objects_t {
     lv_obj_t *settings_kb;
     lv_obj_t *log_panel;
     lv_obj_t *update;
+    lv_obj_t *r_display;
     lv_obj_t *obj38;
     lv_obj_t *obj39;
-    lv_obj_t *version;
     lv_obj_t *obj40;
+    lv_obj_t *version;
     lv_obj_t *obj41;
     lv_obj_t *obj42;
     lv_obj_t *obj43;
@@ -182,8 +183,9 @@ typedef struct _objects_t {
     lv_obj_t *obj54;
     lv_obj_t *obj55;
     lv_obj_t *obj56;
-    lv_obj_t *update_relay_back;
     lv_obj_t *obj57;
+    lv_obj_t *update_relay_back;
+    lv_obj_t *obj58;
 } objects_t;
 
 extern objects_t objects;

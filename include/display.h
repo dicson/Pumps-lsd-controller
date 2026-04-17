@@ -19,7 +19,8 @@
 
 // --- External variables (defined in settings or elsewhere) ---
 extern uint32_t GFX_BL_VALUE; 
-extern uint32_t GFX_BL_TIME;  
+extern uint32_t GFX_BL_TIME; 
+extern int ROTATION; 
 
 // --- Function Prototypes ---
 void setup_display();

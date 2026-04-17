@@ -26,6 +26,8 @@ extern uint32_t GFX_BL_VALUE, GFX_BL_TIME, k_dw_time;
 extern boolean pump_finished[PUMP_AMOUNT], pump_state[PUMP_AMOUNT], now_pumping;
 extern lv_obj_t *bar_list[PUMP_AMOUNT];
 extern int current_zone, minutes;
+extern int ROTATION;
+extern void revert_display();
 
 uint32_t water_num, start_time;
 int32_t programm_time;
@@ -79,6 +81,35 @@ void update_zone_list()
       lv_obj_add_flag(checkbox, LV_OBJ_FLAG_HIDDEN);
     }
   }
+}
+
+void action_revert_display(lv_event_t *e)
+{
+  revert_display();
+  // Полная очистка UI перед сменой ориентации
+  lv_obj_clean(lv_screen_active());
+  ui_init();
+  for (int i = 0; i < PUMP_AMOUNT; i++)
+  {
+    lv_obj_t *button = lv_obj_get_child(objects.tab_2, i);
+
+    lv_obj_t *dw = lv_obj_get_child(button, 1);
+    lv_label_set_text(dw, String(dw_time[i]).c_str());
+    lv_obj_set_ext_click_area(dw, EXT_CLICK_AREA_SMALL);
+
+    lv_obj_t *cw = lv_obj_get_child(button, 2);
+    lv_label_set_text(cw, String(cw_time[i]).c_str());
+    lv_obj_set_ext_click_area(cw, EXT_CLICK_AREA_SMALL);
+
+    if (cw_time[i] != 0 || dw_time[i] != 0)
+      lv_obj_set_style_bg_opa(button, FULL_OPACITY, LV_PART_MAIN);
+    else
+      lv_obj_set_style_bg_opa(button, LOW_OPACITY, LV_PART_MAIN);
+  }
+  update_zone_list();
+  settings.begin("Settings", RW_MODE);
+  settings.putInt("ROTATION", ROTATION);
+  settings.end();
 }
 
 void action_debug(lv_event_t *e)

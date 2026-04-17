@@ -6,7 +6,7 @@
 #define RW_MODE false
 #define RO_MODE true
 
-uint32_t GFX_BL_VALUE, GFX_BL_TIME;      // яркость, время подсветки экрана
+uint32_t GFX_BL_VALUE, GFX_BL_TIME;     // яркость, время подсветки экрана
 uint32_t dw_time[PUMP_AMOUNT];          // время полива грязной водой
 uint32_t cw_time[PUMP_AMOUNT];          // время полива чистой водой
 uint32_t pump_timers[PUMP_AMOUNT];      // таймеры зон
@@ -18,6 +18,7 @@ boolean now_pumping = false;            // идет полив
 boolean dryState = true;                // какой клапан открыт. true - dry(грязная) false - чистая
 uint32_t k_dw_time = DEFAULT_K_DW_TIME; // коэффициент
 int minutes = DEFAULT_MINUTES;          // отладка
+int ROTATION = 0;                       // поворот экрана
 bool use_pult, lora, esp_now;
 extern void update_zone_list();
 
@@ -33,6 +34,7 @@ void setup_settings()
         settings.end();
         settings.begin("Settings", RW_MODE);
 
+        settings.putInt("ROTATION", 0);
         settings.putLong("GFX_BL_VALUE", DEFAULT_GFX_BL_VALUE);
         settings.putLong("GFX_BL_TIME", DEFAULT_GFX_BL_TIME);
         settings.putLong("zone_pause", DEFAULT_ZONE_PAUSE);
@@ -53,6 +55,7 @@ void setup_settings()
         settings.begin("Settings", RO_MODE);
     }
 
+    ROTATION = settings.getInt("ROTATION", 0);
     zone_pause = settings.getLong("zone_pause");
     GFX_BL_VALUE = settings.getLong("GFX_BL_VALUE");
     GFX_BL_TIME = settings.getLong("GFX_BL_TIME");
