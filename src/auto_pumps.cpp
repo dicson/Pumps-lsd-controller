@@ -158,7 +158,7 @@ void flowTick()
 void send_message_to_pult(void *pvParameters)
 {
     struct_message_pult message;
-    
+
     // Ждём стабилизации WiFi
     vTaskDelay(pdMS_TO_TICKS(3000));
 
@@ -179,14 +179,15 @@ void send_status_to_pult(struct_message_pult msg = {
                              SYNC_WORD, 0, 0, 0, 0, 0, 0, 0, 0, 0})
 {
     static uint32_t ping_timer;
-    
+
     if (!use_pult)
         return;
     if (millis() - ping_timer < 1000)
         return;
 
     // Значения по умолчанию, если функция вызвана без аргументов
-    if (msg.sync == SYNC_WORD && msg.time == 0) {
+    if (msg.sync == SYNC_WORD && msg.time == 0)
+    {
         msg.state = false;
         msg.pump_state = pump_water_state;
         msg.osmos_state = !dryState;
@@ -199,11 +200,12 @@ void send_status_to_pult(struct_message_pult msg = {
 
 void update_bars()
 {
-    if (lv_obj_has_flag(objects.stop, LV_OBJ_FLAG_HIDDEN))
+    if (current_zone >= PUMP_AMOUNT || lv_obj_has_flag(objects.stop, LV_OBJ_FLAG_HIDDEN))
     {
         send_status_to_pult();
         return;
     }
+    static int last_zone = -1;
     uint32_t prog_pass = millis() - start_time;
     uint32_t dw_t = dw_time[current_zone] * 1000 * minutes / 100 * k_dw_time;
     uint32_t time = dw_t + (cw_time[current_zone] + zone_pause) * 1000 * minutes;
@@ -212,8 +214,48 @@ void update_bars()
     if (programm_time - prog_pass <= dw_t + cw_time[current_zone] * 1000 * minutes)
         time = time - zone_pause * 1000;
     uint32_t time_pass = millis() - pump_timers[current_zone];
+    if (time_pass > time)
+        time_pass = time;
+
     lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, current_zone);
-    lv_bar_set_value(bar, map(time_pass, 0, time, 0, 100), LV_ANIM_ON);
+    // Обновляем настройки градиента только при смене зоны
+    if (current_zone != last_zone)
+    {
+        last_zone = current_zone;
+        static lv_grad_dsc_t bars_grads[PUMP_AMOUNT];
+        lv_grad_dsc_t *grad = &bars_grads[current_zone];
+
+        grad->dir = LV_GRAD_DIR_HOR;
+        grad->stops_count = 4;
+
+        uint32_t sp = 255;
+        if (time > 0)
+        {
+            sp = (uint32_t)((uint64_t)dw_t * 255 / time);
+            if (sp > 255)
+                sp = 255;
+        }
+
+        // Цвет грязной воды (до границы sp)
+        grad->stops[0].color = lv_color_hex(ZONE_BAR_COLOR_DW);
+        grad->stops[0].frac = 0;
+        grad->stops[0].opa = 255;
+        grad->stops[1].color = lv_color_hex(ZONE_BAR_COLOR_DW);
+        grad->stops[1].frac = (uint8_t)sp;
+        grad->stops[1].opa = 255;
+
+        // Цвет чистой воды (после границы sp)
+        grad->stops[2].color = lv_color_hex(0x2196F3);
+        grad->stops[2].frac = (uint8_t)sp;
+        grad->stops[2].opa = 255;
+        grad->stops[3].color = lv_color_hex(0x2196F3);
+        grad->stops[3].frac = 255;
+        grad->stops[3].opa = 255;
+
+        lv_obj_set_style_bg_grad(bar, grad, LV_PART_INDICATOR);
+        lv_obj_set_style_bg_opa(bar, 255, LV_PART_INDICATOR);
+    }
+    lv_bar_set_value(bar, map(time_pass, 0, time, 0, 100), LV_ANIM_OFF);
     unsigned long allSeconds = prog_pass / 1000;
     int8_t H = (allSeconds / 3600) % 24;
     int8_t M = (allSeconds / 60) % 60;

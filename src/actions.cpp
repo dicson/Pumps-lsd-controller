@@ -198,6 +198,8 @@ void action_start(lv_event_t *e)
     pump_finished[i] = false;
     lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
     lv_bar_set_value(bar, 0, LV_ANIM_OFF);
+    lv_obj_t *bar_label = lv_obj_get_child(bar, 0);
+    lv_obj_set_style_text_color(bar_label, lv_color_hex(0xffffff), LV_PART_MAIN);
   }
 
   calculate_program_time();

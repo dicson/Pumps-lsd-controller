@@ -11,11 +11,11 @@ constexpr int DEFAULT_GFX_BL_TIME{30};
 constexpr int DEFAULT_ZONE_PAUSE{0};
 constexpr int DEFAULT_K_DW_TIME{100};
 constexpr int DEFAULT_MINUTES{60};
-
 constexpr int EXT_CLICK_AREA_SMALL{10};
 constexpr int EXT_CLICK_AREA_LARGE{20};
 constexpr int FULL_OPACITY{255};
 constexpr int LOW_OPACITY{100};
 
+constexpr uint32_t ZONE_BAR_COLOR_DW = 0x0000CB;  // тёмно-синий (грязная вода)
 constexpr const char * VERSION = "Текущая версия прошивки - 1.0";
 #endif
