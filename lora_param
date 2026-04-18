@@ -1,0 +1,16 @@
+
+// LoRa Parameter:
+// +VERSION=V2.3.1
+// MODE:0
+// LEVEL:4 >> 2604.166748bps
+// SLEEP:2
+// Frequency:868000000hz >> 24
+// MAC:ff,ff
+// Bandwidth:0
+// Spreading Factor:8
+// Coding rate:2
+// CRC:0(false)
+// Preamble:8
+// IQ:0(false)
+// Power:22dBm
+// ===================================
