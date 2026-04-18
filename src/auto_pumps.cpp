@@ -23,23 +23,38 @@ void update_bars();
 void send_message_to_pult(void *pvParameters);
 extern void lora_send_status(const struct_message_pult &toPult);
 
+/**
+ * @brief Выводит текстовое сообщение в последовательный порт.
+ * @param Message Текст сообщения для логирования.
+ */
 void MessageToLog(String Message)
 {
     Serial.println(Message);
 }
 
+/**
+ * @brief Выключает указанную зону полива.
+ * @param i Индекс зоны (от 0 до PUMP_AMOUNT-1).
+ */
 void zone_off(int i)
 {
     send_command(i, false);
     MessageToLog("выключить зону " + String(i + 1));
 }
 
+/**
+ * @brief Включает указанную зону полива.
+ * @param i Индекс зоны (от 0 до PUMP_AMOUNT-1).
+ */
 void zone_on(int i)
 {
     send_command(i, true);
     MessageToLog("включить  зону " + String(i + 1));
 }
 
+/**
+ * @brief Включает основной водяной насос и отображает иконку в UI.
+ */
 void pump_on()
 {
     pump_water_state = true;
@@ -48,6 +63,9 @@ void pump_on()
     lv_obj_remove_flag(objects.pump, LV_OBJ_FLAG_HIDDEN);
 }
 
+/**
+ * @brief Выключает основной водяной насос и скрывает иконку в UI.
+ */
 void pump_off()
 {
     pump_water_state = false;
@@ -56,6 +74,9 @@ void pump_off()
     lv_obj_add_flag(objects.pump, LV_OBJ_FLAG_HIDDEN);
 }
 
+/**
+ * @brief Переключает подачу на "грязную" воду (отключает реле чистой воды).
+ */
 void dry_water_on()
 {
     send_command(WATER_RELAY, false);
@@ -65,6 +86,9 @@ void dry_water_on()
     dryState = true; // флаг грязной воды поднять
 }
 
+/**
+ * @brief Переключает подачу на "чистую" воду (включает реле чистой воды).
+ */
 void clear_water_on()
 {
     send_command(WATER_RELAY, true);
@@ -74,6 +98,9 @@ void clear_water_on()
     dryState = false;
 }
 
+/**
+ * @brief Начальная настройка системы полива. Конфигурирует состояния зон и создает задачу связи с пультом.
+ */
 void pump_setup()
 {
     // --------------------- КОНФИГУРИРУЕМ ПИНЫ ---------------------
@@ -89,6 +116,9 @@ void pump_setup()
                             2048 /*Размер стека*/, NULL /*Параметры*/, 1 /*Приоритет*/, NULL /*Дескриптор задачи*/, 0);
 }
 
+/**
+ * @brief Проверяет таймеры и условия для начала полива зон по очереди.
+ */
 void periodTick()
 {
     for (byte i = 0; i < PUMP_AMOUNT; i++)
@@ -121,6 +151,9 @@ void periodTick()
     }
 }
 
+/**
+ * @brief Контролирует завершение полива зоны и переход к следующей.
+ */
 void flowTick()
 { // выключение зоны
     for (byte i = 0; i < PUMP_AMOUNT; i++)
@@ -155,6 +188,10 @@ void flowTick()
     }
 }
 
+/**
+ * @brief Задача FreeRTOS для отправки сообщений на пульт через ESP-NOW или LoRa.
+ * @param pvParameters Параметры задачи (не используются).
+ */
 void send_message_to_pult(void *pvParameters)
 {
     struct_message_pult message;
@@ -175,6 +212,10 @@ void send_message_to_pult(void *pvParameters)
     }
 }
 
+/**
+ * @brief Формирует и отправляет текущий статус системы в очередь для передачи на пульт.
+ * @param msg Структура сообщения (по умолчанию пустая с синхронизацией).
+ */
 void send_status_to_pult(struct_message_pult msg = {
                              SYNC_WORD, 0, 0, 0, 0, 0, 0, 0, 0, 0})
 {
@@ -198,6 +239,9 @@ void send_status_to_pult(struct_message_pult msg = {
     ping_timer = millis();
 }
 
+/**
+ * @brief Обновляет графические индикаторы (бары) зон и прогресса в UI, а также отправляет статус на пульт.
+ */
 void update_bars()
 {
     if (current_zone >= PUMP_AMOUNT || lv_obj_has_flag(objects.stop, LV_OBJ_FLAG_HIDDEN))
@@ -272,6 +316,9 @@ void update_bars()
 
 bool system_error_state = false;
 
+/**
+ * @brief Обрабатывает входящие сообщения из очередей ESP-NOW (ошибки передачи и команды с пульта).
+ */
 void handle_messages()
 {
     EnowMessage msg;
@@ -307,6 +354,9 @@ void handle_messages()
     }
 }
 
+/**
+ * @brief Основной цикл управления помпами. Выполняет логику полива, обновление UI и обработку сообщений.
+ */
 void pump_loop()
 {
     if (system_error_state)
