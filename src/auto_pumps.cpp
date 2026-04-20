@@ -304,6 +304,9 @@ void update_bars()
     }
     lv_bar_set_value(bar, map(time_pass, 0, time, 0, 100), LV_ANIM_OFF);
     lv_bar_set_value(objects.prog_bar, prog_pass, LV_ANIM_OFF);
+    struct_message_pult message1 = {SYNC_WORD, 1, (uint8_t)pump_water_state, (uint8_t)!dryState, (int32_t)current_zone,
+                                    time_pass, time, prog_pass, programm_time, k_dw_time};
+    send_status_to_pult(message1);
     static uint32_t last_update = 0;
     if (millis() - last_update < 1000)
         return;
@@ -313,9 +316,6 @@ void update_bars()
     int8_t M = (allSeconds / 60) % 60;
     int8_t S = allSeconds % 60; // Секунды
     lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d", H, M, S, thisH, thisM, thisS);
-    struct_message_pult message1 = {SYNC_WORD, 1, (uint8_t)pump_water_state, (uint8_t)!dryState, (int32_t)current_zone,
-                                    time_pass, time, prog_pass, programm_time, k_dw_time};
-    send_status_to_pult(message1);
 }
 
 bool system_error_state = false;
