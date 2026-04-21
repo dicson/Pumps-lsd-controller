@@ -117,6 +117,15 @@ void pump_setup()
 }
 
 /**
+ * @brief Рассчитывает длительность фазы грязной воды в миллисекундах.
+ */
+uint32_t getDirtyWaterDurationMs(int zone)
+{
+    if (zone < 0 || zone >= PUMP_AMOUNT) return 0;
+    return (dw_time[zone] * 1000 * minutes / 100) * k_dw_time;
+}
+
+/**
  * @brief Проверяет таймеры и условия для начала полива зон по очереди.
  */
 void periodTick()
@@ -142,7 +151,7 @@ void periodTick()
             zone_on(i);
         }
         // ------------------переключение воды с грязной на чистую
-        uint32_t dw_t = (dw_time[i] * 1000 * minutes / 100) * k_dw_time;
+        uint32_t dw_t = getDirtyWaterDurationMs(i);
         if (dw_time[i] > 0 && millis() - pump_timers[i] >= dw_t // если время полива грязной вышло
             && pump_state[i] == SWITCH_LEVEL                    // если зона поливается в данный момент
             && cw_time[i] > 0                                   // если время чистой воды больше нуля
@@ -158,7 +167,7 @@ void flowTick()
 { // выключение зоны
     for (byte i = 0; i < PUMP_AMOUNT; i++)
     {
-        uint32_t dw_t = dw_time[i] * 1000 * minutes / 100 * k_dw_time;         // пробегаем по всем помпам
+        uint32_t dw_t = getDirtyWaterDurationMs(i);                            // пробегаем по всем помпам
         if ((dw_time[i] > 0 || cw_time[i] > 0)                                 // если время полива больше нуля
             && millis() - pump_timers[i] >= dw_t + cw_time[i] * 1000 * minutes // если время полива вышло
             && pump_state[i] == SWITCH_LEVEL)                                  // если зона поливается в данный момент
@@ -240,6 +249,67 @@ void send_status_to_pult(struct_message_pult msg = {
 }
 
 /**
+ * @brief Настраивает двухцветный градиент для баров (грязная/чистая вода).
+ */
+void update_zone_bar_style(lv_obj_t *bar, int zone, uint32_t dw_duration, uint32_t total_duration)
+{
+    static lv_grad_dsc_t bars_grads[PUMP_AMOUNT];
+    lv_grad_dsc_t *grad = &bars_grads[zone];
+
+    grad->dir = LV_GRAD_DIR_HOR;
+    grad->stops_count = 2;
+
+    uint8_t split_pos = 255;
+    if (total_duration > 0)
+    {
+        uint64_t calc = (uint64_t)dw_duration * 255 / total_duration;
+        split_pos = (calc > 255) ? 255 : (uint8_t)calc;
+    }
+
+    // Цвет грязной воды
+    grad->stops[0].color = lv_color_hex(ZONE_BAR_COLOR_DW);
+    grad->stops[0].frac = 0;
+    grad->stops[0].opa = LV_OPA_COVER;
+    grad->stops[1].color = lv_color_hex(ZONE_BAR_COLOR_DW);
+    grad->stops[1].frac = split_pos;
+    grad->stops[1].opa = LV_OPA_COVER;
+
+    // Добавляем цвет чистой воды, если фаза есть
+    if (split_pos < 255)
+    {
+        grad->stops_count = 4;
+        grad->stops[2].color = lv_color_hex(0x2196F3); // Blue
+        grad->stops[2].frac = split_pos;
+        grad->stops[2].opa = LV_OPA_COVER;
+        grad->stops[3].color = lv_color_hex(0x2196F3);
+        grad->stops[3].frac = 255;
+        grad->stops[3].opa = LV_OPA_COVER;
+    }
+
+    lv_obj_set_style_bg_grad(bar, grad, LV_PART_INDICATOR);
+    lv_obj_set_style_bg_opa(bar, LV_OPA_COVER, LV_PART_INDICATOR);
+}
+
+/**
+ * @brief Форматирует и обновляет текстовую метку общего прогресса.
+ */
+void update_progress_time_label(uint32_t prog_pass_ms)
+{
+    static uint32_t last_label_update = 0;
+    if (millis() - last_label_update < 1000)
+        return;
+    last_label_update = millis();
+
+    uint32_t allSeconds = prog_pass_ms / 1000;
+    int8_t H = (allSeconds / 3600) % 24;
+    int8_t M = (allSeconds / 60) % 60;
+    int8_t S = allSeconds % 60;
+
+    lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d",
+                          H, M, S, thisH, thisM, thisS);
+}
+
+/**
  * @brief Обновляет графические индикаторы (бары) зон и прогресса в UI, а также отправляет статус на пульт.
  */
 void update_bars()
@@ -249,73 +319,37 @@ void update_bars()
         send_status_to_pult();
         return;
     }
-    static int last_zone = -1;
+
+    // 1. Расчет таймингов
     uint32_t prog_pass = millis() - start_time;
-    uint32_t dw_t = dw_time[current_zone] * 1000 * minutes / 100 * k_dw_time;
-    uint32_t time = dw_t + (cw_time[current_zone] + zone_pause) * 1000 * minutes;
-    if (programm_time < prog_pass)
+    if (prog_pass > programm_time)
         prog_pass = programm_time;
-    if (programm_time - prog_pass <= dw_t + cw_time[current_zone] * 1000 * minutes)
-        time = time - zone_pause * 1000;
+
+    uint32_t dw_t = getDirtyWaterDurationMs(current_zone);
+    uint32_t time = dw_t + cw_time[current_zone] * 1000 * minutes;
     uint32_t time_pass = millis() - pump_timers[current_zone];
     if (time_pass > time)
         time_pass = time;
 
+    // 2. Обновление UI Баров
+    static int last_zone_styled = -1;
     lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, current_zone);
-    // Обновляем настройки градиента только при смене зоны
-    if (current_zone != last_zone)
+
+    if (current_zone != last_zone_styled)
     {
-        last_zone = current_zone;
-        static lv_grad_dsc_t bars_grads[PUMP_AMOUNT];
-        lv_grad_dsc_t *grad = &bars_grads[current_zone];
-
-        grad->dir = LV_GRAD_DIR_HOR;
-        grad->stops_count = 2;
-
-        uint32_t sp = 255;
-        if (time > 0)
-        {
-            sp = (uint32_t)((uint64_t)dw_t * 255 / time);
-            if (sp > 255)
-                sp = 255;
-        }
-
-        // Цвет грязной воды (до границы sp)
-        grad->stops[0].color = lv_color_hex(ZONE_BAR_COLOR_DW);
-        grad->stops[0].frac = 0;
-        grad->stops[0].opa = 255;
-        grad->stops[1].color = lv_color_hex(ZONE_BAR_COLOR_DW);
-        grad->stops[1].frac = (uint8_t)sp;
-        grad->stops[1].opa = 255;
-        // Цвет чистой воды (после границы sp)
-        if (grad->stops[1].frac < 255)
-        {
-            grad->stops_count = 4;
-            grad->stops[2].color = lv_color_hex(0x2196F3);
-            grad->stops[2].frac = (uint8_t)sp;
-            grad->stops[2].opa = 255;
-            grad->stops[3].color = lv_color_hex(0x2196F3);
-            grad->stops[3].frac = 255;
-            grad->stops[3].opa = 255;
-        }
-
-        lv_obj_set_style_bg_grad(bar, grad, LV_PART_INDICATOR);
-        lv_obj_set_style_bg_opa(bar, 255, LV_PART_INDICATOR);
+        update_zone_bar_style(bar, current_zone, dw_t, time);
+        last_zone_styled = current_zone;
     }
+
     lv_bar_set_value(bar, map(time_pass, 0, time, 0, 100), LV_ANIM_OFF);
     lv_bar_set_value(objects.prog_bar, prog_pass, LV_ANIM_OFF);
+
+    // 3. Текстовая информация и синхронизация
+    update_progress_time_label(prog_pass);
+
     struct_message_pult message1 = {SYNC_WORD, 1, (uint8_t)pump_water_state, (uint8_t)!dryState, (int32_t)current_zone,
                                     time_pass, time, prog_pass, programm_time, k_dw_time};
     send_status_to_pult(message1);
-    static uint32_t last_update = 0;
-    if (millis() - last_update < 1000)
-        return;
-    last_update = millis();
-    unsigned long allSeconds = prog_pass / 1000;
-    int8_t H = (allSeconds / 3600) % 24;
-    int8_t M = (allSeconds / 60) % 60;
-    int8_t S = allSeconds % 60; // Секунды
-    lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d", H, M, S, thisH, thisM, thisS);
 }
 
 bool system_error_state = false;
