@@ -3,11 +3,42 @@
 #include <stdint.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/queue.h>
+#include <esp_now.h>
 
 constexpr uint8_t broadcastAddress[] = {0xa4, 0xf0, 0x0f, 0x8d, 0x02, 0xec}; // 5v relay
 constexpr uint8_t pultAddress[] = {0x58, 0x8c, 0x81, 0x52, 0xec, 0x84};      // pult
 
+/**
+ * @brief Функция обратного вызова, которая выполняется после отправки данных.
+ * Используется для отслеживания успешности доставки сообщений.
+ * 
+ * @param tx_info Информация о передаче.
+ * @param status Статус доставки (ESP_NOW_SEND_SUCCESS или ESP_NOW_SEND_FAIL).
+ */
+void OnDataSent(const esp_now_send_info_t *tx_info, esp_now_send_status_t status);
+
+/**
+ * @brief Функция обратного вызова, которая выполняется при получении данных по протоколу ESP-NOW.
+ * Обрабатывает команды, поступающие от пульта управления (START, STOP, SET_K).
+ * 
+ * @param info Информация о отправителе (включая MAC-адрес).
+ * @param incomingData Указатель на входящий буфер данных.
+ * @param len Длина полученных данных.
+ */
+void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, int len);
+
+/**
+ * @brief Инициализация протокола ESP-NOW.
+ * Настраивает WiFi в режиме станции, регистрирует коллбэки и добавляет пиры (узлы) для связи.
+ */
 void esp_now_setup();
+
+/**
+ * @brief Отправляет команду управления конкретным реле (зоной).
+ * 
+ * @param relay Номер реле или индекс зоны.
+ * @param state Состояние (true - включить, false - выключить).
+ */
 void send_command(int relay, bool state);
 
 extern bool use_pult, lora, esp_now;
@@ -56,6 +87,11 @@ typedef struct __attribute__((packed))
 
 const uint16_t SYNC_WORD = 0xABCD;
 
+/**
+ * @brief Отправляет полный статус системы на пульт управления.
+ * 
+ * @param toPult Структура с данными о состоянии системы (прогресс, активная зона и т.д.).
+ */
 void espnow_send_status(const struct_message_pult &toPult);
 
 extern uint32_t k_dw_time;

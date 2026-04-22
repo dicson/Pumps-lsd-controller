@@ -1,4 +1,3 @@
-#include <esp_now.h>
 #include <WiFi.h>
 #include <esp_wifi.h>
 #include <lvgl.h>
@@ -15,14 +14,6 @@ static bool esp_now_ready = false;
 
 extern void save_k_dw_time();
 
-/**
- * @brief Функция обратного вызова, которая выполняется при получении данных по протоколу ESP-NOW.
- * Обрабатывает команды, поступающие от пульта управления (START, STOP, SET_K).
- * 
- * @param info Информация о отправителе (включая MAC-адрес).
- * @param incomingData Указатель на входящий буфер данных.
- * @param len Длина полученных данных.
- */
 void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, int len)
 {
     if (info == NULL || info->src_addr == NULL || incomingData == NULL)
@@ -61,23 +52,12 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
         xQueueSendFromISR(esp_now_queue_from_pult, &qMsg, NULL);
 }
 
-/**
- * @brief Функция обратного вызова, которая выполняется после отправки данных.
- * Используется для отслеживания успешности доставки сообщений.
- * 
- * @param tx_info Информация о передаче.
- * @param status Статус доставки (ESP_NOW_SEND_SUCCESS или ESP_NOW_SEND_FAIL).
- */
 void OnDataSent(const esp_now_send_info_t *tx_info, esp_now_send_status_t status)
 {
     EnowMessage msg = (status == ESP_NOW_SEND_SUCCESS) ? EnowMessage::OK : EnowMessage::SEND_FAIL;
     xQueueSendFromISR(esp_now_queue, &msg, NULL);
 }
 
-/**
- * @brief Инициализация протокола ESP-NOW.
- * Настраивает WiFi в режиме станции, регистрирует коллбэки и добавляет пиры (узлы) для связи.
- */
 void esp_now_setup()
 {
     // Настройка устройства как Wi-Fi станции (обязательно для ESP-NOW)
@@ -129,26 +109,15 @@ void esp_now_setup()
     esp_now_ready = true;
 }
 
-/**
- * @brief Отправляет команду управления конкретным реле (зоной).
- * 
- * @param relay Номер реле или индекс зоны.
- * @param state Состояние (true - включить, false - выключить).
- */
 void send_command(int relay, bool state)
 {
-    struct_message myData;
+    struct_message myData = {};
     myData.relay = relay;
     myData.state = state;
 
     esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
 }
 
-/**
- * @brief Отправляет полный статус системы на пульт управления.
- * 
- * @param toPult Структура с данными о состоянии системы (прогресс, активная зона и т.д.).
- */
 void espnow_send_status(const struct_message_pult &toPult)
 {
     if (!esp_now_ready)
