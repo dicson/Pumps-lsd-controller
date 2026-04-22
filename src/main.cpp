@@ -2,12 +2,11 @@
 #include "ui/ui.h"
 #include "auto_pumps.h"
 #include "elegantota.h"
+#include "enow.h"
+#include "lora.h"
 
 extern void setup_settings();
 extern void fill_widgets();
-extern void esp_now_setup();
-extern void lora_setup();
-extern void lora_loop();
 
 void setup()
 {

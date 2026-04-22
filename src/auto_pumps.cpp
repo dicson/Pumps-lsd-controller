@@ -5,6 +5,7 @@
 #include "enow.h"
 #include "constants.h"
 #include <freertos/queue.h>
+#include "lora.h"
 
 extern void save_k_dw_time();
 
@@ -21,7 +22,6 @@ boolean pump_water_state;
 void handle_messages();
 void update_bars();
 void send_message_to_pult(void *pvParameters);
-extern void lora_send_status(const struct_message_pult &toPult);
 
 /**
  * @brief Выводит текстовое сообщение в последовательный порт.

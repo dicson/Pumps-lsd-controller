@@ -2,7 +2,8 @@
 #include <HardwareSerial.h>
 #include <cstring>
 #include "ui/actions.h"
-#include "enow.h" // Для доступа к определению struct_message_pult
+#include "enow.h"
+#include "lora.h"
 
 // ВНИМАНИЕ: На ESP32-8048S070C GPIO 18 может использоваться как прерывание тачскрина (Touch INT).
 // Если тачскрин работает нестабильно при передаче через LoRa, проверьте назначение пинов.
