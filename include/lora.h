@@ -4,6 +4,11 @@
 #include <stdint.h>
 #include "enow.h" // Для доступа к struct_message_pult
 
+
+extern bool use_pult;
+extern void save_k_dw_time();
+extern uint32_t k_dw_time;
+
 /**
  * @brief Инициализация модуля LoRa через UART.
  * Настраивает последовательный порт на пинах RX:17, TX:18 со скоростью 9600 бод.

@@ -387,7 +387,7 @@ void action_update_relay(lv_event_t *e)
 
 void action_update_relay_1(lv_event_t *e)
 {
-  send_command(255, false);
+  send_root_command(255, false);
 }
 
 void action_zone_selected(lv_event_t *e)

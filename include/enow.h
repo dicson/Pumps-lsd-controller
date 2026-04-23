@@ -5,7 +5,7 @@
 #include <freertos/queue.h>
 #include <esp_now.h>
 
-constexpr uint8_t broadcastAddress[] = {0xa4, 0xf0, 0x0f, 0x8d, 0x02, 0xec}; // 5v relay
+constexpr uint8_t relay1Address[] = {0xa4, 0xf0, 0x0f, 0x8d, 0x02, 0xec}; // 5v relay
 constexpr uint8_t pultAddress[] = {0x58, 0x8c, 0x81, 0x52, 0xec, 0x84};      // pult
 
 /**
@@ -40,6 +40,14 @@ void esp_now_setup();
  * @param state Состояние (true - включить, false - выключить).
  */
 void send_command(int relay, bool state);
+
+/**
+ * @brief Отправляет команду управления реле насоса(осмоса) или обновления.
+ * 
+ * @param relay Номер реле.
+ * @param state Состояние (true - включить, false - выключить).
+ */
+void send_root_command(int relay, bool state);
 
 extern bool use_pult, lora, esp_now;
 

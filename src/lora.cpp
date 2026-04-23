@@ -5,8 +5,6 @@
 #include "enow.h"
 #include "lora.h"
 
-// ВНИМАНИЕ: На ESP32-8048S070C GPIO 18 может использоваться как прерывание тачскрина (Touch INT).
-// Если тачскрин работает нестабильно при передаче через LoRa, проверьте назначение пинов.
 #define RX2_PIN 17
 #define TX2_PIN 18
 
@@ -15,9 +13,6 @@ HardwareSerial LoraSerial(1); // Используем UART1
 #define MAX_BUF 64    // Максимальная длина команды
 char buffer[MAX_BUF]; // Массив для хранения байтов
 int pos = 0;          // Текущая позиция в массиве
-extern bool use_pult;
-extern void save_k_dw_time();
-extern uint32_t k_dw_time;
 
 void processCommand(char *cmd)
 {

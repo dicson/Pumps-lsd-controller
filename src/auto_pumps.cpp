@@ -58,7 +58,7 @@ void zone_on(int i)
 void pump_on()
 {
     pump_water_state = true;
-    send_command(PUMP_RELAY, true);
+    send_root_command(PUMP_RELAY, true);
     MessageToLog("включить  насос ");
     lv_obj_remove_flag(objects.pump, LV_OBJ_FLAG_HIDDEN);
 }
@@ -69,7 +69,7 @@ void pump_on()
 void pump_off()
 {
     pump_water_state = false;
-    send_command(PUMP_RELAY, false);
+    send_root_command(PUMP_RELAY, false);
     MessageToLog("выключить насос ");
     lv_obj_add_flag(objects.pump, LV_OBJ_FLAG_HIDDEN);
 }
@@ -79,7 +79,7 @@ void pump_off()
  */
 void dry_water_on()
 {
-    send_command(WATER_RELAY, false);
+    send_root_command(WATER_RELAY, false);
     MessageToLog("выключить чистую воду");
     lv_obj_add_flag(objects.osmos, LV_OBJ_FLAG_HIDDEN);
     lv_obj_remove_flag(objects.pipe, LV_OBJ_FLAG_HIDDEN);
@@ -91,7 +91,7 @@ void dry_water_on()
  */
 void clear_water_on()
 {
-    send_command(WATER_RELAY, true);
+    send_root_command(WATER_RELAY, true);
     MessageToLog("включить чистую воду");
     lv_obj_add_flag(objects.pipe, LV_OBJ_FLAG_HIDDEN);
     lv_obj_remove_flag(objects.osmos, LV_OBJ_FLAG_HIDDEN);

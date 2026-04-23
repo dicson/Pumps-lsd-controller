@@ -78,7 +78,7 @@ void esp_now_setup()
 
     // Регистрация узла реле (используется broadcast адрес для управления исполнительными модулями)
     esp_now_peer_info_t peerInfo = {};
-    memcpy(peerInfo.peer_addr, broadcastAddress, 6);
+    memcpy(peerInfo.peer_addr, relay1Address, 6);
     peerInfo.channel = 0;
     peerInfo.encrypt = false;
 
@@ -115,7 +115,16 @@ void send_command(int relay, bool state)
     myData.relay = relay;
     myData.state = state;
 
-    esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
+    esp_now_send(relay1Address, (uint8_t *)&myData, sizeof(myData));
+}
+
+void send_root_command(int relay, bool state)
+{
+    struct_message myData = {};
+    myData.relay = relay;
+    myData.state = state;
+
+    esp_now_send(relay1Address, (uint8_t *)&myData, sizeof(myData));
 }
 
 void espnow_send_status(const struct_message_pult &toPult)
