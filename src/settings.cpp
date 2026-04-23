@@ -99,7 +99,7 @@ void fill_widgets()
 
     for (int i = 0; i < PUMP_AMOUNT; i++)
     {
-        lv_obj_t *button = lv_obj_get_child(objects.tab_2, i);
+        lv_obj_t *button = lv_obj_get_child(objects.zone_times, i);
 
         lv_obj_t *dw = lv_obj_get_child(button, 1);
         lv_label_set_text(dw, String(dw_time[i]).c_str());
