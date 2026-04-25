@@ -5,6 +5,7 @@
 
 const char *ssid = "Pump_controller";
 const char *password = "80100000";
+static bool is_ota_initialized = false;
 boolean update = false;
 
 WebServer server(80);
@@ -13,14 +14,11 @@ unsigned long ota_progress_millis = 0;
 
 void onOTAStart()
 {
-    // Логирование начала OTA-обновления
     Serial.println("OTA update started!");
-    // <Добавьте здесь свой код>
 }
 
 void onOTAProgress(size_t current, size_t final)
 {
-    // Логирование каждую секунду
     if (millis() - ota_progress_millis > 1000)
     {
         ota_progress_millis = millis();
@@ -30,7 +28,6 @@ void onOTAProgress(size_t current, size_t final)
 
 void onOTAEnd(bool success)
 {
-    // Логирование завершения OTA-обновления
     if (success)
     {
         Serial.println("OTA update finished successfully!");
@@ -39,30 +36,33 @@ void onOTAEnd(bool success)
     {
         Serial.println("There was an error during OTA update!");
     }
-    // <Добавьте здесь свой код>
 }
 
 void ota_setup(void)
 {
-    if (!WiFi.softAP(ssid, password))
+    if (is_ota_initialized)
     {
-        Serial.print(".");
-        while (1)
-            ;
+        Serial.println("OTA already initialized.");
+        return;
     }
 
-    Serial.println("");
-    Serial.print("Connected to ");
-    Serial.println(ssid);
+    Serial.println("Starting OTA setup...");
+    
+    // Пытаемся запустить AP
+    if (!WiFi.softAP(ssid, password))
+    {
+        Serial.println("Failed to start SoftAP!");
+        return; 
+    }
+
     IPAddress myIP = WiFi.softAPIP();
     Serial.print("AP IP address: ");
     Serial.println(myIP);
 
     server.on("/", []()
-              { server.send(200, "text/plain", "Hi! This is ElegantOTA Demo."); });
+              { server.send(200, "text/plain", "Hi! This is Pump Controller OTA."); });
 
-    ElegantOTA.begin(&server); // Запуск ElegantOTA
-                               // Обратные вызовы ElegantOTA
+    ElegantOTA.begin(&server);
     ElegantOTA.onStart(onOTAStart);
     ElegantOTA.onProgress(onOTAProgress);
     ElegantOTA.onEnd(onOTAEnd);
@@ -70,6 +70,7 @@ void ota_setup(void)
     server.begin();
     Serial.println("HTTP server started");
     update = true;
+    is_ota_initialized = true;
 }
 
 void ota_loop(void)

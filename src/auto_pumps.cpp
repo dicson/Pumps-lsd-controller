@@ -121,7 +121,8 @@ void pump_setup()
  */
 uint32_t getDirtyWaterDurationMs(int zone)
 {
-    if (zone < 0 || zone >= PUMP_AMOUNT) return 0;
+    if (zone < 0 || zone >= PUMP_AMOUNT)
+        return 0;
     return (dw_time[zone] * 1000 * minutes / 100) * k_dw_time;
 }
 
@@ -359,17 +360,34 @@ bool system_error_state = false;
  */
 void handle_messages()
 {
-    EnowMessage msg;
+    EnowStatusMessage msg;
     if (xQueueReceive(esp_now_queue, &msg, 0) == pdTRUE)
     {
-        if (msg == EnowMessage::SEND_FAIL)
+        if (msg.status == EnowMessage::SEND_FAIL)
         {
-            if (!system_error_state)
+            // Уходим в ошибку только если не удалось достучаться до реле (игнорируем ошибки связи с пультом)
+            bool is_relay1 = (memcmp(msg.mac, relay1Address, 6) == 0);
+            bool is_relay2 = (memcmp(msg.mac, relay2Address, 6) == 0);
+
+            if (is_relay1 || is_relay2)
             {
-                system_error_state = true;
-                ledcWrite(2, 70);
-                lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
-                lv_obj_add_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
+                if (!system_error_state)
+                {
+                    system_error_state = true;
+                    analogWrite(2, 70); // Снижаем яркость подсветки
+
+                    // Пытаемся найти метку внутри контейнера message_box и обновить текст
+                    lv_obj_t *label = lv_obj_get_child(objects.message_box, 0);
+                    if (label)
+                    {
+                        lv_label_set_text_fmt(label, "Связь потеряна: %s\n\nПерезапустите систему.",
+                                              is_relay1 ? "реле 1" : "реле 2");
+                    }
+
+                    lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
+                    lv_obj_add_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
+                    MessageToLog("Ошибка связи с " + String(is_relay1 ? "relay1" : "relay2"));
+                }
             }
         }
     }

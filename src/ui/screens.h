@@ -25,7 +25,6 @@ typedef struct _objects_t {
     lv_obj_t *update_relay;
     lv_obj_t *tabview;
     lv_obj_t *tab_main;
-    lv_obj_t *message_box;
     lv_obj_t *prog_bar;
     lv_obj_t *bar_label;
     lv_obj_t *spinner;
@@ -96,6 +95,7 @@ typedef struct _objects_t {
     lv_obj_t *obj29;
     lv_obj_t *bar_29;
     lv_obj_t *obj30;
+    lv_obj_t *message_box;
     lv_obj_t *k_panel;
     lv_obj_t *k_dw_time;
     lv_obj_t *button_10;
@@ -277,8 +277,9 @@ typedef struct _objects_t {
     lv_obj_t *obj82;
     lv_obj_t *obj83;
     lv_obj_t *obj84;
-    lv_obj_t *update_relay_back;
     lv_obj_t *obj85;
+    lv_obj_t *update_relay_back;
+    lv_obj_t *obj86;
 } objects_t;
 
 extern objects_t objects;

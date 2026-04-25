@@ -54,7 +54,16 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
 
 void OnDataSent(const esp_now_send_info_t *tx_info, esp_now_send_status_t status)
 {
-    EnowMessage msg = (status == ESP_NOW_SEND_SUCCESS) ? EnowMessage::OK : EnowMessage::SEND_FAIL;
+    EnowStatusMessage msg;
+    msg.status = (status == ESP_NOW_SEND_SUCCESS) ? EnowMessage::OK : EnowMessage::SEND_FAIL;
+    if (tx_info != NULL)
+    {
+        memcpy(msg.mac, tx_info->des_addr, 6);
+    }
+    else
+    {
+        memset(msg.mac, 0, 6);
+    }
     xQueueSendFromISR(esp_now_queue, &msg, NULL);
 }
 
@@ -76,7 +85,7 @@ void esp_now_setup()
     esp_now_register_recv_cb(OnDataRecv);
     esp_now_register_send_cb(OnDataSent);
 
-    // Регистрация узла реле (используется broadcast адрес для управления исполнительными модулями)
+    // Регистрация узла реле 1
     esp_now_peer_info_t peerInfo = {};
     memcpy(peerInfo.peer_addr, relay1Address, 6);
     peerInfo.channel = 0;
@@ -84,6 +93,13 @@ void esp_now_setup()
 
     esp_now_add_peer(&peerInfo);
 
+    // Регистрация узла реле 2
+    memset(&peerInfo, 0, sizeof(peerInfo));
+    memcpy(peerInfo.peer_addr, relay2Address, 6);
+    peerInfo.channel = 0;
+    peerInfo.encrypt = false;
+
+    esp_now_add_peer(&peerInfo);
     // Регистрация конкретного адреса пульта
     memset(&peerInfo, 0, sizeof(peerInfo));
     memcpy(peerInfo.peer_addr, pultAddress, 6);
@@ -102,11 +118,22 @@ void esp_now_setup()
     esp_now_add_peer(&peerInfo);
 
     // Создание очередей для межзадачного взаимодействия
-    esp_now_queue = xQueueCreate(10, sizeof(EnowMessage));
+    esp_now_queue = xQueueCreate(10, sizeof(EnowStatusMessage));
     esp_now_queue_from_pult = xQueueCreate(10, sizeof(QueuePultMessage));
     esp_now_queue_to_pult = xQueueCreate(10, sizeof(struct_message_pult));
 
     esp_now_ready = true;
+}
+
+void send_root_command(int relay, bool state, int relay_blk)
+{
+    struct_message myData = {};
+    myData.relay = relay;
+    myData.state = state;
+    if (relay_blk == 2)
+        esp_now_send(relay2Address, (uint8_t *)&myData, sizeof(myData));
+    else
+        esp_now_send(relay1Address, (uint8_t *)&myData, sizeof(myData));
 }
 
 void send_command(int relay, bool state)
@@ -114,17 +141,13 @@ void send_command(int relay, bool state)
     struct_message myData = {};
     myData.relay = relay;
     myData.state = state;
-
-    esp_now_send(relay1Address, (uint8_t *)&myData, sizeof(myData));
-}
-
-void send_root_command(int relay, bool state)
-{
-    struct_message myData = {};
-    myData.relay = relay;
-    myData.state = state;
-
-    esp_now_send(relay1Address, (uint8_t *)&myData, sizeof(myData));
+    if (relay < 14)
+        esp_now_send(relay1Address, (uint8_t *)&myData, sizeof(myData));
+    else
+    {
+        myData.relay = relay - 14;
+        esp_now_send(relay2Address, (uint8_t *)&myData, sizeof(myData));
+    }
 }
 
 void espnow_send_status(const struct_message_pult &toPult)

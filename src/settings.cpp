@@ -55,7 +55,7 @@ void setup_settings()
         settings.begin("Settings", RO_MODE);
     }
 
-    ROTATION = settings.getInt("ROTATION", 0);
+    ROTATION = settings.getInt("ROTATION");
     zone_pause = settings.getLong("zone_pause");
     GFX_BL_VALUE = settings.getLong("GFX_BL_VALUE");
     GFX_BL_TIME = settings.getLong("GFX_BL_TIME");

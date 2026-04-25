@@ -86,8 +86,15 @@ void update_zone_list()
 void action_revert_display(lv_event_t *e)
 {
   revert_display();
+  settings.begin("Settings", RW_MODE);
+  settings.putInt("ROTATION", ROTATION);
+  settings.end();
   // Полная очистка UI перед сменой ориентации
   lv_obj_clean(lv_screen_active());
+  
+  // Обнуляем структуру объектов, так как старые указатели больше не валидны
+  memset(&objects, 0, sizeof(objects));
+  
   ui_init();
   for (int i = 0; i < PUMP_AMOUNT; i++)
   {
@@ -107,9 +114,6 @@ void action_revert_display(lv_event_t *e)
       lv_obj_set_style_bg_opa(button, LOW_OPACITY, LV_PART_MAIN);
   }
   update_zone_list();
-  settings.begin("Settings", RW_MODE);
-  settings.putInt("ROTATION", ROTATION);
-  settings.end();
 }
 
 void action_debug(lv_event_t *e)
@@ -387,7 +391,12 @@ void action_update_relay(lv_event_t *e)
 
 void action_update_relay_1(lv_event_t *e)
 {
-  send_root_command(255, false);
+  send_root_command(255, false, 1);
+}
+
+void action_update_relay_2(lv_event_t *e)
+{
+  send_root_command(255, false, 2);
 }
 
 void action_zone_selected(lv_event_t *e)

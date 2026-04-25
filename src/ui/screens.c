@@ -58,29 +58,10 @@ void create_screen_main() {
                     {
                         lv_obj_t *parent_obj = obj;
                         {
-                            // message_box
-                            lv_obj_t *obj = lv_msgbox_create(parent_obj);
-                            objects.message_box = obj;
-                            lv_obj_set_pos(obj, 183, 174);
-                            lv_obj_set_size(obj, 344, 140);
-                            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
-                            lv_obj_set_style_align(obj, LV_ALIGN_DEFAULT, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_obj_set_style_layout(obj, LV_LAYOUT_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            {
-                                lv_obj_t *parent_obj = obj;
-                                {
-                                    lv_obj_t *obj = lv_label_create(parent_obj);
-                                    lv_obj_set_pos(obj, 60, 34);
-                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                    lv_label_set_text_static(obj, "Связь с реле потеряна!\n\nПерезапустите систему.");
-                                }
-                            }
-                        }
-                        {
                             // prog_bar
                             lv_obj_t *obj = lv_bar_create(parent_obj);
                             objects.prog_bar = obj;
-                            lv_obj_set_pos(obj, -20, 388);
+                            lv_obj_set_pos(obj, -20, 381);
                             lv_obj_set_size(obj, 590, 27);
                             lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
                             lv_obj_set_style_radius(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -316,19 +297,19 @@ void create_screen_main() {
                             lv_obj_t *obj = lv_obj_create(parent_obj);
                             objects.bars_panel = obj;
                             lv_obj_set_pos(obj, -20, -20);
-                            lv_obj_set_size(obj, 590, 401);
+                            lv_obj_set_size(obj, 590, 395);
                             lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLL_CHAIN_VER|LV_OBJ_FLAG_SCROLL_ELASTIC);
                             add_style_1style(obj);
                             lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_flex_flow(obj, LV_FLEX_FLOW_COLUMN_WRAP, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_obj_set_style_pad_top(obj, 15, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_obj_set_style_pad_bottom(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_pad_top(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_row(obj, 6, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_START, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_left(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_pad_right(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_flex_track_place(obj, LV_FLEX_ALIGN_START, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_pad_bottom(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
                             {
                                 lv_obj_t *parent_obj = obj;
                                 {
@@ -1144,6 +1125,24 @@ void create_screen_main() {
                             }
                         }
                         {
+                            // message_box
+                            lv_obj_t *obj = lv_obj_create(parent_obj);
+                            objects.message_box = obj;
+                            lv_obj_set_pos(obj, 125, 97);
+                            lv_obj_set_size(obj, 300, 200);
+                            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
+                            add_style_1style(obj);
+                            {
+                                lv_obj_t *parent_obj = obj;
+                                {
+                                    lv_obj_t *obj = lv_label_create(parent_obj);
+                                    lv_obj_set_pos(obj, 18, 40);
+                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                    lv_label_set_text_static(obj, "Связь с реле потеряна!\n\nПерезапустите систему.");
+                                }
+                            }
+                        }
+                        {
                             // k_panel
                             lv_obj_t *obj = lv_obj_create(parent_obj);
                             objects.k_panel = obj;
@@ -1269,7 +1268,7 @@ void create_screen_main() {
                             objects.button_reset = obj;
                             lv_obj_set_pos(obj, 644, 235);
                             lv_obj_set_size(obj, 62, 40);
-                            lv_obj_add_event_cb(obj, action_k_reset, LV_EVENT_PRESSED, (void *)0);
+                            lv_obj_add_event_cb(obj, action_k_reset, LV_EVENT_RELEASED, (void *)0);
                             lv_obj_set_style_radius(obj, 8, LV_PART_MAIN | LV_STATE_DEFAULT);
                             {
                                 lv_obj_t *parent_obj = obj;
@@ -4549,7 +4548,7 @@ void create_screen_main() {
                             lv_obj_t *obj = lv_button_create(parent_obj);
                             lv_obj_set_pos(obj, -8, 375);
                             lv_obj_set_size(obj, 300, 32);
-                            lv_obj_add_event_cb(obj, action_update, LV_EVENT_PRESSED, (void *)0);
+                            lv_obj_add_event_cb(obj, action_update, LV_EVENT_RELEASED, (void *)0);
                             lv_obj_set_style_radius(obj, 8, LV_PART_MAIN | LV_STATE_DEFAULT);
                             {
                                 lv_obj_t *parent_obj = obj;
@@ -4606,7 +4605,6 @@ void delete_screen_main() {
     objects.main = 0;
     objects.tabview = 0;
     objects.tab_main = 0;
-    objects.message_box = 0;
     objects.prog_bar = 0;
     objects.bar_label = 0;
     objects.spinner = 0;
@@ -4677,6 +4675,7 @@ void delete_screen_main() {
     objects.obj29 = 0;
     objects.bar_29 = 0;
     objects.obj30 = 0;
+    objects.message_box = 0;
     objects.k_panel = 0;
     objects.k_dw_time = 0;
     objects.button_10 = 0;
@@ -4938,9 +4937,9 @@ void create_screen_update_display() {
                                 {
                                     lv_obj_t *obj = lv_qrcode_create(parent_obj);
                                     objects.obj70 = obj;
-                                    lv_obj_set_pos(obj, 2405, -987);
-                                    lv_obj_set_size(obj, 211, 213);
-                                    lv_qrcode_set_size(obj, 211);
+                                    lv_obj_set_pos(obj, 1409, -935);
+                                    lv_obj_set_size(obj, 166, 166);
+                                    lv_qrcode_set_size(obj, 166);
                                     lv_qrcode_set_dark_color(obj, lv_color_hex(0x20429f));
                                     lv_qrcode_set_light_color(obj, lv_color_hex(0xe2f5fe));
                                     lv_qrcode_update(obj, "WIFI:S:Pump_controller;T:WPA2;P:80100000;;", 42);
@@ -4993,9 +4992,9 @@ void create_screen_update_display() {
                                 {
                                     lv_obj_t *obj = lv_qrcode_create(parent_obj);
                                     objects.obj73 = obj;
-                                    lv_obj_set_pos(obj, -11, 70);
-                                    lv_obj_set_size(obj, 211, 209);
-                                    lv_qrcode_set_size(obj, 209);
+                                    lv_obj_set_pos(obj, -404, 122);
+                                    lv_obj_set_size(obj, 166, 166);
+                                    lv_qrcode_set_size(obj, 166);
                                     lv_qrcode_set_dark_color(obj, lv_color_hex(0x20429f));
                                     lv_qrcode_set_light_color(obj, lv_color_hex(0xe2f5fe));
                                     lv_qrcode_update(obj, "http://192.168.4.1/update", 25);
@@ -5078,9 +5077,9 @@ void create_screen_update_selector() {
                 }
                 {
                     lv_obj_t *obj = lv_button_create(parent_obj);
-                    lv_obj_set_pos(obj, -2326, 0);
+                    lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, 200, 50);
-                    lv_obj_add_event_cb(obj, action_update_relay, LV_EVENT_PRESSED, (void *)0);
+                    lv_obj_add_event_cb(obj, action_update_relay, LV_EVENT_RELEASED, (void *)0);
                     {
                         lv_obj_t *parent_obj = obj;
                         {
@@ -5098,7 +5097,7 @@ void create_screen_update_selector() {
                     lv_obj_t *obj = lv_button_create(parent_obj);
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, 100, 50);
-                    lv_obj_add_event_cb(obj, action_update_back, LV_EVENT_PRESSED, (void *)0);
+                    lv_obj_add_event_cb(obj, action_update_back, LV_EVENT_RELEASED, (void *)0);
                     {
                         lv_obj_t *parent_obj = obj;
                         {
@@ -5149,7 +5148,7 @@ void create_screen_update_relay() {
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
             lv_obj_set_pos(obj, 0, 0);
-            lv_obj_set_size(obj, 800, 191);
+            lv_obj_set_size(obj, 800, 146);
             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5173,7 +5172,7 @@ void create_screen_update_relay() {
                 }
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
-                    lv_obj_set_pos(obj, 7784, 0);
+                    lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, 650, 64);
                     lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5191,9 +5190,9 @@ void create_screen_update_relay() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_button_create(parent_obj);
-                            lv_obj_set_pos(obj, 1419, 0);
+                            lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, 144, 50);
-                            lv_obj_add_event_cb(obj, action_update_relay_1, LV_EVENT_PRESSED, (void *)0);
+                            lv_obj_add_event_cb(obj, action_update_relay_1, LV_EVENT_RELEASED, (void *)0);
                             {
                                 lv_obj_t *parent_obj = obj;
                                 {
@@ -5207,14 +5206,32 @@ void create_screen_update_relay() {
                                 }
                             }
                         }
+                        {
+                            lv_obj_t *obj = lv_button_create(parent_obj);
+                            lv_obj_set_pos(obj, 0, 0);
+                            lv_obj_set_size(obj, 144, 50);
+                            lv_obj_add_event_cb(obj, action_update_relay_2, LV_EVENT_RELEASED, (void *)0);
+                            {
+                                lv_obj_t *parent_obj = obj;
+                                {
+                                    lv_obj_t *obj = lv_label_create(parent_obj);
+                                    objects.obj79 = obj;
+                                    lv_obj_set_pos(obj, 0, 0);
+                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                    lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_text_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_label_set_text_static(obj, "Блок реле 2");
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.obj79 = obj;
-            lv_obj_set_pos(obj, 0, 199);
+            objects.obj80 = obj;
+            lv_obj_set_pos(obj, 0, 171);
             lv_obj_set_size(obj, 330, 281);
             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5241,8 +5258,8 @@ void create_screen_update_relay() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_textarea_create(parent_obj);
-                    objects.obj80 = obj;
-                    lv_obj_set_pos(obj, -2081, 36);
+                    objects.obj81 = obj;
+                    lv_obj_set_pos(obj, 0, 36);
                     lv_obj_set_size(obj, 326, 60);
                     lv_textarea_set_max_length(obj, 128);
                     lv_textarea_set_text(obj, "WiFi сеть  (SSID): Relay_module\nПароль Wi-Fi сети: 80100000");
@@ -5256,10 +5273,10 @@ void create_screen_update_relay() {
                 }
                 {
                     lv_obj_t *obj = lv_qrcode_create(parent_obj);
-                    objects.obj81 = obj;
-                    lv_obj_set_pos(obj, 2405, -987);
-                    lv_obj_set_size(obj, 211, 213);
-                    lv_qrcode_set_size(obj, 211);
+                    objects.obj82 = obj;
+                    lv_obj_set_pos(obj, -436, 49);
+                    lv_obj_set_size(obj, 166, 164);
+                    lv_qrcode_set_size(obj, 164);
                     lv_qrcode_set_dark_color(obj, lv_color_hex(0x20429f));
                     lv_qrcode_set_light_color(obj, lv_color_hex(0xe2f5fe));
                     lv_qrcode_update(obj, "WIFI:S:Relay_module;T:WPA2;P:80100000;;", 39);
@@ -5269,9 +5286,9 @@ void create_screen_update_relay() {
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.obj82 = obj;
-            lv_obj_set_pos(obj, 523, 199);
-            lv_obj_set_size(obj, 277, 281);
+            objects.obj83 = obj;
+            lv_obj_set_pos(obj, 477, 171);
+            lv_obj_set_size(obj, 314, 281);
             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5289,7 +5306,7 @@ void create_screen_update_relay() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_textarea_create(parent_obj);
-                    objects.obj83 = obj;
+                    objects.obj84 = obj;
                     lv_obj_set_pos(obj, 104, -52);
                     lv_obj_set_size(obj, 268, 60);
                     lv_textarea_set_max_length(obj, 128);
@@ -5304,10 +5321,10 @@ void create_screen_update_relay() {
                 }
                 {
                     lv_obj_t *obj = lv_qrcode_create(parent_obj);
-                    objects.obj84 = obj;
-                    lv_obj_set_pos(obj, -11, 70);
-                    lv_obj_set_size(obj, 211, 209);
-                    lv_qrcode_set_size(obj, 209);
+                    objects.obj85 = obj;
+                    lv_obj_set_pos(obj, -1094, 119);
+                    lv_obj_set_size(obj, 166, 164);
+                    lv_qrcode_set_size(obj, 164);
                     lv_qrcode_set_dark_color(obj, lv_color_hex(0x20429f));
                     lv_qrcode_set_light_color(obj, lv_color_hex(0xe2f5fe));
                     lv_qrcode_update(obj, "http://192.168.4.1/update", 25);
@@ -5321,12 +5338,12 @@ void create_screen_update_relay() {
             objects.update_relay_back = obj;
             lv_obj_set_pos(obj, 350, 416);
             lv_obj_set_size(obj, 100, 50);
-            lv_obj_add_event_cb(obj, action_update_relay_back, LV_EVENT_CLICKED, (void *)0);
+            lv_obj_add_event_cb(obj, action_update_relay_back, LV_EVENT_RELEASED, (void *)0);
             {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj85 = obj;
+                    objects.obj86 = obj;
                     lv_obj_set_pos(obj, 9, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5356,8 +5373,9 @@ void delete_screen_update_relay() {
     objects.obj82 = 0;
     objects.obj83 = 0;
     objects.obj84 = 0;
-    objects.update_relay_back = 0;
     objects.obj85 = 0;
+    objects.update_relay_back = 0;
+    objects.obj86 = 0;
 }
 
 void tick_screen_update_relay() {

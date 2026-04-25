@@ -99,11 +99,7 @@ void setup_display()
     uint32_t screenHeight = gfx.height();
 
     // Расчет фиксированного размера буфера (в байтах)
-#ifdef DIRECT_MODE
-    uint32_t bufSizeInBytes = screenWidth * screenHeight * sizeof(lv_color_t);
-#else
     uint32_t bufSizeInBytes = screenWidth * 480 * sizeof(lv_color_t);
-#endif
 
     disp_draw_buf = (lv_color_t *)heap_caps_aligned_alloc(64, bufSizeInBytes, MALLOC_CAP_SPIRAM);
     if (!disp_draw_buf)
@@ -114,13 +110,7 @@ void setup_display()
 
     disp = lv_display_create(screenWidth, screenHeight);
     lv_display_set_flush_cb(disp, my_disp_flush);
-
-#ifdef DIRECT_MODE
-    disp_draw_buf1 = (lv_color_t *)heap_caps_aligned_alloc(64, bufSizeInBytes, MALLOC_CAP_SPIRAM);
-    lv_display_set_buffers(disp, disp_draw_buf, disp_draw_buf1, bufSizeInBytes, LV_DISPLAY_RENDER_MODE_DIRECT);
-#else
     lv_display_set_buffers(disp, disp_draw_buf, NULL, bufSizeInBytes, LV_DISPLAY_RENDER_MODE_PARTIAL);
-#endif
 
     lv_indev_t *indev = lv_indev_create();
     lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
