@@ -4,6 +4,7 @@
 #include <lvgl.h>
 #include <Arduino_GFX_Library.h>
 #include "TAMC_GT911.h"
+#include "ui/ui.h"
 
 // --- Hardware Configuration ---
 #define TOUCH_GT911_SCL 20

@@ -84,7 +84,6 @@ void setup_display()
     Serial.println("Initializing display...");
     gfx.begin(8000000);
     gfx.setRotation(ROTATION);
-    gfx.fillScreen(0x000000);
 
     ts.begin();
     if (ROTATION == 0)
@@ -116,6 +115,15 @@ void setup_display()
     lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
     lv_indev_set_read_cb(indev, my_touchpad_read);
     Serial.println("Display setup complete.");
+
+    ui_init();
+    lv_timer_handler(); // Принудительная отрисовка первого кадра
+    // Плавное включение подсветки
+    for (int duty = 0; duty <= GFX_BL_VALUE; duty++)
+    {
+        analogWrite(GFX_BL, duty);
+        delay(3);
+    }
 }
 void revert_display()
 {
