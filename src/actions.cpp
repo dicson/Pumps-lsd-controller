@@ -306,8 +306,9 @@ void action_decrement_10(lv_event_t *e)
     lv_event_code_t code = lv_event_get_code(e);
     if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED_REPEAT)
     {
-        k_dw_time -= K_DW_STEP;
-        if (k_dw_time < MIN_K_DW_TIME)
+        if (k_dw_time >= K_DW_STEP + MIN_K_DW_TIME)
+            k_dw_time -= K_DW_STEP;
+        else
             k_dw_time = MIN_K_DW_TIME;
         save_k_dw_time();
     }
