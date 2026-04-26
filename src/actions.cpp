@@ -386,7 +386,7 @@ void action_update_display(lv_event_t *e)
 void action_update_relay(lv_event_t *e)
 {
   create_screen_update_relay();
-  loadScreen(SCREEN_ID_UPDATE_RELAY);
+  lv_screen_load_anim(objects.update_relay, LV_SCREEN_LOAD_ANIM_NONE, 0, 0, true);
 }
 
 void action_update_relay_1(lv_event_t *e)
