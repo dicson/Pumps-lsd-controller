@@ -115,13 +115,6 @@ void setup_display()
     lv_indev_t *indev = lv_indev_create();
     lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
     lv_indev_set_read_cb(indev, my_touchpad_read);
-
-    // Плавное включение подсветки
-    for (int duty = 0; duty <= GFX_BL_VALUE; duty++)
-    {
-        analogWrite(GFX_BL, duty);
-        delay(4);
-    }
     Serial.println("Display setup complete.");
 }
 void revert_display()

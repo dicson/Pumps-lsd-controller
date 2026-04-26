@@ -15,6 +15,15 @@ void setup()
   setup_settings();
   setup_display();
   ui_init();
+  lv_timer_handler(); // Принудительная отрисовка первого кадра
+
+  // Плавное включение подсветки
+  for (int duty = 0; duty <= GFX_BL_VALUE; duty++)
+  {
+    analogWrite(GFX_BL, duty);
+    delay(4);
+  }
+
   fill_widgets();
   esp_now_setup();
   pump_setup();
