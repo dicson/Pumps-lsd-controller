@@ -211,8 +211,8 @@ void calculate_program_time()
     {
         if ((dw_time[i] > 0 || cw_time[i] > 0) && pump_finished[i] == false)
         {
-            uint32_t dw_t = dw_time[i] * MS_PER_SECOND * minutes / 100 * k_dw_time;
-            programm_time += dw_t + (cw_time[i] + zone_pause) * MS_PER_SECOND * minutes;
+            uint32_t dw_t = (uint64_t)dw_time[i] * MS_PER_SECOND * minutes * k_dw_time / 100;
+            programm_time += dw_t + (uint64_t)(cw_time[i] + zone_pause) * MS_PER_SECOND * minutes;
         }
     }
     if (programm_time > 0)
