@@ -226,7 +226,6 @@ void action_start(lv_event_t *e)
 {
     start_time = millis();
     zoneTimer = millis() - (zone_pause * MS_PER_SECOND * minutes);
-    now_pumping = true;
 
     for (byte i = 0; i < PUMP_AMOUNT; i++)
     {
@@ -238,8 +237,6 @@ void action_start(lv_event_t *e)
     }
 
     calculate_program_time();
-    now_pumping = false;
-
     if (programm_time <= 0)
         return;
 
