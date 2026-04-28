@@ -13,13 +13,6 @@
 #define RO_MODE true
 #define GFX_BL 2
 
-static constexpr uint32_t MS_PER_SECOND = 1000;
-static constexpr uint16_t MIN_K_DW_TIME = 50;
-static constexpr uint16_t MAX_K_DW_TIME = 200;
-static constexpr uint16_t K_DW_STEP = 10;
-static constexpr uint16_t MIN_GFX_BL_TIME = 10;
-static constexpr uint16_t SCREEN_ANIM_DURATION_MS = 1000;
-
 extern Preferences settings;
 extern uint32_t GFX_BL_VALUE, GFX_BL_TIME;
 extern lv_obj_t *bar_list[PUMP_AMOUNT];
