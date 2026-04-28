@@ -6,21 +6,14 @@
 #include "constants.h"
 #include <freertos/queue.h>
 #include "lora.h"
-
-extern void save_k_dw_time();
+#include "auto_pumps.h"
 
 #define SWITCH_LEVEL 0 // реле: 1 - высокого уровня (или мосфет), 0 - низкого
 
-extern uint32_t dw_time[PUMP_AMOUNT], cw_time[PUMP_AMOUNT], pump_timers[PUMP_AMOUNT];
-extern uint32_t zone_pause, programm_time, start_time, zoneTimer, k_dw_time;
-extern boolean pump_state[PUMP_AMOUNT], pump_finished[PUMP_AMOUNT], now_pumping, dryState;
-extern int8_t thisH, thisM, thisS;
-extern bool show_log;
-extern int minutes;
 int current_zone = 255;
 boolean pump_water_state;
-void handle_messages();
-void update_bars();
+bool system_error_state = false;
+
 void send_message_to_pult(void *pvParameters);
 
 /**
@@ -224,10 +217,9 @@ void send_message_to_pult(void *pvParameters)
 
 /**
  * @brief Формирует и отправляет текущий статус системы в очередь для передачи на пульт.
- * @param msg Структура сообщения (по умолчанию пустая с синхронизацией).
+ * @param msg Структура сообщения.
  */
-void send_status_to_pult(struct_message_pult msg = {
-                             SYNC_WORD, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+void send_status_to_pult(struct_message_pult msg)
 {
     static uint32_t ping_timer;
 
@@ -352,8 +344,6 @@ void update_bars()
                                     time_pass, time, prog_pass, programm_time, k_dw_time};
     send_status_to_pult(message1);
 }
-
-bool system_error_state = false;
 
 /**
  * @brief Обрабатывает входящие сообщения из очередей ESP-NOW (ошибки передачи и команды с пульта).

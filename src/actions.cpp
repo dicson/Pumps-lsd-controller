@@ -21,16 +21,12 @@ static constexpr uint16_t MIN_GFX_BL_TIME = 10;
 static constexpr uint16_t SCREEN_ANIM_DURATION_MS = 1000;
 
 extern Preferences settings;
-extern uint32_t dw_time[PUMP_AMOUNT], cw_time[PUMP_AMOUNT], zoneTimer, zone_pause;
-extern uint32_t GFX_BL_VALUE, GFX_BL_TIME, k_dw_time;
-extern boolean pump_finished[PUMP_AMOUNT], pump_state[PUMP_AMOUNT], now_pumping;
+extern uint32_t GFX_BL_VALUE, GFX_BL_TIME;
 extern lv_obj_t *bar_list[PUMP_AMOUNT];
-extern int current_zone, minutes;
 extern int ROTATION;
 extern void revert_display();
 
-uint32_t water_num, start_time;
-int32_t programm_time;
+uint32_t water_num, start_time, programm_time;
 int8_t thisH, thisM, thisS;
 lv_obj_t *obj;
 
