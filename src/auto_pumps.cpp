@@ -404,13 +404,12 @@ void handle_messages()
             lv_label_set_text(objects.pump_i, (String(pump_sensor) + " A").c_str());
             if (pump_sensor > 9 && minutes == 60)
             {
-                // Пытаемся найти метку внутри контейнера message_box и обновить текст
-                lv_obj_t *label = lv_obj_get_child(objects.message_box, 0);
-                if (label)
+                static bool inited = false;
+                if (!inited)
                 {
-                    lv_label_set_text(label, "Датчик тока насоса \nпоказывает большой ток.\nОн не подключен \nили неисправен");
-                }
-                lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
+                    lv_obj_remove_flag(objects.sensor_msgbox, LV_OBJ_FLAG_HIDDEN);
+                    inited = true;
+                }  
             }
         }
     }

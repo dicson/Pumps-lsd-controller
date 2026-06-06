@@ -96,6 +96,7 @@ typedef struct _objects_t {
     lv_obj_t *bar_29;
     lv_obj_t *obj30;
     lv_obj_t *message_box;
+    lv_obj_t *sensor_msgbox;
     lv_obj_t *k_panel;
     lv_obj_t *k_dw_time;
     lv_obj_t *button_10;

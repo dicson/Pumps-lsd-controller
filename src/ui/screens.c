@@ -1128,17 +1128,63 @@ void create_screen_main() {
                             // message_box
                             lv_obj_t *obj = lv_obj_create(parent_obj);
                             objects.message_box = obj;
-                            lv_obj_set_pos(obj, 125, 97);
-                            lv_obj_set_size(obj, 300, 200);
+                            lv_obj_set_pos(obj, 140, 133);
+                            lv_obj_set_size(obj, 271, 165);
                             lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
                             add_style_1style(obj);
+                            lv_obj_set_style_pad_top(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_pad_bottom(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_pad_left(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_pad_right(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_bg_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
                             {
                                 lv_obj_t *parent_obj = obj;
                                 {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
-                                    lv_obj_set_pos(obj, 18, 40);
+                                    lv_obj_set_pos(obj, 1, 3);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                    lv_label_set_text_static(obj, "Связь с реле потеряна!\n\nПерезапустите систему.");
+                                    lv_label_set_text_static(obj, "");
+                                }
+                            }
+                        }
+                        {
+                            // sensor_msgbox
+                            lv_obj_t *obj = lv_obj_create(parent_obj);
+                            objects.sensor_msgbox = obj;
+                            lv_obj_set_pos(obj, 113, 133);
+                            lv_obj_set_size(obj, 324, 165);
+                            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
+                            lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_CHAIN_HOR|LV_OBJ_FLAG_SCROLL_WITH_ARROW|LV_OBJ_FLAG_SNAPPABLE);
+                            add_style_1style(obj);
+                            lv_obj_set_style_pad_top(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_pad_bottom(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_pad_left(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_pad_right(obj, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            {
+                                lv_obj_t *parent_obj = obj;
+                                {
+                                    lv_obj_t *obj = lv_label_create(parent_obj);
+                                    lv_obj_set_pos(obj, 1, 3);
+                                    lv_obj_set_size(obj, LV_PCT(100), LV_PCT(100));
+                                    lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_CHAIN_HOR|LV_OBJ_FLAG_SCROLL_MOMENTUM|LV_OBJ_FLAG_SCROLL_WITH_ARROW);
+                                    lv_obj_set_scrollbar_mode(obj, LV_SCROLLBAR_MODE_OFF);
+                                    lv_label_set_text_static(obj, "Датчик тока насоса показывает большой ток. Он не подключен или неисправен. Проверьте датчик или отключите его в настройках.");
+                                }
+                                {
+                                    lv_obj_t *obj = lv_button_create(parent_obj);
+                                    lv_obj_set_pos(obj, 200, 111);
+                                    lv_obj_set_size(obj, 100, 35);
+                                    lv_obj_add_event_cb(obj, action_sensor_ok, LV_EVENT_RELEASED, (void *)0);
+                                    {
+                                        lv_obj_t *parent_obj = obj;
+                                        {
+                                            lv_obj_t *obj = lv_label_create(parent_obj);
+                                            lv_obj_set_pos(obj, 0, 0);
+                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_label_set_text_static(obj, "OK");
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -4716,6 +4762,7 @@ void delete_screen_main() {
     objects.bar_29 = 0;
     objects.obj30 = 0;
     objects.message_box = 0;
+    objects.sensor_msgbox = 0;
     objects.k_panel = 0;
     objects.k_dw_time = 0;
     objects.button_10 = 0;
