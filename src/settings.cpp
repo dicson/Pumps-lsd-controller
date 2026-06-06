@@ -19,7 +19,7 @@ boolean dryState = true;                // какой клапан открыт.
 uint32_t k_dw_time = DEFAULT_K_DW_TIME; // коэффициент
 int minutes = DEFAULT_MINUTES;          // отладка
 int ROTATION = 0;                       // поворот экрана
-bool use_pult, lora, esp_now;
+bool use_pult, use_pump_sensor, lora, esp_now;
 extern void update_zone_list();
 
 Preferences settings;
@@ -61,6 +61,7 @@ void setup_settings()
     GFX_BL_TIME = settings.getLong("GFX_BL_TIME");
     k_dw_time = settings.getLong("k_dw_time");
     use_pult = settings.getBool("use_pult");
+    use_pump_sensor = settings.getBool("use_pump_sensor");
     lora = settings.getBool("lora");
     esp_now = settings.getBool("esp_now");
 
@@ -73,6 +74,7 @@ void fill_widgets()
 {
     /* Расширение области нажатия с помощью констант */
     lv_obj_set_ext_click_area(objects.pult, EXT_CLICK_AREA_SMALL);
+    lv_obj_set_ext_click_area(objects.pump_sensor, EXT_CLICK_AREA_SMALL);
     lv_obj_set_ext_click_area(objects.debug, EXT_CLICK_AREA_SMALL);
     lv_obj_set_ext_click_area(objects.bl, EXT_CLICK_AREA_SMALL);
     lv_obj_set_ext_click_area(objects.button_10, EXT_CLICK_AREA_LARGE);
@@ -85,6 +87,11 @@ void fill_widgets()
     {
         lv_obj_add_state(objects.pult, LV_STATE_CHECKED);
         lv_obj_remove_flag(objects.esp_lora, LV_OBJ_FLAG_HIDDEN);
+    }
+    if (use_pump_sensor)
+    {
+        lv_obj_add_state(objects.pump_sensor, LV_STATE_CHECKED);
+        lv_obj_remove_flag(objects.pump_i, LV_OBJ_FLAG_HIDDEN);
     }
     if (esp_now)
         lv_obj_add_state(objects.esp_now, LV_STATE_CHECKED);

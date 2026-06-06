@@ -4511,6 +4511,46 @@ void create_screen_main() {
                                         }
                                     }
                                 }
+                                {
+                                    // pump_sensor_container
+                                    lv_obj_t *obj = lv_obj_create(parent_obj);
+                                    objects.pump_sensor_container = obj;
+                                    lv_obj_set_pos(obj, 0, 0);
+                                    lv_obj_set_size(obj, 312, 40);
+                                    lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    {
+                                        lv_obj_t *parent_obj = obj;
+                                        {
+                                            // pump_sensor
+                                            lv_obj_t *obj = lv_switch_create(parent_obj);
+                                            objects.pump_sensor = obj;
+                                            lv_obj_set_pos(obj, 0, 8);
+                                            lv_obj_set_size(obj, 50, 25);
+                                            lv_obj_add_event_cb(obj, action_pump_sensor_clicked, LV_EVENT_VALUE_CHANGED, (void *)0);
+                                        }
+                                        {
+                                            lv_obj_t *obj = lv_label_create(parent_obj);
+                                            lv_obj_set_pos(obj, 61, 9);
+                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                            lv_label_set_text_static(obj, "Датчик насоса");
+                                        }
+                                        {
+                                            // pump_i
+                                            lv_obj_t *obj = lv_label_create(parent_obj);
+                                            objects.pump_i = obj;
+                                            lv_obj_set_pos(obj, 241, 8);
+                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
+                                            lv_label_set_text_static(obj, " ");
+                                        }
+                                    }
+                                }
                             }
                         }
                         {
@@ -4832,6 +4872,9 @@ void delete_screen_main() {
     objects.esp_lora = 0;
     objects.esp_now = 0;
     objects.lora = 0;
+    objects.pump_sensor_container = 0;
+    objects.pump_sensor = 0;
+    objects.pump_i = 0;
     objects.settings_kb = 0;
     objects.log_panel = 0;
     objects.update = 0;

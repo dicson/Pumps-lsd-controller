@@ -9,6 +9,7 @@ constexpr uint8_t relay1Address[] = {0xa4, 0xf0, 0x0f, 0x8d, 0x02, 0xec}; // 5v 
 // constexpr uint8_t relay2Address[] = {0xd4, 0xe9, 0xf4, 0xf1, 0x20, 0xa8}; // 12v relay   d4:e9:f4:f1:20:a8
 constexpr uint8_t relay2Address[] = {0x70, 0x4b, 0xca, 0x8f, 0xaf, 0x28}; // 70:4b:ca:8f:af:28
 constexpr uint8_t pultAddress[] = {0x58, 0x8c, 0x81, 0x52, 0xec, 0x84};   // pult
+constexpr uint8_t pumpsensorAddress[] = {0x68, 0x25, 0xdd, 0xfd, 0x24, 0x94};   // pump sensor 68:25:dd:fd:24:94
 
 /**
  * @brief Функция обратного вызова, которая выполняется после отправки данных.
@@ -52,7 +53,7 @@ void send_command(int relay, bool state);
  */
 void send_root_command(int relay, bool state, int relay_blk = 1);
 
-extern bool use_pult, lora, esp_now;
+extern bool use_pult, use_pump_sensor, lora, esp_now;
 
 // Queue handles
 extern QueueHandle_t esp_now_queue;
@@ -66,7 +67,8 @@ enum class EnowMessage
     SEND_FAIL,
     START,
     STOP,
-    SET_K
+    SET_K,
+    PUMP_I
 };
 
 typedef struct

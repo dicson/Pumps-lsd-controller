@@ -125,6 +125,18 @@ void action_use_pult(lv_event_t *e)
     settings.end();
 }
 
+void action_pump_sensor_clicked(lv_event_t *e)
+{
+    use_pump_sensor = lv_obj_has_state(objects.pump_sensor, LV_STATE_CHECKED);
+    if (use_pump_sensor)
+        lv_obj_remove_flag(objects.pump_i, LV_OBJ_FLAG_HIDDEN);
+    else
+        lv_obj_add_flag(objects.pump_i, LV_OBJ_FLAG_HIDDEN);
+    settings.begin("Settings", RW_MODE);
+    settings.putBool("use_pump_sensor", use_pump_sensor);
+    settings.end();
+}
+
 void action_esp_lora_clicked(lv_event_t *e)
 {
     esp_now = lv_obj_has_state(objects.esp_now, LV_STATE_CHECKED);

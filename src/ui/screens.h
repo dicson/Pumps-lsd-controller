@@ -252,6 +252,9 @@ typedef struct _objects_t {
     lv_obj_t *esp_lora;
     lv_obj_t *esp_now;
     lv_obj_t *lora;
+    lv_obj_t *pump_sensor_container;
+    lv_obj_t *pump_sensor;
+    lv_obj_t *pump_i;
     lv_obj_t *settings_kb;
     lv_obj_t *log_panel;
     lv_obj_t *update;

@@ -20,7 +20,10 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
         return;
 
     // Проверяем, что данные пришли именно от пульта и пульт разрешен в настройках
-    if (memcmp(info->src_addr, pultAddress, 6) != 0 || !use_pult)
+    if (memcmp(info->src_addr, pultAddress, 6) == 0 && !use_pult)
+        return;
+
+    if (memcmp(info->src_addr, pumpsensorAddress, 6) == 0 && !use_pump_sensor)
         return;
 
     struct_message fromPult;
@@ -37,6 +40,15 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
     if (fromPult.relay == 255)
     {
         qMsg.type = EnowMessage::SET_K;
+        qMsg.value = fromPult.k_value;
+        xQueueSendFromISR(esp_now_queue_from_pult, &qMsg, NULL);
+        return;
+    }
+
+    // Команда от датчика насоса (используется спец. номер реле 254)
+    if (fromPult.relay == 254)
+    {
+        qMsg.type = EnowMessage::PUMP_I;
         qMsg.value = fromPult.k_value;
         xQueueSendFromISR(esp_now_queue_from_pult, &qMsg, NULL);
         return;
@@ -78,6 +90,9 @@ void esp_now_setup()
         return;
     }
 
+    uint8_t newMACAddress[] = {0x98, 0x88, 0xe0, 0x04, 0xe2, 0x48};
+    esp_wifi_set_mac(WIFI_IF_STA, &newMACAddress[0]);
+
     // Устанавливаем канал 1 для совпадения с другими устройствами
     esp_wifi_set_channel(1, WIFI_SECOND_CHAN_NONE);
 
@@ -112,6 +127,13 @@ void esp_now_setup()
     memset(&peerInfo, 0, sizeof(peerInfo));
     uint8_t broadcast_mac[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
     memcpy(peerInfo.peer_addr, broadcast_mac, 6);
+    peerInfo.channel = 0;
+    peerInfo.encrypt = false;
+
+    esp_now_add_peer(&peerInfo);
+    // Регистрация конкретного адреса датчика насоса
+    memset(&peerInfo, 0, sizeof(peerInfo));
+    memcpy(peerInfo.peer_addr, pumpsensorAddress, 6);
     peerInfo.channel = 0;
     peerInfo.encrypt = false;
 

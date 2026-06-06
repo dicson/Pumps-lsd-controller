@@ -13,6 +13,7 @@
 int current_zone = 255;
 boolean pump_water_state;
 bool system_error_state = false;
+uint32_t pump_sensor = 0;
 
 void send_message_to_pult(void *pvParameters);
 
@@ -359,7 +360,7 @@ void handle_messages()
             bool is_relay1 = (memcmp(msg.mac, relay1Address, 6) == 0);
             bool is_relay2 = (memcmp(msg.mac, relay2Address, 6) == 0);
 
-            if (is_relay1 || is_relay2)
+            if ((is_relay1 || is_relay2) && minutes == 60)
             {
                 if (!system_error_state)
                 {
@@ -395,6 +396,21 @@ void handle_messages()
             {
                 k_dw_time = qpMsg.value;
                 save_k_dw_time();
+            }
+        }
+        if (qpMsg.type == EnowMessage::PUMP_I && use_pump_sensor)
+        {
+            pump_sensor = qpMsg.value;
+            lv_label_set_text(objects.pump_i, (String(pump_sensor) + " A").c_str());
+            if (pump_sensor > 9 && minutes == 60)
+            {
+                // Пытаемся найти метку внутри контейнера message_box и обновить текст
+                lv_obj_t *label = lv_obj_get_child(objects.message_box, 0);
+                if (label)
+                {
+                    lv_label_set_text(label, "Датчик тока насоса \nпоказывает большой ток.\nОн не подключен \nили неисправен");
+                }
+                lv_obj_remove_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
             }
         }
     }
