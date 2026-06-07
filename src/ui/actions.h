@@ -37,6 +37,7 @@ extern void action_revert_display(lv_event_t * e);
 extern void action_update_relay_2(lv_event_t * e);
 extern void action_pump_sensor_clicked(lv_event_t * e);
 extern void action_sensor_ok(lv_event_t * e);
+extern void action_sensor_ok_1(lv_event_t * e);
 
 #ifdef __cplusplus
 }

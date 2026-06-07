@@ -13,7 +13,8 @@
 int current_zone = 255;
 boolean pump_water_state;
 bool system_error_state = false;
-uint32_t pump_sensor = 0;
+float pump_sensor = 0;
+uint32_t pump_sensor_timer = millis();
 
 void send_message_to_pult(void *pvParameters);
 
@@ -306,8 +307,15 @@ void update_progress_time_label(uint32_t prog_pass_ms)
 /**
  * @brief Обновляет графические индикаторы (бары) зон и прогресса в UI, а также отправляет статус на пульт.
  */
-void update_bars()
+void update_bars(bool resetFlag)
 {
+    static int last_zone_styled = -1;
+    // Если передан флаг сброса, обнуляем переменную
+    if (resetFlag)
+    {
+        last_zone_styled = -1;
+        return;
+    }
     if (current_zone >= PUMP_AMOUNT || lv_obj_has_flag(objects.stop, LV_OBJ_FLAG_HIDDEN))
     {
         send_status_to_pult();
@@ -326,7 +334,6 @@ void update_bars()
         time_pass = time;
 
     // 2. Обновление UI Баров
-    static int last_zone_styled = -1;
     lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, current_zone);
 
     if (current_zone != last_zone_styled)
@@ -398,10 +405,15 @@ void handle_messages()
                 save_k_dw_time();
             }
         }
-        if (qpMsg.type == EnowMessage::PUMP_I && use_pump_sensor)
+    }
+    QueueSensorMessage qpMsg1;
+    if (xQueueReceive(esp_now_queue_from_sensor, &qpMsg1, 0) == pdTRUE)
+    {
+        if (qpMsg1.type == EnowMessage::PUMP_I && use_pump_sensor)
         {
-            pump_sensor = qpMsg.value;
-            lv_label_set_text(objects.pump_i, (String(pump_sensor) + " A").c_str());
+            pump_sensor = qpMsg1.value;
+            pump_sensor_timer = millis();
+            lv_label_set_text_fmt(objects.pump_i, "%.1f A", pump_sensor);
             if (pump_sensor > 9 && minutes == 60)
             {
                 static bool inited = false;
@@ -409,9 +421,57 @@ void handle_messages()
                 {
                     lv_obj_remove_flag(objects.sensor_msgbox, LV_OBJ_FLAG_HIDDEN);
                     inited = true;
-                }  
+                }
             }
         }
+    }
+}
+
+/**
+ * @brief проверка работы насоса и изменение цвта прогрессбара зоны
+ */
+void check_pump(bool resetFlag)
+{
+    static uint32_t last_check = 0;
+    static int changed_zone = -1;
+
+    // Если передан флаг сброса, обнуляем переменную
+    if (resetFlag)
+    {
+        changed_zone = -1;
+        return;
+    }
+    if (!use_pump_sensor || !pump_water_state || changed_zone == current_zone)
+        return;
+    if (millis() - last_check < 4000)
+        return;
+    last_check = millis();
+    uint32_t time_pass = millis() - pump_timers[current_zone];
+    if (time_pass < 4000)
+        return;
+    if (pump_sensor < 2)
+    {
+        lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, current_zone);
+        lv_obj_set_style_bg_grad(bar, NULL, LV_PART_INDICATOR);
+        lv_obj_set_style_bg_color(bar, lv_color_hex(0xff0000), LV_PART_INDICATOR);
+        lv_obj_set_style_bg_opa(bar, LV_OPA_COVER, LV_PART_INDICATOR); // Ensure opacity is visible
+        changed_zone = current_zone;
+        Serial.println("Насос не качает");
+    }
+}
+
+/**
+ * @brief проверка работы датчика насоса
+ */
+void check_pump_sensor()
+{
+    if ((millis() - pump_sensor_timer) < 5000 || !use_pump_sensor)
+        return;
+    static bool inited = false;
+    if (!inited)
+    {
+        lv_obj_remove_flag(objects.sensor_msgbox_1, LV_OBJ_FLAG_HIDDEN);
+        inited = true;
     }
 }
 
@@ -429,4 +489,6 @@ void pump_loop()
     flowTick();
     update_bars();
     handle_messages();
+    check_pump();
+    check_pump_sensor();
 }

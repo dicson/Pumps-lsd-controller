@@ -8,6 +8,7 @@
 QueueHandle_t esp_now_queue;
 QueueHandle_t esp_now_queue_from_pult;
 QueueHandle_t esp_now_queue_to_pult;
+QueueHandle_t esp_now_queue_from_sensor;
 
 // Флаг: ESP-NOW полностью инициализирован и готов к работе
 static bool esp_now_ready = false;
@@ -26,6 +27,23 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
     if (memcmp(info->src_addr, pumpsensorAddress, 6) == 0 && !use_pump_sensor)
         return;
 
+    if (memcmp(info->src_addr, pumpsensorAddress, 6) == 0)
+    {
+        struct_message_sensor fromSensor;
+        if (len != sizeof(fromSensor))
+            return;
+        memcpy(&fromSensor, incomingData, sizeof(fromSensor));
+        QueueSensorMessage qMsg;
+        // Команда от датчика насоса (используется спец. номер реле 254)
+        if (fromSensor.relay == 254)
+        {
+            //Serial.print(fromSensor.k_value);
+            qMsg.type = EnowMessage::PUMP_I;
+            qMsg.value = fromSensor.k_value;
+            xQueueSendFromISR(esp_now_queue_from_sensor, &qMsg, NULL);
+            return;
+        }
+    }
     struct_message fromPult;
     if (len != sizeof(fromPult))
         return;
@@ -45,14 +63,14 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
         return;
     }
 
-    // Команда от датчика насоса (используется спец. номер реле 254)
-    if (fromPult.relay == 254)
-    {
-        qMsg.type = EnowMessage::PUMP_I;
-        qMsg.value = fromPult.k_value;
-        xQueueSendFromISR(esp_now_queue_from_pult, &qMsg, NULL);
-        return;
-    }
+    // // Команда от датчика насоса (используется спец. номер реле 254)
+    // if (fromPult.relay == 254)
+    // {
+    //     qMsg.type = EnowMessage::PUMP_I;
+    //     qMsg.value = (float)fromPult.k_value;
+    //     xQueueSendFromISR(esp_now_queue_from_pult, &qMsg, NULL);
+    //     return;
+    // }
 
     // Обработка команд СТАРТ и СТОП
     if (fromPult.relay == 0 && fromPult.state == false)
@@ -140,9 +158,10 @@ void esp_now_setup()
     esp_now_add_peer(&peerInfo);
 
     // Создание очередей для межзадачного взаимодействия
-    esp_now_queue = xQueueCreate(10, sizeof(EnowStatusMessage));
-    esp_now_queue_from_pult = xQueueCreate(10, sizeof(QueuePultMessage));
-    esp_now_queue_to_pult = xQueueCreate(10, sizeof(struct_message_pult));
+    esp_now_queue = xQueueCreate(2, sizeof(EnowStatusMessage));
+    esp_now_queue_from_pult = xQueueCreate(2, sizeof(QueuePultMessage));
+    esp_now_queue_to_pult = xQueueCreate(2, sizeof(struct_message_pult));
+    esp_now_queue_from_sensor = xQueueCreate(2, sizeof(QueueSensorMessage));
 
     esp_now_ready = true;
 }

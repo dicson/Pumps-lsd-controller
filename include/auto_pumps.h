@@ -19,8 +19,9 @@ void zone_off(int i);
 
 // Обработка сообщений и обновление UI
 void handle_messages();
-void update_bars();
+void update_bars(bool resetFlag = false);
 void send_status_to_pult(struct_message_pult msg = {SYNC_WORD, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+void check_pump(bool resetFlag = false);
 
 // Вспомогательные функции
 void MessageToLog(String Message);

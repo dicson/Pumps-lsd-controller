@@ -143,6 +143,11 @@ void action_sensor_ok(lv_event_t *e)
     lv_obj_add_flag(objects.sensor_msgbox, LV_OBJ_FLAG_HIDDEN);
 }
 
+void action_sensor_ok_1(lv_event_t *e)
+{
+    lv_obj_add_flag(objects.sensor_msgbox_1, LV_OBJ_FLAG_HIDDEN);
+}
+
 void action_esp_lora_clicked(lv_event_t *e)
 {
     esp_now = lv_obj_has_state(objects.esp_now, LV_STATE_CHECKED);
@@ -233,6 +238,8 @@ void action_start(lv_event_t *e)
 {
     start_time = millis();
     zoneTimer = millis() - (zone_pause * MS_PER_SECOND * minutes);
+    check_pump(true);
+    update_bars(true);
 
     for (byte i = 0; i < PUMP_AMOUNT; i++)
     {
@@ -283,7 +290,6 @@ void action_stop(lv_event_t *e)
         if (pump_state[i] == SWITCH_LEVEL)
             pump_state[i] = !SWITCH_LEVEL;
     }
-
     now_pumping = false;
     lv_obj_add_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_state(objects.stop, LV_STATE_DISABLED);
