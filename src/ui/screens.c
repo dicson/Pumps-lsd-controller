@@ -4528,12 +4528,17 @@ void create_screen_main() {
                                         lv_obj_t *parent_obj = obj;
                                         {
                                             // debug
-                                            lv_obj_t *obj = lv_checkbox_create(parent_obj);
+                                            lv_obj_t *obj = lv_switch_create(parent_obj);
                                             objects.debug = obj;
                                             lv_obj_set_pos(obj, 0, 0);
-                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text_static(obj, "Отладка");
+                                            lv_obj_set_size(obj, 50, 25);
                                             lv_obj_add_event_cb(obj, action_debug, LV_EVENT_VALUE_CHANGED, (void *)0);
+                                        }
+                                        {
+                                            lv_obj_t *obj = lv_label_create(parent_obj);
+                                            lv_obj_set_pos(obj, 61, 4);
+                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                            lv_label_set_text_static(obj, "Отладка");
                                         }
                                     }
                                 }
@@ -4552,49 +4557,57 @@ void create_screen_main() {
                                         lv_obj_t *parent_obj = obj;
                                         {
                                             // pult
-                                            lv_obj_t *obj = lv_checkbox_create(parent_obj);
+                                            lv_obj_t *obj = lv_switch_create(parent_obj);
                                             objects.pult = obj;
                                             lv_obj_set_pos(obj, 0, 0);
-                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text_static(obj, "Пульт");
+                                            lv_obj_set_size(obj, 50, 25);
                                             lv_obj_add_event_cb(obj, action_use_pult, LV_EVENT_VALUE_CHANGED, (void *)0);
                                         }
-                                    }
-                                }
-                                {
-                                    // esp_lora
-                                    lv_obj_t *obj = lv_obj_create(parent_obj);
-                                    objects.esp_lora = obj;
-                                    lv_obj_set_pos(obj, -645, -112);
-                                    lv_obj_set_size(obj, 312, 40);
-                                    lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-                                    lv_obj_add_event_cb(obj, action_esp_lora_clicked, LV_EVENT_VALUE_CHANGED, (void *)0);
-                                    lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
-                                    {
-                                        lv_obj_t *parent_obj = obj;
                                         {
-                                            // esp_now
-                                            lv_obj_t *obj = lv_checkbox_create(parent_obj);
-                                            objects.esp_now = obj;
-                                            lv_obj_set_pos(obj, 0, 1);
+                                            lv_obj_t *obj = lv_label_create(parent_obj);
+                                            lv_obj_set_pos(obj, 61, 3);
                                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text_static(obj, "ESP-NOW");
-                                            lv_obj_add_flag(obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+                                            lv_label_set_text_static(obj, "Пульт");
                                         }
                                         {
-                                            // lora
-                                            lv_obj_t *obj = lv_checkbox_create(parent_obj);
-                                            objects.lora = obj;
-                                            lv_obj_set_pos(obj, 156, 1);
-                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                                            lv_checkbox_set_text_static(obj, "LoRa");
-                                            lv_obj_add_flag(obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+                                            // esp_lora
+                                            lv_obj_t *obj = lv_obj_create(parent_obj);
+                                            objects.esp_lora = obj;
+                                            lv_obj_set_pos(obj, 111, -6);
+                                            lv_obj_set_size(obj, 195, 40);
+                                            lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_obj_add_event_cb(obj, action_esp_lora_clicked, LV_EVENT_VALUE_CHANGED, (void *)0);
+                                            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
+                                            lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_obj_set_style_flex_main_place(obj, LV_FLEX_ALIGN_END, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_obj_set_style_flex_track_place(obj, LV_FLEX_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            {
+                                                lv_obj_t *parent_obj = obj;
+                                                {
+                                                    // esp_now
+                                                    lv_obj_t *obj = lv_checkbox_create(parent_obj);
+                                                    objects.esp_now = obj;
+                                                    lv_obj_set_pos(obj, 0, 1);
+                                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                                    lv_checkbox_set_text_static(obj, "ESP-NOW");
+                                                    lv_obj_add_flag(obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+                                                }
+                                                {
+                                                    // lora
+                                                    lv_obj_t *obj = lv_checkbox_create(parent_obj);
+                                                    objects.lora = obj;
+                                                    lv_obj_set_pos(obj, 110, 3);
+                                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                                    lv_checkbox_set_text_static(obj, "LoRa");
+                                                    lv_obj_add_flag(obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -4602,7 +4615,7 @@ void create_screen_main() {
                                     // pump_sensor_container
                                     lv_obj_t *obj = lv_obj_create(parent_obj);
                                     objects.pump_sensor_container = obj;
-                                    lv_obj_set_pos(obj, 0, 0);
+                                    lv_obj_set_pos(obj, -14, 112);
                                     lv_obj_set_size(obj, 312, 40);
                                     lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4617,13 +4630,13 @@ void create_screen_main() {
                                             // pump_sensor
                                             lv_obj_t *obj = lv_switch_create(parent_obj);
                                             objects.pump_sensor = obj;
-                                            lv_obj_set_pos(obj, 0, 8);
+                                            lv_obj_set_pos(obj, 0, 0);
                                             lv_obj_set_size(obj, 50, 25);
                                             lv_obj_add_event_cb(obj, action_pump_sensor_clicked, LV_EVENT_VALUE_CHANGED, (void *)0);
                                         }
                                         {
                                             lv_obj_t *obj = lv_label_create(parent_obj);
-                                            lv_obj_set_pos(obj, 61, 9);
+                                            lv_obj_set_pos(obj, 61, 2);
                                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                             lv_label_set_text_static(obj, "Датчик насоса");
                                         }
@@ -4631,7 +4644,7 @@ void create_screen_main() {
                                             // pump_i
                                             lv_obj_t *obj = lv_label_create(parent_obj);
                                             objects.pump_i = obj;
-                                            lv_obj_set_pos(obj, 226, 8);
+                                            lv_obj_set_pos(obj, 226, 1);
                                             lv_obj_set_size(obj, 75, LV_SIZE_CONTENT);
                                             lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
                                             lv_obj_set_style_text_align(obj, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN | LV_STATE_DEFAULT);
