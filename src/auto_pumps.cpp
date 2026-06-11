@@ -406,6 +406,7 @@ void handle_messages()
             }
         }
     }
+    // сообщение от датчика тока насоса
     QueueSensorMessage qpMsg1;
     if (xQueueReceive(esp_now_queue_from_sensor, &qpMsg1, 0) == pdTRUE)
     {
@@ -441,15 +442,16 @@ void check_pump(bool resetFlag)
         changed_zone = -1;
         return;
     }
-    if (!use_pump_sensor || !pump_water_state || changed_zone == current_zone)
-        return;
     if (millis() - last_check < 4000)
         return;
-    last_check = millis();
+    if (!use_pump_sensor || !pump_water_state || changed_zone == current_zone)
+        return;
     uint32_t time_pass = millis() - pump_timers[current_zone];
     if (time_pass < 4000)
         return;
-    if (pump_sensor < 2)
+
+    last_check = millis();
+    if (pump_sensor < MINIMAL_CURRENT)
     {
         lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, current_zone);
         lv_obj_set_style_bg_grad(bar, NULL, LV_PART_INDICATOR);

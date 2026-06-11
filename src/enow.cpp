@@ -37,7 +37,6 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
         // Команда от датчика насоса (используется спец. номер реле 254)
         if (fromSensor.relay == 254)
         {
-            //Serial.print(fromSensor.k_value);
             qMsg.type = EnowMessage::PUMP_I;
             qMsg.value = fromSensor.k_value;
             xQueueSendFromISR(esp_now_queue_from_sensor, &qMsg, NULL);
@@ -62,15 +61,6 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
         xQueueSendFromISR(esp_now_queue_from_pult, &qMsg, NULL);
         return;
     }
-
-    // // Команда от датчика насоса (используется спец. номер реле 254)
-    // if (fromPult.relay == 254)
-    // {
-    //     qMsg.type = EnowMessage::PUMP_I;
-    //     qMsg.value = (float)fromPult.k_value;
-    //     xQueueSendFromISR(esp_now_queue_from_pult, &qMsg, NULL);
-    //     return;
-    // }
 
     // Обработка команд СТАРТ и СТОП
     if (fromPult.relay == 0 && fromPult.state == false)
