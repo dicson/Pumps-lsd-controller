@@ -6,9 +6,10 @@ An ESP32S3-based automated pump control system with a 7-inch LCD display (800x48
 ### Architecture
 - **Framework:** Arduino (Espressif32)
 - **UI:** LVGL (v9.5) with EEZ Studio integration (`src/ui/`)
-- **Communication:** ESP-NOW for relay control and remote pult interaction
+- **Communication:** ESP-NOW for relay control, remote pult interaction, and current monitoring
 - **Logic:** `src/auto_pumps.cpp` handles the scheduling and state of pumps
 - **OS:** FreeRTOS (integrated into ESP32 Arduino) for task management
+- **Components:** `c_sensor` is a separate module (project) used as a remote current sensor.
 
 ## Building and Running
 The project uses **PlatformIO**.
