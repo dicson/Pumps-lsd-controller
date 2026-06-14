@@ -415,7 +415,7 @@ void handle_messages()
             pump_sensor = qpMsg1.value;
             pump_sensor_timer = millis();
             lv_label_set_text_fmt(objects.pump_i, "%.1f A", pump_sensor);
-            if (pump_sensor > 9 && minutes == 60)
+            if (pump_sensor > 10 && minutes == 60)
             {
                 static bool inited = false;
                 if (!inited)

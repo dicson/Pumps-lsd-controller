@@ -122,4 +122,15 @@ void fill_widgets()
             lv_obj_set_style_bg_opa(button, LOW_OPACITY, LV_PART_MAIN);
     }
     update_zone_list();
+
+    // Настраиваем выравнивание табов в настройках
+    lv_obj_t *tab_bar = lv_tabview_get_tab_bar(objects.settings_tv);
+    uint32_t i;
+    for (i = 0; i < lv_obj_get_child_count(tab_bar); i++)
+    {
+        lv_obj_t *btn = lv_obj_get_child(tab_bar, i);
+        lv_obj_set_flex_align(btn, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+        // Добавляем отступ слева, чтобы текст не прижимался к краю
+        lv_obj_set_style_pad_left(btn, 10, 0);
+    }
 }

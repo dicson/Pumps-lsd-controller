@@ -244,12 +244,13 @@ typedef struct _objects_t {
     lv_obj_t *input_area;
     lv_obj_t *keyboard;
     lv_obj_t *tab_settings;
-    lv_obj_t *obj64;
+    lv_obj_t *settings_tv;
+    lv_obj_t *pause;
     lv_obj_t *brightness;
     lv_obj_t *bl;
     lv_obj_t *bl_idle;
-    lv_obj_t *pause;
-    lv_obj_t *debug;
+    lv_obj_t *r_display;
+    lv_obj_t *obj64;
     lv_obj_t *pult;
     lv_obj_t *esp_lora;
     lv_obj_t *esp_now;
@@ -257,14 +258,13 @@ typedef struct _objects_t {
     lv_obj_t *pump_sensor_container;
     lv_obj_t *pump_sensor;
     lv_obj_t *pump_i;
-    lv_obj_t *settings_kb;
-    lv_obj_t *log_panel;
     lv_obj_t *update;
-    lv_obj_t *r_display;
+    lv_obj_t *debug;
+    lv_obj_t *settings_kb;
     lv_obj_t *obj65;
     lv_obj_t *obj66;
-    lv_obj_t *obj67;
     lv_obj_t *version;
+    lv_obj_t *obj67;
     lv_obj_t *obj68;
     lv_obj_t *obj69;
     lv_obj_t *obj70;
@@ -282,9 +282,8 @@ typedef struct _objects_t {
     lv_obj_t *obj82;
     lv_obj_t *obj83;
     lv_obj_t *obj84;
-    lv_obj_t *obj85;
     lv_obj_t *update_relay_back;
-    lv_obj_t *obj86;
+    lv_obj_t *obj85;
 } objects_t;
 
 extern objects_t objects;
