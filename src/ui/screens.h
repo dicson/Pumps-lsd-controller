@@ -259,11 +259,11 @@ typedef struct _objects_t {
     lv_obj_t *pump_sensor;
     lv_obj_t *pump_i;
     lv_obj_t *update;
+    lv_obj_t *version;
     lv_obj_t *debug;
     lv_obj_t *settings_kb;
     lv_obj_t *obj65;
     lv_obj_t *obj66;
-    lv_obj_t *version;
     lv_obj_t *obj67;
     lv_obj_t *obj68;
     lv_obj_t *obj69;

@@ -4717,6 +4717,14 @@ void create_screen_main() {
                                                 }
                                             }
                                         }
+                                        {
+                                            // version
+                                            lv_obj_t *obj = lv_label_create(parent_obj);
+                                            objects.version = obj;
+                                            lv_obj_set_pos(obj, -9, 394);
+                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                            lv_label_set_text_static(obj, "Текущая версия прошивки 0,0");
+                                        }
                                     }
                                 }
                                 {
@@ -5028,6 +5036,7 @@ void delete_screen_main() {
     objects.pump_sensor = 0;
     objects.pump_i = 0;
     objects.update = 0;
+    objects.version = 0;
     objects.debug = 0;
     objects.settings_kb = 0;
 }
@@ -5077,14 +5086,6 @@ void create_screen_update_display() {
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                     {
                         lv_obj_t *parent_obj = obj;
-                        {
-                            // version
-                            lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.version = obj;
-                            lv_obj_set_pos(obj, 15, 445);
-                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                            lv_label_set_text_static(obj, "Текущая версия прошивки 0,0");
-                        }
                         {
                             lv_obj_t *obj = lv_obj_create(parent_obj);
                             objects.obj67 = obj;
@@ -5209,7 +5210,6 @@ void delete_screen_update_display() {
     objects.update_display = 0;
     objects.obj65 = 0;
     objects.obj66 = 0;
-    objects.version = 0;
     objects.obj67 = 0;
     objects.obj68 = 0;
     objects.obj69 = 0;

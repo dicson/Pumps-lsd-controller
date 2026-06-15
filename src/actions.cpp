@@ -390,7 +390,6 @@ void action_update_display(lv_event_t *e)
 {
     create_screen_update_display();
     loadScreen(SCREEN_ID_UPDATE_DISPLAY);
-    lv_label_set_text(objects.version, VERSION);
     ota_setup();
 }
 

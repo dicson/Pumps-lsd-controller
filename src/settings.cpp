@@ -133,4 +133,6 @@ void fill_widgets()
         // Добавляем отступ слева, чтобы текст не прижимался к краю
         lv_obj_set_style_pad_left(btn, 10, 0);
     }
+
+    lv_label_set_text(objects.version, VERSION);
 }
