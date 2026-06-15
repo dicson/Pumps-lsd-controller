@@ -447,7 +447,7 @@ void check_pump(bool resetFlag)
     if (!use_pump_sensor || !pump_water_state || changed_zone == current_zone)
         return;
     uint32_t time_pass = millis() - pump_timers[current_zone];
-    if (time_pass < 4000)
+    if (time_pass < 6000)
         return;
 
     last_check = millis();
