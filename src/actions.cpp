@@ -131,10 +131,7 @@ void action_pump_sensor_clicked(lv_event_t *e)
     if (use_pump_sensor)
         lv_obj_remove_flag(objects.pump_i, LV_OBJ_FLAG_HIDDEN);
     else
-    {
         lv_obj_add_flag(objects.pump_i, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_add_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
-    }
     settings.begin("Settings", RW_MODE);
     settings.putBool("use_pump_sensor", use_pump_sensor);
     settings.end();
