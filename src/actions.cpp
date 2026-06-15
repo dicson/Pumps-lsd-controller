@@ -131,8 +131,10 @@ void action_pump_sensor_clicked(lv_event_t *e)
     if (use_pump_sensor)
         lv_obj_remove_flag(objects.pump_i, LV_OBJ_FLAG_HIDDEN);
     else
+    {
         lv_obj_add_flag(objects.pump_i, LV_OBJ_FLAG_HIDDEN);
         lv_obj_add_flag(objects.message_box, LV_OBJ_FLAG_HIDDEN);
+    }
     settings.begin("Settings", RW_MODE);
     settings.putBool("use_pump_sensor", use_pump_sensor);
     settings.end();
@@ -205,7 +207,7 @@ void action_idle_time_unfocused(lv_event_t *e)
     lv_obj_add_flag(objects.settings_kb, LV_OBJ_FLAG_HIDDEN);
     const char *txt = lv_textarea_get_text(objects.bl_idle);
     GFX_BL_TIME = (txt[0] == '\0') ? MIN_GFX_BL_TIME : atol(txt);
-    if (GFX_BL_TIME < MIN_GFX_BL_TIME)
+    if (GFX_BL_TIME < MIN_GFX_BL_TIME || (txt[0] == '\0'))
     {
         GFX_BL_TIME = MIN_GFX_BL_TIME;
         lv_textarea_set_text(objects.bl_idle, String(MIN_GFX_BL_TIME).c_str());
