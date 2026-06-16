@@ -17,6 +17,7 @@ float pump_sensor = 0;
 uint32_t pump_sensor_timer = millis();
 
 void send_message_to_pult(void *pvParameters);
+void update_progress_time_label(uint32_t prog_pass_ms);
 
 /**
  * @brief Выводит текстовое сообщение в последовательный порт.
@@ -34,7 +35,7 @@ void MessageToLog(String Message)
 void zone_off(int i)
 {
     send_command(i, false);
-    MessageToLog("выключить зону " + String(i + 1));
+    Serial.printf("выключить зону %d\n", i + 1);
 }
 
 /**
@@ -44,7 +45,7 @@ void zone_off(int i)
 void zone_on(int i)
 {
     send_command(i, true);
-    MessageToLog("включить  зону " + String(i + 1));
+    Serial.printf("включить зону %d\n", i + 1);
 }
 
 /**
@@ -183,7 +184,9 @@ void flowTick()
                     break;                                                   //
                 if (n == PUMP_AMOUNT - 1)                                    // если нет не политых
                 {
-                    delay(900);
+                    lv_bar_set_value(objects.prog_bar, programm_time, LV_ANIM_OFF);
+                    update_progress_time_label(programm_time);
+                    //delay(900);
                     update_bars();
                     action_stop(NULL);
                 }
@@ -310,12 +313,22 @@ void update_progress_time_label(uint32_t prog_pass_ms)
 void update_bars(bool resetFlag)
 {
     static int last_zone_styled = -1;
+    static uint32_t last_ui_update = 0;
+
     // Если передан флаг сброса, обнуляем переменную
     if (resetFlag)
     {
         last_zone_styled = -1;
         return;
     }
+
+    // Ограничение частоты обновления UI (20 Гц)
+    if (millis() - last_ui_update < 50)
+    {
+        return;
+    }
+    last_ui_update = millis();
+
     if (current_zone >= PUMP_AMOUNT || lv_obj_has_flag(objects.stop, LV_OBJ_FLAG_HIDDEN))
     {
         send_status_to_pult();
@@ -329,7 +342,7 @@ void update_bars(bool resetFlag)
 
     uint32_t dw_t = getDirtyWaterDurationMs(current_zone);
     uint32_t time = dw_t + cw_time[current_zone] * 1000 * minutes;
-    uint32_t time_pass = millis() - pump_timers[current_zone];
+    uint32_t time_pass = millis() - pump_timers[current_zone] + 50;
     if (time_pass > time)
         time_pass = time;
 
