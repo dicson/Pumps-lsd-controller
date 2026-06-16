@@ -4334,20 +4334,13 @@ void create_screen_main() {
                             lv_obj_t *obj = lv_tabview_create(parent_obj);
                             objects.settings_tv = obj;
                             lv_obj_set_pos(obj, -20, -20);
-                            lv_obj_set_size(obj, 800, 449);
+                            lv_obj_set_size(obj, 800, 448);
                             lv_tabview_set_tab_bar_position(obj, LV_DIR_LEFT);
                             lv_tabview_set_tab_bar_size(obj, 170);
                             lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_CHAIN_HOR);
                             lv_obj_set_style_text_font(obj, &ui_font_ubuntu_20, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            {
-                                static lv_coord_t dsc[] = {0, LV_GRID_TEMPLATE_LAST};
-                                lv_obj_set_style_grid_row_dsc_array(obj, dsc, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            }
-                            {
-                                static lv_coord_t dsc[] = {0, LV_GRID_TEMPLATE_LAST};
-                                lv_obj_set_style_grid_column_dsc_array(obj, dsc, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            }
                             lv_obj_set_style_bg_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_pad_bottom(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
                             {
                                 lv_obj_t *parent_obj = obj;
                                 {
@@ -4418,7 +4411,7 @@ void create_screen_main() {
                                         }
                                         {
                                             lv_obj_t *obj = lv_label_create(parent_obj);
-                                            lv_obj_set_pos(obj, -15, 378);
+                                            lv_obj_set_pos(obj, -14, 373);
                                             lv_obj_set_size(obj, LV_PCT(100), LV_PCT(10));
                                             lv_label_set_text_static(obj, "Пауза между поливом зон. Устанавливается в минутах. После каждой зоны выключается насос и все клапана зон.");
                                         }
@@ -4695,6 +4688,7 @@ void create_screen_main() {
                                 }
                                 {
                                     lv_obj_t *obj = lv_tabview_add_tab(parent_obj, "Обновление");
+                                    lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
                                     {
                                         lv_obj_t *parent_obj = obj;
                                         {
