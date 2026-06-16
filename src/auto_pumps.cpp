@@ -17,7 +17,6 @@ float pump_sensor = 0;
 uint32_t pump_sensor_timer = millis();
 
 void send_message_to_pult(void *pvParameters);
-void update_progress_time_label(uint32_t prog_pass_ms);
 
 /**
  * @brief Выводит текстовое сообщение в последовательный порт.
@@ -185,8 +184,8 @@ void flowTick()
                 if (n == PUMP_AMOUNT - 1)                                    // если нет не политых
                 {
                     lv_bar_set_value(objects.prog_bar, programm_time, LV_ANIM_OFF);
-                    update_progress_time_label(programm_time);
-                    //delay(900);
+                    lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d",
+                          thisH, thisM, thisS, thisH, thisM, thisS);
                     update_bars();
                     action_stop(NULL);
                 }
