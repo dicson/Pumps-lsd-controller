@@ -21927,6 +21927,48 @@
                   },
                   "group": "",
                   "groupIndex": 0
+                },
+                {
+                  "objID": "e946b56a-e452-4854-a12b-4445202657e8",
+                  "type": "LVGLLabelWidget",
+                  "left": 3,
+                  "top": 287,
+                  "width": 760,
+                  "height": 132,
+                  "customInputs": [],
+                  "customOutputs": [],
+                  "style": {
+                    "objID": "617ad83f-45e7-4011-9d0d-24139da647a3",
+                    "useStyle": "default",
+                    "conditionalStyles": [],
+                    "childStyles": []
+                  },
+                  "timeline": [],
+                  "eventHandlers": [],
+                  "leftUnit": "px",
+                  "topUnit": "px",
+                  "widthUnit": "content",
+                  "heightUnit": "content",
+                  "children": [],
+                  "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
+                  "hiddenFlagType": "literal",
+                  "clickableFlagType": "literal",
+                  "flagScrollbarMode": "",
+                  "flagScrollDirection": "",
+                  "scrollSnapX": "",
+                  "scrollSnapY": "",
+                  "checkedStateType": "literal",
+                  "disabledStateType": "literal",
+                  "states": "",
+                  "localStyles": {
+                    "objID": "44017bc4-5c4e-4324-c926-83cad742ae35"
+                  },
+                  "group": "",
+                  "groupIndex": 0,
+                  "text": " 1. Возьмите телефон или ноутбук и подключитесь к сети:\n  - SSID: Pump_controller - Пароль: 80100000\n 2. Откройте браузер и введите адрес: http://192.168.4.1/update\n  - Нажмите <Choose File>  выберите файл  *.bin\n  - Нажмите <Update> и дождитесь завершения.\n 3. Завершение: Устройство перезагрузится и вернется в обычный режим работы.",
+                  "textType": "literal",
+                  "longMode": "WRAP",
+                  "recolor": false
                 }
               ],
               "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",

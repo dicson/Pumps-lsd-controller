@@ -5192,6 +5192,12 @@ void create_screen_update_display() {
                         }
                     }
                 }
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, 3, 287);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text_static(obj, " 1. Возьмите телефон или ноутбук и подключитесь к сети:\n  - SSID: Pump_controller - Пароль: 80100000\n 2. Откройте браузер и введите адрес: http://192.168.4.1/update\n  - Нажмите <Choose File>  выберите файл  *.bin\n  - Нажмите <Update> и дождитесь завершения.\n 3. Завершение: Устройство перезагрузится и вернется в обычный режим работы.");
+                }
             }
         }
     }
