@@ -185,7 +185,7 @@ void flowTick()
                 {
                     lv_bar_set_value(objects.prog_bar, programm_time, LV_ANIM_OFF);
                     lv_label_set_text_fmt(objects.bar_label, "%d:%02d:%02d / %d:%02d:%02d",
-                          thisH, thisM, thisS, thisH, thisM, thisS);
+                                          thisH, thisM, thisS, thisH, thisM, thisS);
                     update_bars();
                     action_stop(NULL);
                 }
@@ -427,9 +427,15 @@ void handle_messages()
             pump_sensor = qpMsg1.value;
             pump_sensor_timer = millis();
             lv_label_set_text_fmt(objects.pump_i, "%.1f A", pump_sensor);
-            if (pump_sensor > 10 && minutes == 60)
+            if (pump_sensor > 14 && minutes == 60)
             {
                 static bool inited = false;
+                static int pass = 0;
+                if (pass != 2)
+                {
+                    ++pass;
+                    return;
+                }
                 if (!inited)
                 {
                     lv_obj_remove_flag(objects.sensor_msgbox, LV_OBJ_FLAG_HIDDEN);
