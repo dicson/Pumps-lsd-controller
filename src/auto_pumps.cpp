@@ -431,11 +431,22 @@ void handle_messages()
             {
                 static bool inited = false;
                 static int pass = 0;
-                if (pass != 2)
+                static uint32_t last_event_time = 0;
+                uint32_t current_time = millis();
+                // 1. Проверяем таймаут. Если времени прошло много — сбрасываем счетчик событий
+                if (current_time - last_event_time > 2000)
                 {
-                    ++pass;
-                    return;
+                    pass = 0;
                 }
+                last_event_time = current_time; // В любом случае обновляем время последнего события
+                // 2. Считаем шаги
+                if (pass < 2)
+                {
+                    pass++;
+                    return; // Блокируем выполнение основного кода, пока не накопим 3 быстрых события
+                }
+                pass = 0;
+                
                 if (!inited)
                 {
                     lv_obj_remove_flag(objects.sensor_msgbox, LV_OBJ_FLAG_HIDDEN);
