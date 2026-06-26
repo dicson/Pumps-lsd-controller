@@ -434,7 +434,7 @@ void handle_messages()
                 static uint32_t last_event_time = 0;
                 uint32_t current_time = millis();
                 // 1. Проверяем таймаут. Если времени прошло много — сбрасываем счетчик событий
-                if (current_time - last_event_time > 2000)
+                if (current_time - last_event_time > 2500)
                 {
                     pass = 0;
                 }
@@ -446,7 +446,7 @@ void handle_messages()
                     return; // Блокируем выполнение основного кода, пока не накопим 3 быстрых события
                 }
                 pass = 0;
-                
+
                 if (!inited)
                 {
                     lv_obj_remove_flag(objects.sensor_msgbox, LV_OBJ_FLAG_HIDDEN);
