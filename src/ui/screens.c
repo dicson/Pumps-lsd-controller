@@ -4719,6 +4719,23 @@ void create_screen_main() {
                                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                             lv_label_set_text_static(obj, "Текущая версия прошивки 0,0");
                                         }
+                                        {
+                                            lv_obj_t *obj = lv_qrcode_create(parent_obj);
+                                            objects.obj65 = obj;
+                                            lv_obj_set_pos(obj, 434, 229);
+                                            lv_obj_set_size(obj, 160, 160);
+                                            lv_qrcode_set_size(obj, 160);
+                                            lv_qrcode_set_dark_color(obj, lv_color_hex(0x20429f));
+                                            lv_qrcode_set_light_color(obj, lv_color_hex(0xe2f5fe));
+                                            lv_qrcode_update(obj, "https://github.com/dicson/Pumps-lsd-controller/releases/latest", 62);
+                                            lv_obj_add_flag(obj, LV_OBJ_FLAG_CLICKABLE);
+                                        }
+                                        {
+                                            lv_obj_t *obj = lv_label_create(parent_obj);
+                                            lv_obj_set_pos(obj, 424, 400);
+                                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                            lv_label_set_text_static(obj, "Прошивка на Github");
+                                        }
                                     }
                                 }
                                 {
@@ -5031,6 +5048,7 @@ void delete_screen_main() {
     objects.pump_i = 0;
     objects.update = 0;
     objects.version = 0;
+    objects.obj65 = 0;
     objects.debug = 0;
     objects.settings_kb = 0;
 }
@@ -5047,7 +5065,7 @@ void create_screen_update_display() {
         lv_obj_t *parent_obj = obj;
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.obj65 = obj;
+            objects.obj66 = obj;
             lv_obj_set_pos(obj, 0, 0);
             lv_obj_set_size(obj, 800, 480);
             lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
@@ -5058,7 +5076,7 @@ void create_screen_update_display() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
-                    objects.obj66 = obj;
+                    objects.obj67 = obj;
                     lv_obj_set_pos(obj, -22, -22);
                     lv_obj_set_size(obj, 800, 480);
                     lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5082,7 +5100,7 @@ void create_screen_update_display() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_obj_create(parent_obj);
-                            objects.obj67 = obj;
+                            objects.obj68 = obj;
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, 383, 281);
                             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5110,7 +5128,7 @@ void create_screen_update_display() {
                                 lv_obj_t *parent_obj = obj;
                                 {
                                     lv_obj_t *obj = lv_textarea_create(parent_obj);
-                                    objects.obj68 = obj;
+                                    objects.obj69 = obj;
                                     lv_obj_set_pos(obj, -1185, 11);
                                     lv_obj_set_size(obj, 369, 71);
                                     lv_textarea_set_max_length(obj, 128);
@@ -5124,7 +5142,7 @@ void create_screen_update_display() {
                                 }
                                 {
                                     lv_obj_t *obj = lv_qrcode_create(parent_obj);
-                                    objects.obj69 = obj;
+                                    objects.obj70 = obj;
                                     lv_obj_set_pos(obj, 1409, -935);
                                     lv_obj_set_size(obj, 166, 166);
                                     lv_qrcode_set_size(obj, 166);
@@ -5137,7 +5155,7 @@ void create_screen_update_display() {
                         }
                         {
                             lv_obj_t *obj = lv_obj_create(parent_obj);
-                            objects.obj70 = obj;
+                            objects.obj71 = obj;
                             lv_obj_set_pos(obj, 523, 0);
                             lv_obj_set_size(obj, 277, 281);
                             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5157,7 +5175,7 @@ void create_screen_update_display() {
                                 lv_obj_t *parent_obj = obj;
                                 {
                                     lv_obj_t *obj = lv_textarea_create(parent_obj);
-                                    objects.obj71 = obj;
+                                    objects.obj72 = obj;
                                     lv_obj_set_pos(obj, 104, -52);
                                     lv_obj_set_size(obj, 268, 76);
                                     lv_textarea_set_max_length(obj, 128);
@@ -5179,7 +5197,7 @@ void create_screen_update_display() {
                                 }
                                 {
                                     lv_obj_t *obj = lv_qrcode_create(parent_obj);
-                                    objects.obj72 = obj;
+                                    objects.obj73 = obj;
                                     lv_obj_set_pos(obj, -404, 122);
                                     lv_obj_set_size(obj, 166, 166);
                                     lv_qrcode_set_size(obj, 166);
@@ -5208,7 +5226,6 @@ void create_screen_update_display() {
 void delete_screen_update_display() {
     lv_obj_delete(objects.update_display);
     objects.update_display = 0;
-    objects.obj65 = 0;
     objects.obj66 = 0;
     objects.obj67 = 0;
     objects.obj68 = 0;
@@ -5216,6 +5233,7 @@ void delete_screen_update_display() {
     objects.obj70 = 0;
     objects.obj71 = 0;
     objects.obj72 = 0;
+    objects.obj73 = 0;
 }
 
 void tick_screen_update_display() {
@@ -5231,7 +5249,7 @@ void create_screen_update_selector() {
         lv_obj_t *parent_obj = obj;
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.obj73 = obj;
+            objects.obj74 = obj;
             lv_obj_set_pos(obj, 0, 165);
             lv_obj_set_size(obj, 800, 150);
             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5259,7 +5277,7 @@ void create_screen_update_selector() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj74 = obj;
+                            objects.obj75 = obj;
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5277,7 +5295,7 @@ void create_screen_update_selector() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj75 = obj;
+                            objects.obj76 = obj;
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5295,7 +5313,7 @@ void create_screen_update_selector() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj76 = obj;
+                            objects.obj77 = obj;
                             lv_obj_set_pos(obj, 8, 0);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5320,10 +5338,10 @@ void create_screen_update_selector() {
 void delete_screen_update_selector() {
     lv_obj_delete(objects.update_selector);
     objects.update_selector = 0;
-    objects.obj73 = 0;
     objects.obj74 = 0;
     objects.obj75 = 0;
     objects.obj76 = 0;
+    objects.obj77 = 0;
 }
 
 void tick_screen_update_selector() {
@@ -5390,7 +5408,7 @@ void create_screen_update_relay() {
                                 lv_obj_t *parent_obj = obj;
                                 {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
-                                    objects.obj77 = obj;
+                                    objects.obj78 = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5408,7 +5426,7 @@ void create_screen_update_relay() {
                                 lv_obj_t *parent_obj = obj;
                                 {
                                     lv_obj_t *obj = lv_label_create(parent_obj);
-                                    objects.obj78 = obj;
+                                    objects.obj79 = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5423,7 +5441,7 @@ void create_screen_update_relay() {
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.obj79 = obj;
+            objects.obj80 = obj;
             lv_obj_set_pos(obj, 0, 171);
             lv_obj_set_size(obj, 330, 281);
             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5451,7 +5469,7 @@ void create_screen_update_relay() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_textarea_create(parent_obj);
-                    objects.obj80 = obj;
+                    objects.obj81 = obj;
                     lv_obj_set_pos(obj, 0, 36);
                     lv_obj_set_size(obj, 326, 60);
                     lv_textarea_set_max_length(obj, 128);
@@ -5466,7 +5484,7 @@ void create_screen_update_relay() {
                 }
                 {
                     lv_obj_t *obj = lv_qrcode_create(parent_obj);
-                    objects.obj81 = obj;
+                    objects.obj82 = obj;
                     lv_obj_set_pos(obj, -436, 49);
                     lv_obj_set_size(obj, 166, 164);
                     lv_qrcode_set_size(obj, 164);
@@ -5479,7 +5497,7 @@ void create_screen_update_relay() {
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.obj82 = obj;
+            objects.obj83 = obj;
             lv_obj_set_pos(obj, 477, 171);
             lv_obj_set_size(obj, 314, 281);
             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5499,7 +5517,7 @@ void create_screen_update_relay() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_textarea_create(parent_obj);
-                    objects.obj83 = obj;
+                    objects.obj84 = obj;
                     lv_obj_set_pos(obj, 104, -52);
                     lv_obj_set_size(obj, 268, 60);
                     lv_textarea_set_max_length(obj, 128);
@@ -5514,7 +5532,7 @@ void create_screen_update_relay() {
                 }
                 {
                     lv_obj_t *obj = lv_qrcode_create(parent_obj);
-                    objects.obj84 = obj;
+                    objects.obj85 = obj;
                     lv_obj_set_pos(obj, -1094, 119);
                     lv_obj_set_size(obj, 166, 164);
                     lv_qrcode_set_size(obj, 164);
@@ -5536,7 +5554,7 @@ void create_screen_update_relay() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj85 = obj;
+                    objects.obj86 = obj;
                     lv_obj_set_pos(obj, 9, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5559,7 +5577,6 @@ void create_screen_update_relay() {
 void delete_screen_update_relay() {
     lv_obj_delete(objects.update_relay);
     objects.update_relay = 0;
-    objects.obj77 = 0;
     objects.obj78 = 0;
     objects.obj79 = 0;
     objects.obj80 = 0;
@@ -5567,8 +5584,9 @@ void delete_screen_update_relay() {
     objects.obj82 = 0;
     objects.obj83 = 0;
     objects.obj84 = 0;
-    objects.update_relay_back = 0;
     objects.obj85 = 0;
+    objects.update_relay_back = 0;
+    objects.obj86 = 0;
 }
 
 void tick_screen_update_relay() {
