@@ -21,7 +21,8 @@ extern void revert_display();
 
 uint32_t water_num, start_time, programm_time;
 int8_t thisH, thisM, thisS;
-lv_obj_t *obj;
+// Кнопка выбранной зоны (используется между action_zone_time_clicked и action_input_done)
+lv_obj_t *g_selected_zone_btn;
 
 void millis_to_HMS(unsigned long ms)
 {
@@ -108,9 +109,9 @@ void action_revert_display(lv_event_t *e)
 void action_debug(lv_event_t *e)
 {
     if (lv_obj_has_state(objects.debug, LV_STATE_CHECKED))
-        minutes = 1;
+        minutes = DEBUG_TIME_MINUTES;
     else
-        minutes = 60;
+        minutes = REAL_TIME_MINUTES;
 }
 
 void action_use_pult(lv_event_t *e)
@@ -273,7 +274,8 @@ void action_stop(lv_event_t *e)
     pump_off();
     handle_messages();
     dry_water_on();
-    if (!pump_finished[current_zone])
+    // Защита от невалидного current_zone (по умолчанию 255) до назначения зоны в periodTick()
+    if (current_zone < PUMP_AMOUNT && !pump_finished[current_zone])
         zone_off(current_zone);
 
     for (byte i = 0; i < PUMP_AMOUNT; i++)
@@ -459,7 +461,7 @@ void action_zone_selected(lv_event_t *e)
 
 void action_zone_time_clicked(lv_event_t *e)
 {
-    obj = lv_event_get_current_target_obj(e); // зона
+    g_selected_zone_btn = lv_event_get_current_target_obj(e); // зона
     water_num = lv_obj_get_index(lv_event_get_target_obj(e));
     if (lv_obj_has_flag(objects.keyboard, LV_OBJ_FLAG_HIDDEN))
     {
@@ -472,7 +474,7 @@ void action_zone_time_clicked(lv_event_t *e)
 void action_input_done(lv_event_t *e)
 {
     const char *txt = lv_textarea_get_text(objects.input_area);
-    lv_obj_t *ob = lv_obj_get_child(obj, water_num);
+    lv_obj_t *ob = lv_obj_get_child(g_selected_zone_btn, water_num);
 
     if (txt[0] == '\0' || strcmp(txt, "0") == 0 || strcmp(txt, "00") == 0)
     {
@@ -483,7 +485,7 @@ void action_input_done(lv_event_t *e)
     lv_obj_add_flag(objects.input_area, LV_OBJ_FLAG_HIDDEN);
 
     settings.begin("Settings", RW_MODE);
-    int zone_num = (int)lv_obj_get_index(obj);
+    int zone_num = (int)lv_obj_get_index(g_selected_zone_btn);
 
     if (water_num == 1)
     {
@@ -501,9 +503,9 @@ void action_input_done(lv_event_t *e)
     lv_textarea_set_text(objects.input_area, "");
 
     if (cw_time[zone_num] == 0 && dw_time[zone_num] == 0)
-        lv_obj_set_style_bg_opa(obj, LOW_OPACITY, LV_PART_MAIN);
+        lv_obj_set_style_bg_opa(g_selected_zone_btn, LOW_OPACITY, LV_PART_MAIN);
     else
-        lv_obj_set_style_bg_opa(obj, FULL_OPACITY, LV_PART_MAIN);
+        lv_obj_set_style_bg_opa(g_selected_zone_btn, FULL_OPACITY, LV_PART_MAIN);
 
     update_zone_list();
 }

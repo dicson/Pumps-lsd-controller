@@ -18,7 +18,6 @@ Arduino_RGB_Display gfx(800, 480, &rgbpanel, ROTATION /* поворот */, true
 
 lv_display_t *disp;
 static lv_color_t *disp_draw_buf;
-static lv_color_t *disp_draw_buf1;
 
 uint32_t millis_cb(void)
 {
@@ -27,27 +26,9 @@ uint32_t millis_cb(void)
 
 void my_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t *px_map)
 {
-#ifdef DIRECT_MODE
-    if (lv_display_flush_is_last(disp))
-    {
-        gfx.draw16bitRGBBitmap(0, 0, (uint16_t *)px_map, 800, 480);
-    }
-    if (lv_display_is_double_buffered(disp))
-    {
-        lv_color_t *inactive_buf = (px_map == (uint8_t *)disp_draw_buf) ? disp_draw_buf1 : disp_draw_buf;
-        uint32_t w = lv_area_get_width(area);
-        for (int32_t y = area->y1; y <= area->y2; y++)
-        {
-            memcpy(&inactive_buf[y * 800 + area->x1],
-                   &((lv_color_t *)px_map)[y * 800 + area->x1],
-                   w * sizeof(lv_color_t));
-        }
-    }
-#else
     uint32_t w = lv_area_get_width(area);
     uint32_t h = lv_area_get_height(area);
     gfx.draw16bitRGBBitmap(area->x1, area->y1, (uint16_t *)px_map, w, h);
-#endif
     lv_display_flush_ready(disp);
 }
 
@@ -98,7 +79,7 @@ void setup_display()
     uint32_t screenHeight = gfx.height();
 
     // Расчет фиксированного размера буфера (в байтах)
-    uint32_t bufSizeInBytes = screenWidth * 480 * sizeof(lv_color_t);
+    uint32_t bufSizeInBytes = screenWidth * screenHeight * sizeof(lv_color_t);
 
     disp_draw_buf = (lv_color_t *)heap_caps_aligned_alloc(64, bufSizeInBytes, MALLOC_CAP_SPIRAM);
     if (!disp_draw_buf)

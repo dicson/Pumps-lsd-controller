@@ -7,6 +7,15 @@ constexpr int PUMP_AMOUNT{30};    // количество зон
 constexpr int SWITCH_LEVEL{0};    // реле: 1 - высокого уровня (или мосфет), 0 - низкого
 constexpr int MINIMAL_CURRENT{2}; // минимальный ток
 
+// Граница между блоками реле: зоны 0..RELAY_BLOCK_SPLIT-1 -> реле 1,
+// зоны RELAY_BLOCK_SPLIT.. -> реле 2 (со смещением на RELAY_BLOCK_SPLIT).
+constexpr int RELAY_BLOCK_SPLIT{14};
+constexpr int RELAY2_OFFSET{14}; // значение, вычитаемое из номера зоны для блока реле 2
+
+// Множитель времени: реальный режим (60) и отладочный режим (1).
+constexpr int REAL_TIME_MINUTES{60};
+constexpr int DEBUG_TIME_MINUTES{1};
+
 constexpr int DEFAULT_GFX_BL_VALUE{80};
 constexpr int DEFAULT_GFX_BL_TIME{30};
 constexpr int DEFAULT_ZONE_PAUSE{0};

@@ -10,12 +10,12 @@ uint32_t GFX_BL_VALUE, GFX_BL_TIME;     // яркость, время подсв
 uint32_t dw_time[PUMP_AMOUNT];          // время полива грязной водой
 uint32_t cw_time[PUMP_AMOUNT];          // время полива чистой водой
 uint32_t pump_timers[PUMP_AMOUNT];      // таймеры зон
-boolean pump_state[PUMP_AMOUNT];        // состояние помпы
-boolean pump_finished[PUMP_AMOUNT];     // зона уже полита
+bool pump_state[PUMP_AMOUNT];           // состояние помпы
+bool pump_finished[PUMP_AMOUNT];        // зона уже полита
 uint32_t zone_pause;                    // пауза между зонами
 uint32_t zoneTimer;                     // таймер паузы
-boolean now_pumping = false;            // идет полив
-boolean dryState = true;                // какой клапан открыт. true - dry(грязная) false - чистая
+bool now_pumping = false;               // идет полив
+bool dryState = true;                   // какой клапан открыт. true - dry(грязная) false - чистая
 uint32_t k_dw_time = DEFAULT_K_DW_TIME; // коэффициент
 int minutes = DEFAULT_MINUTES;          // отладка
 int ROTATION = 0;                       // поворот экрана

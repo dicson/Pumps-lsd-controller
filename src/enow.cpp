@@ -3,6 +3,7 @@
 #include <lvgl.h>
 #include "ui/screens.h"
 #include "enow.h"
+#include "constants.h"
 
 // Дескрипторы очередей для обмена данными между задачами и прерываниями
 QueueHandle_t esp_now_queue;
@@ -24,11 +25,13 @@ void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, in
     if (memcmp(info->src_addr, pultAddress, 6) == 0 && !use_pult)
         return;
 
-    if (memcmp(info->src_addr, pumpsensorAddress, 6) == 0 && !use_pump_sensor)
-        return;
-
+    // Обработка сообщений от датчика насоса
     if (memcmp(info->src_addr, pumpsensorAddress, 6) == 0)
     {
+        // Игнорируем, если датчик тока запрещен в настройках
+        if (!use_pump_sensor)
+            return;
+
         struct_message_sensor fromSensor;
         if (len != sizeof(fromSensor))
             return;
@@ -89,6 +92,14 @@ void OnDataSent(const esp_now_send_info_t *tx_info, esp_now_send_status_t status
 
 void esp_now_setup()
 {
+    // Создание очередей для межзадачного взаимодействия.
+    // Делаем это до любой возможности раннего возврата, иначе задача send_message_to_pult,
+    // запущенная в pump_setup(), получит NULL-дескриптор очереди и приведёт к крашу.
+    esp_now_queue = xQueueCreate(2, sizeof(EnowStatusMessage));
+    esp_now_queue_from_pult = xQueueCreate(2, sizeof(QueuePultMessage));
+    esp_now_queue_to_pult = xQueueCreate(2, sizeof(struct_message_pult));
+    esp_now_queue_from_sensor = xQueueCreate(2, sizeof(QueueSensorMessage));
+
     // Настройка устройства как Wi-Fi станции (обязательно для ESP-NOW)
     WiFi.mode(WIFI_STA);
     WiFi.enableAP(false);
@@ -147,12 +158,7 @@ void esp_now_setup()
 
     esp_now_add_peer(&peerInfo);
 
-    // Создание очередей для межзадачного взаимодействия
-    esp_now_queue = xQueueCreate(2, sizeof(EnowStatusMessage));
-    esp_now_queue_from_pult = xQueueCreate(2, sizeof(QueuePultMessage));
-    esp_now_queue_to_pult = xQueueCreate(2, sizeof(struct_message_pult));
-    esp_now_queue_from_sensor = xQueueCreate(2, sizeof(QueueSensorMessage));
-
+    // Очереди созданы в начале функции, здесь только отмечаем готовность ESP-NOW.
     esp_now_ready = true;
 }
 
@@ -172,11 +178,11 @@ void send_command(int relay, bool state)
     struct_message myData = {};
     myData.relay = relay;
     myData.state = state;
-    if (relay < 14)
+    if (relay < RELAY_BLOCK_SPLIT)
         esp_now_send(relay1Address, (uint8_t *)&myData, sizeof(myData));
     else
     {
-        myData.relay = relay - 14;
+        myData.relay = relay - RELAY2_OFFSET;
         esp_now_send(relay2Address, (uint8_t *)&myData, sizeof(myData));
     }
 }

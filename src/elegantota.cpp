@@ -6,7 +6,7 @@
 const char *ssid = "Pump_controller";
 const char *password = "80100000";
 static bool is_ota_initialized = false;
-boolean update = false;
+bool update = false;
 
 WebServer server(80);
 

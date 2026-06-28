@@ -8,10 +8,8 @@
 #include "lora.h"
 #include "auto_pumps.h"
 
-#define SWITCH_LEVEL 0 // реле: 1 - высокого уровня (или мосфет), 0 - низкого
-
 int current_zone = 255;
-boolean pump_water_state;
+bool pump_water_state;
 bool system_error_state = false;
 float pump_sensor = 0;
 uint32_t pump_sensor_timer = millis();
@@ -118,7 +116,9 @@ uint32_t getDirtyWaterDurationMs(int zone)
 {
     if (zone < 0 || zone >= PUMP_AMOUNT)
         return 0;
-    return (dw_time[zone] * 1000 * minutes / 100) * k_dw_time;
+    // Приведение к uint64_t исключает переполнение при больших значениях dw_time и minutes,
+    // а единый порядок операций с calculate_program_time() гарантирует совпадение суммы.
+    return (uint64_t)dw_time[zone] * MS_PER_SECOND * minutes * k_dw_time / 100;
 }
 
 /**
@@ -371,7 +371,7 @@ void update_bars(bool resetFlag)
 void handle_messages()
 {
     EnowStatusMessage msg;
-    if (xQueueReceive(esp_now_queue, &msg, 0) == pdTRUE)
+    if (xQueueReceive(esp_now_queue, &msg, 0) == pdPASS)
     {
         if (msg.status == EnowMessage::SEND_FAIL)
         {
@@ -379,7 +379,7 @@ void handle_messages()
             bool is_relay1 = (memcmp(msg.mac, relay1Address, 6) == 0);
             bool is_relay2 = (memcmp(msg.mac, relay2Address, 6) == 0);
 
-            if ((is_relay1 || is_relay2) && minutes == 60)
+            if ((is_relay1 || is_relay2) && minutes == REAL_TIME_MINUTES)
             {
                 if (!system_error_state)
                 {
@@ -403,7 +403,7 @@ void handle_messages()
     }
 
     QueuePultMessage qpMsg;
-    if (xQueueReceive(esp_now_queue_from_pult, &qpMsg, 0) == pdTRUE)
+    if (xQueueReceive(esp_now_queue_from_pult, &qpMsg, 0) == pdPASS)
     {
         if (esp_now && use_pult)
         {
@@ -420,14 +420,14 @@ void handle_messages()
     }
     // сообщение от датчика тока насоса
     QueueSensorMessage qpMsg1;
-    if (xQueueReceive(esp_now_queue_from_sensor, &qpMsg1, 0) == pdTRUE)
+    if (xQueueReceive(esp_now_queue_from_sensor, &qpMsg1, 0) == pdPASS)
     {
         if (qpMsg1.type == EnowMessage::PUMP_I && use_pump_sensor)
         {
             pump_sensor = qpMsg1.value;
             pump_sensor_timer = millis();
             lv_label_set_text_fmt(objects.pump_i, "%.1f A", pump_sensor);
-            if (pump_sensor > 14 && minutes == 60)
+            if (pump_sensor > 14 && minutes == REAL_TIME_MINUTES)
             {
                 static bool inited = false;
                 static int pass = 0;
