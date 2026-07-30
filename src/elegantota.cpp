@@ -2,6 +2,7 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
 #include <ElegantOTA.h>
+#include "esp_now.h"
 
 const char *ssid = "Pump_controller";
 const char *password = "80100000";
@@ -46,8 +47,8 @@ void ota_setup(void)
         return;
     }
 
-    Serial.println("Starting OTA setup...");
-    
+    esp_now_deinit();
+    Serial.println("Starting OTA setup..."); 
     // Пытаемся запустить AP
     if (!WiFi.softAP(ssid, password))
     {

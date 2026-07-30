@@ -8,6 +8,7 @@
 #include "elegantota.h"
 #include "constants.h"
 #include "enow.h"
+#include <freertos/task.h>
 
 #define RW_MODE false
 #define RO_MODE true
@@ -234,22 +235,12 @@ void calculate_program_time()
     millis_to_HMS(programm_time > 0 ? (uint32_t)programm_time : 0);
 }
 
-void action_start(lv_event_t *e)
+void start_programm()
 {
     start_time = millis();
     zoneTimer = millis() - (zone_pause * MS_PER_SECOND * minutes);
     check_pump(true);
     update_bars(true);
-
-    for (byte i = 0; i < PUMP_AMOUNT; i++)
-    {
-        pump_finished[i] = false;
-        lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
-        lv_bar_set_value(bar, 0, LV_ANIM_OFF);
-        lv_obj_t *bar_label = lv_obj_get_child(bar, 0);
-        lv_obj_set_style_text_color(bar_label, lv_color_hex(0xffffff), LV_PART_MAIN);
-    }
-
     calculate_program_time();
     if (programm_time <= 0)
         return;
@@ -261,12 +252,83 @@ void action_start(lv_event_t *e)
     lv_obj_add_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(objects.dry, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(objects.clear, LV_OBJ_FLAG_HIDDEN);
     hide_k_buttons();
     lv_obj_add_state(objects.start, LV_STATE_DISABLED);
     lv_obj_remove_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);
     lv_obj_clear_state(objects.stop, LV_STATE_DISABLED);
     lv_obj_remove_flag(objects.spinner, LV_OBJ_FLAG_HIDDEN);
     lv_bar_set_value(objects.prog_bar, 0, LV_ANIM_OFF);
+}
+
+void action_start(lv_event_t *e)
+{
+    for (byte i = 0; i < PUMP_AMOUNT; i++)
+    {
+        pump_finished[i] = false;
+        lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
+        lv_bar_set_value(bar, 0, LV_ANIM_OFF);
+        lv_obj_t *bar_label = lv_obj_get_child(bar, 0);
+        lv_obj_set_style_text_color(bar_label, lv_color_hex(0xffffff), LV_PART_MAIN);
+    }
+    start_programm();
+}
+
+void action_start_dry(lv_event_t *e)
+{
+    for (int i = 0; i < PUMP_AMOUNT; i++)
+    {
+        lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
+        lv_bar_set_value(bar, 0, LV_ANIM_OFF);
+        lv_obj_t *bar_label = lv_obj_get_child(bar, 0);
+        lv_obj_set_style_text_color(bar_label, lv_color_hex(0xffffff), LV_PART_MAIN);
+        lv_obj_t *button = lv_obj_get_child(objects.tab_1, i);
+        lv_obj_t *checkbox = lv_obj_get_child(button, 1);
+
+        if (cw_time[i] == 0 && dw_time[i] != 0)
+        {
+            pump_finished[i] = false;
+            lv_obj_remove_flag(bar, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_set_style_bg_opa(button, FULL_OPACITY, LV_PART_MAIN);
+            lv_obj_remove_flag(checkbox, LV_OBJ_FLAG_HIDDEN);
+        }
+        else
+        {
+            lv_obj_add_flag(bar, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_set_style_bg_opa(button, LOW_OPACITY, LV_PART_MAIN);
+            lv_obj_add_flag(checkbox, LV_OBJ_FLAG_HIDDEN);
+        }
+    }
+    start_programm();
+}
+
+void action_start_clear(lv_event_t *e)
+{
+    for (int i = 0; i < PUMP_AMOUNT; i++)
+    {
+        lv_obj_t *bar = lv_obj_get_child(objects.bars_panel, i);
+        lv_bar_set_value(bar, 0, LV_ANIM_OFF);
+        lv_obj_t *bar_label = lv_obj_get_child(bar, 0);
+        lv_obj_set_style_text_color(bar_label, lv_color_hex(0xffffff), LV_PART_MAIN);
+        lv_obj_t *button = lv_obj_get_child(objects.tab_1, i);
+        lv_obj_t *checkbox = lv_obj_get_child(button, 1);
+
+        if (cw_time[i] != 0)
+        {
+            pump_finished[i] = false;
+            lv_obj_remove_flag(bar, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_set_style_bg_opa(button, FULL_OPACITY, LV_PART_MAIN);
+            lv_obj_remove_flag(checkbox, LV_OBJ_FLAG_HIDDEN);
+        }
+        else
+        {
+            lv_obj_add_flag(bar, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_set_style_bg_opa(button, LOW_OPACITY, LV_PART_MAIN);
+            lv_obj_add_flag(checkbox, LV_OBJ_FLAG_HIDDEN);
+        }
+    }
+    start_programm();
 }
 
 void action_stop(lv_event_t *e)
@@ -300,6 +362,8 @@ void action_stop(lv_event_t *e)
     lv_obj_remove_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
     lv_obj_remove_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
     lv_obj_clear_state(objects.start, LV_STATE_DISABLED);
+    lv_obj_remove_flag(objects.dry, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_remove_flag(objects.clear, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(objects.spinner, LV_OBJ_FLAG_HIDDEN);
     update_zone_list();
 }
@@ -389,6 +453,8 @@ void action_update(lv_event_t *e)
 
 void action_update_display(lv_event_t *e)
 {
+    if (pultTaskHandle != NULL)
+        vTaskSuspend(pultTaskHandle);
     create_screen_update_display();
     loadScreen(SCREEN_ID_UPDATE_DISPLAY);
     ota_setup();
@@ -424,6 +490,8 @@ void action_zone_selected(lv_event_t *e)
         lv_obj_add_flag(objects.tab_2, LV_OBJ_FLAG_HIDDEN);
         lv_obj_add_flag(objects.tab_settings, LV_OBJ_FLAG_HIDDEN);
         lv_obj_add_flag(objects.start, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(objects.dry, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(objects.clear, LV_OBJ_FLAG_HIDDEN);
         hide_k_buttons();
         lv_obj_add_state(objects.start, LV_STATE_DISABLED);
         lv_obj_remove_flag(objects.stop, LV_OBJ_FLAG_HIDDEN);

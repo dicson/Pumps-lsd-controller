@@ -22,7 +22,7 @@ void handle_messages();
 void update_bars(bool resetFlag = false);
 void send_status_to_pult(struct_message_pult msg = {SYNC_WORD, 0, 0, 0, 0, 0, 0, 0, 0, 0});
 void check_pump(bool resetFlag = false);
-
+extern TaskHandle_t pultTaskHandle;
 // Вспомогательные функции
 void MessageToLog(String Message);
 uint32_t getDirtyWaterDurationMs(int zone);

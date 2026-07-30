@@ -13,6 +13,7 @@ bool pump_water_state;
 bool system_error_state = false;
 float pump_sensor = 0;
 uint32_t pump_sensor_timer = millis();
+TaskHandle_t pultTaskHandle = NULL;
 
 void send_message_to_pult(void *pvParameters);
 
@@ -106,7 +107,7 @@ void pump_setup()
     pump_state[PUMP_RELAY] = !SWITCH_LEVEL;  // выкл
 
     xTaskCreatePinnedToCore(send_message_to_pult /*Функция задачи*/, "SendMessagesToPult" /* Имя*/,
-                            2048 /*Размер стека*/, NULL /*Параметры*/, 1 /*Приоритет*/, NULL /*Дескриптор задачи*/, 0);
+                            2048 /*Размер стека*/, NULL /*Параметры*/, 1 /*Приоритет*/, &pultTaskHandle  /*Дескриптор задачи*/, 0);
 }
 
 /**

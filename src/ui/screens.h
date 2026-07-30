@@ -25,6 +25,8 @@ typedef struct _objects_t {
     lv_obj_t *update_relay;
     lv_obj_t *tabview;
     lv_obj_t *tab_main;
+    lv_obj_t *dry;
+    lv_obj_t *clear;
     lv_obj_t *prog_bar;
     lv_obj_t *bar_label;
     lv_obj_t *spinner;
